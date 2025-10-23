@@ -1,73 +1,160 @@
-# Welcome to your Lovable project
+# Campus Navigator
 
-## Project info
+A modern, Google Maps-powered campus navigation web app built with React, TypeScript, and Tailwind CSS.
 
-**URL**: https://lovable.dev/projects/57e27cea-612a-4e7a-96dd-26f25f7815cc
+## Features
 
-## How can I edit this code?
+- 🗺️ **Google Maps Integration**: Full-featured map with Places Autocomplete and Directions
+- 🔍 **Smart Search**: Find campus buildings and locations with autocomplete
+- 🚶 **Multi-Modal Routing**: Get directions by walking, driving, biking, or transit
+- 📍 **Building Markers**: Interactive markers with detailed building information
+- 📱 **Responsive Design**: Mobile-first UI that works on all devices
+- 🎯 **Geolocation**: Center map on your current location
+- 🎨 **Modern UI**: Clean, accessible design with university-themed colors
 
-There are several ways of editing your application.
+## Setup Instructions
 
-**Use Lovable**
+### Prerequisites
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/57e27cea-612a-4e7a-96dd-26f25f7815cc) and start prompting.
+- Node.js 16+ and npm
+- Google Maps API key with the following APIs enabled:
+  - Maps JavaScript API
+  - Places API
+  - Directions API
 
-Changes made via Lovable will be committed automatically to this repo.
+### Installation
 
-**Use your preferred IDE**
+1. **Clone and install dependencies:**
+   ```bash
+   npm install
+   ```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+2. **Configure Google Maps API:**
+   
+   Create a `.env.local` file in the root directory:
+   ```bash
+   VITE_GOOGLE_MAPS_API_KEY=your_api_key_here
+   # Optional: VITE_GOOGLE_MAPS_MAP_ID=your_map_id_here
+   ```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+3. **Start development server:**
+   ```bash
+   npm run dev
+   ```
 
-Follow these steps:
+   App will be available at http://localhost:8080
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## Project Structure
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+src/
+├── components/
+│   ├── maps/              # Google Maps components
+│   │   ├── MapCanvas.tsx           # Base map renderer
+│   │   ├── SearchAutocomplete.tsx  # Places autocomplete search
+│   │   ├── DirectionsPanel.tsx     # Route planning interface
+│   │   ├── MarkerLayer.tsx         # Building markers
+│   │   ├── GeolocateButton.tsx     # User location control
+│   │   └── LayersToggle.tsx        # Layer visibility controls
+│   ├── panels/            # Side panels
+│   │   └── BuildingInfoPanel.tsx   # Building details drawer
+│   └── ui/                # Reusable UI components (shadcn)
+├── data/
+│   ├── buildings.mock.ts  # Mock building data
+│   └── events.mock.ts     # Mock campus events
+├── lib/
+│   ├── mapsClient.ts      # Google Maps configuration
+│   ├── mapState.ts        # State management (Zustand)
+│   ├── types.ts           # TypeScript interfaces
+│   └── utils.ts           # Utility functions
+└── pages/
+    └── Index.tsx          # Main application page
 ```
 
-**Edit a file directly in GitHub**
+## API Integration Points
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+The app is UI-ready with clearly marked integration points for backend APIs. Search for `TODO(api)` comments to find these wiring points:
 
-**Use GitHub Codespaces**
+### 1. **Search API** (`SearchAutocomplete.tsx`)
+```typescript
+// TODO(api): Replace Places API with custom search
+// const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### 2. **Buildings API** (`MarkerLayer.tsx`)
+```typescript
+// TODO(api): Fetch buildings from backend
+// const { data: buildings } = await fetch('/api/buildings');
+```
 
-## What technologies are used for this project?
+### 3. **Building Details** (`BuildingInfoPanel.tsx`)
+```typescript
+// TODO(api): Fetch full building details
+// const { data } = await fetch(`/api/buildings/${building.id}`);
+```
 
-This project is built with:
+### 4. **Events API** (`LayersToggle.tsx`)
+```typescript
+// TODO(api): Fetch campus events
+// const { data: events } = await fetch('/api/events');
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### 5. **Route Logging** (`DirectionsPanel.tsx`)
+```typescript
+// TODO(api): Log route analytics
+// await fetch('/api/routes/log', {
+//   method: 'POST',
+//   body: JSON.stringify({ origin, destination, mode })
+// });
+```
 
-## How can I deploy this project?
+## Customization
 
-Simply open [Lovable](https://lovable.dev/projects/57e27cea-612a-4e7a-96dd-26f25f7815cc) and click on Share -> Publish.
+### Update Campus Location
 
-## Can I connect a custom domain to my Lovable project?
+Edit `src/lib/mapsClient.ts`:
+```typescript
+export const DEFAULT_CENTER = {
+  lat: 37.7749,  // Your campus latitude
+  lng: -122.4194 // Your campus longitude
+};
+```
 
-Yes, you can!
+### Add Real Building Data
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Replace mock data in `src/data/buildings.mock.ts` with your campus buildings following the `Building` interface.
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+### Customize Colors
+
+The app uses a university-themed design system. Edit `src/index.css` to customize:
+- `--primary`: University blue (main brand color)
+- `--accent`: Campus coral (highlights and CTAs)
+- `--gradient-primary`: Header gradient
+
+## Tech Stack
+
+- **React 18** - UI framework
+- **TypeScript** - Type safety
+- **Vite** - Build tool
+- **Tailwind CSS** - Styling
+- **shadcn/ui** - UI components
+- **@react-google-maps/api** - Google Maps integration
+- **Zustand** - State management
+- **React Router** - Routing
+
+## Next Steps
+
+1. **Backend Integration**: Replace mock data with REST/GraphQL APIs
+2. **Authentication**: Add user accounts for saved routes and favorites
+3. **Real-time Updates**: WebSocket integration for live event updates
+4. **Accessibility**: WCAG 2.1 AA compliance audit
+5. **Analytics**: Track popular routes and search queries
+6. **Mobile App**: React Native version with offline maps
+
+## License
+
+MIT
+
+---
+
+**Need help?** Check the [Google Maps Platform documentation](https://developers.google.com/maps/documentation).
