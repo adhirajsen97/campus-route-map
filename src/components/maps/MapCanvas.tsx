@@ -19,6 +19,29 @@ export const MapCanvas = ({
   const mapsConfig = getMapsConfig();
   const [map, setMap] = useState<google.maps.Map | null>(null);
 
+  // Check if API key is missing before trying to load
+  if (!mapsConfig.apiKey) {
+    return (
+      <div className="flex h-full w-full items-center justify-center bg-muted">
+        <div className="text-center max-w-md p-6">
+          <p className="text-destructive font-medium mb-2">Google Maps API Key Missing</p>
+          <p className="text-sm text-muted-foreground mb-4">
+            Please add your Google Maps API key to continue.
+          </p>
+          <div className="bg-background rounded-lg p-4 text-left">
+            <p className="text-xs font-mono mb-2">Create a .env.local file:</p>
+            <code className="text-xs bg-muted p-2 rounded block">
+              VITE_GOOGLE_MAPS_API_KEY=your_key_here
+            </code>
+          </div>
+          <p className="text-xs text-muted-foreground mt-4">
+            See SETUP_GUIDE.md for detailed instructions
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: mapsConfig.apiKey,
     libraries: mapsConfig.libraries as any,
