@@ -10,7 +10,8 @@ interface MarkerLayerProps {
 export const MarkerLayer = ({ buildings }: MarkerLayerProps) => {
   const { selectedBuilding, setSelectedBuilding, showBuildings } = useMapStore();
 
-  if (!showBuildings) return null;
+  // Ensure Google Maps API is loaded before rendering
+  if (!showBuildings || typeof google === 'undefined') return null;
 
   // TODO(api): Replace mock buildings with API call
   // const { data: buildings } = await fetch('/api/buildings');
