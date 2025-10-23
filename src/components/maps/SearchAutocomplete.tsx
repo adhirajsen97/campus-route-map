@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
-import { Autocomplete } from '@react-google-maps/api';
+import { Autocomplete, useJsApiLoader } from '@react-google-maps/api';
+import { getMapsConfig } from '@/lib/mapsClient';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
 
@@ -16,6 +17,14 @@ export const SearchAutocomplete = ({
 }: SearchAutocompleteProps) => {
   const [autocomplete, setAutocomplete] = useState<google.maps.places.Autocomplete | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Ensure Maps JS API (with Places) is loaded before rendering Autocomplete
+  const mapsConfig = getMapsConfig();
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: mapsConfig.apiKey,
+    libraries: mapsConfig.libraries as any,
+    mapIds: mapsConfig.mapId ? [mapsConfig.mapId] : undefined,
+  });
 
   const onLoad = (autocompleteInstance: google.maps.places.Autocomplete) => {
     setAutocomplete(autocompleteInstance);
@@ -37,20 +46,31 @@ export const SearchAutocomplete = ({
   return (
     <div className={`relative ${className}`}>
       <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
-      <Autocomplete
-        onLoad={onLoad}
-        onPlaceChanged={onPlaceChanged}
-        options={{
-          fields: ['formatted_address', 'geometry', 'name', 'place_id'],
-        }}
-      >
+      {isLoaded ? (
+        <Autocomplete
+          onLoad={onLoad}
+          onPlaceChanged={onPlaceChanged}
+          options={{
+            fields: ['formatted_address', 'geometry', 'name', 'place_id'],
+          }}
+        >
+          <Input
+            ref={inputRef}
+            type="text"
+            placeholder={placeholder}
+            className="pl-10 bg-background"
+          />
+        </Autocomplete>
+      ) : (
         <Input
           ref={inputRef}
           type="text"
-          placeholder={placeholder}
+          placeholder="Loading Google Maps..."
           className="pl-10 bg-background"
+          disabled
+          aria-disabled="true"
         />
-      </Autocomplete>
+      )}
     </div>
   );
 };
