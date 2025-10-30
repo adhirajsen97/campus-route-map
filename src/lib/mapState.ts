@@ -10,12 +10,12 @@ interface MapStore extends MapState {
 }
 
 export const useMapStore = create<MapStore>((set) => ({
-  center: { lat: 37.7749, lng: -122.4194 },
-  zoom: 15,
+  center: { lat: 32.7311, lng: -97.1151 }, // UTA Campus center
+  zoom: 16,
   selectedBuilding: undefined,
   showBuildings: true,
   showEvents: true,
-  
+
   setCenter: (center) => set({ center }),
   setZoom: (zoom) => set({ zoom }),
   setSelectedBuilding: (building) => set({ selectedBuilding: building }),

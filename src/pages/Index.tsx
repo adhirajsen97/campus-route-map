@@ -3,6 +3,7 @@ import { MapCanvas } from '@/components/maps/MapCanvas';
 import { SearchAutocomplete } from '@/components/maps/SearchAutocomplete';
 import { DirectionsPanel } from '@/components/maps/DirectionsPanel';
 import { MarkerLayer } from '@/components/maps/MarkerLayer';
+import { BuildingFootprints } from '@/components/maps/BuildingFootprints';
 import { GeolocateButton } from '@/components/maps/GeolocateButton';
 import { LayersToggle } from '@/components/maps/LayersToggle';
 import { BuildingInfoPanel } from '@/components/panels/BuildingInfoPanel';
@@ -48,6 +49,7 @@ const Index = () => {
         {/* Map */}
         <div className="flex-1 relative">
           <MapCanvas center={center} zoom={zoom}>
+            <BuildingFootprints />
             <MarkerLayer buildings={mockBuildings} />
           </MapCanvas>
 
