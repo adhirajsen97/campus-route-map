@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { MapCanvas } from '@/components/maps/MapCanvas';
 import { SearchAutocomplete } from '@/components/maps/SearchAutocomplete';
 import { DirectionsPanel } from '@/components/maps/DirectionsPanel';
@@ -10,10 +9,11 @@ import { BuildingInfoPanel } from '@/components/panels/BuildingInfoPanel';
 import { mockBuildings } from '@/data/buildings.mock';
 import { useMapStore } from '@/lib/mapState';
 import { MapPin } from 'lucide-react';
+import { CampusMask } from '@/components/maps/CampusMask';
+import { CampusBoundary } from '@/components/maps/CampusBoundary';
 
 const Index = () => {
   const { center, zoom, selectedBuilding, setSelectedBuilding, setCenter, setZoom } = useMapStore();
-  const [showDirections, setShowDirections] = useState(false);
 
   const handlePlaceSelected = (place: google.maps.places.PlaceResult) => {
     if (place.geometry?.location) {
@@ -49,6 +49,8 @@ const Index = () => {
         {/* Map */}
         <div className="flex-1 relative">
           <MapCanvas center={center} zoom={zoom}>
+            <CampusMask />
+            <CampusBoundary />
             <BuildingFootprints />
             <MarkerLayer buildings={mockBuildings} />
           </MapCanvas>

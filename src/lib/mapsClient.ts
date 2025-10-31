@@ -1,5 +1,7 @@
 // Google Maps API client utilities
 
+import { CAMPUS_BOUNDARY_COORDINATES } from '@/data/campusBoundary';
+
 export interface MapsConfig {
   apiKey: string;
   mapId?: string;
@@ -8,7 +10,7 @@ export interface MapsConfig {
 
 export const getMapsConfig = (): MapsConfig => {
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-  
+
   if (!apiKey) {
     console.error('VITE_GOOGLE_MAPS_API_KEY is not set. Please add it to your .env.local file.');
   }
@@ -32,6 +34,26 @@ export const UTA_BOUNDS = {
   south: 32.7240,  // Southern edge near Park Row
   east: -97.1080,  // Eastern edge near Cooper St
   west: -97.1220,  // Western edge near Davis St
+};
+
+export const getCampusLatLngBounds = (): google.maps.LatLngBoundsLiteral => {
+  if (!CAMPUS_BOUNDARY_COORDINATES.length) {
+    return UTA_BOUNDS;
+  }
+
+  let north = -90;
+  let south = 90;
+  let east = -180;
+  let west = 180;
+
+  for (const point of CAMPUS_BOUNDARY_COORDINATES) {
+    north = Math.max(north, point.lat);
+    south = Math.min(south, point.lat);
+    east = Math.max(east, point.lng);
+    west = Math.min(west, point.lng);
+  }
+
+  return { north, south, east, west };
 };
 
 // Map styling options
