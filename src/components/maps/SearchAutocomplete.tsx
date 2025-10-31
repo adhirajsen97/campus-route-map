@@ -58,7 +58,7 @@ export const SearchAutocomplete = ({
             ref={inputRef}
             type="text"
             placeholder={placeholder}
-            className="pl-10 bg-background"
+            className="pl-10 bg-background text-foreground"
           />
         </Autocomplete>
       ) : (
@@ -66,7 +66,7 @@ export const SearchAutocomplete = ({
           ref={inputRef}
           type="text"
           placeholder="Loading Google Maps..."
-          className="pl-10 bg-background"
+          className="pl-10 bg-background text-foreground"
           disabled
           aria-disabled="true"
         />
