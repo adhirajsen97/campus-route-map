@@ -40,6 +40,18 @@ export const SearchAutocomplete = ({
     }
   };
 
+  const isLocationWithinCampusBounds = (location: google.maps.LatLng) => {
+    const lat = location.lat();
+    const lng = location.lng();
+
+    return (
+      lat <= campusBounds.north &&
+      lat >= campusBounds.south &&
+      lng >= campusBounds.west &&
+      lng <= campusBounds.east
+    );
+  };
+
   const onPlaceChanged = () => {
     if (!autocomplete) {
       return;
@@ -47,14 +59,18 @@ export const SearchAutocomplete = ({
 
     const place = autocomplete.getPlace();
 
-    if (!place.place_id || !CAMPUS_PLACE_WHITELIST.has(place.place_id)) {
-      setErrorMessage('That place is outside the supported campus locations.');
+    if (!place.geometry?.location) {
+      setErrorMessage("We could not determine that place's location. Please pick another suggestion.");
       resetInput();
       return;
     }
 
-    if (!place.geometry?.location) {
-      setErrorMessage("We could not determine that place's location. Please pick another suggestion.");
+    const location = place.geometry.location;
+    const isWhitelisted = Boolean(place.place_id && CAMPUS_PLACE_WHITELIST.has(place.place_id));
+    const withinCampus = isLocationWithinCampusBounds(location);
+
+    if (!isWhitelisted && !withinCampus) {
+      setErrorMessage('That place is outside the supported campus locations.');
       resetInput();
       return;
     }
