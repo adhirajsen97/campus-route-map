@@ -92,32 +92,30 @@ export const DirectionsPanel = () => {
     });
   };
 
-  const toggleDestination = () => {
-    if (isDestinationActive) {
-      setIsDestinationActive(false);
-      setDestination({ text: '', location: null });
+  const handleGetDirectionsClick = () => {
+    if (!isDestinationActive) {
+      if (!origin.location) {
+        setOriginError('Select a campus starting point before choosing a destination.');
+        return;
+      }
+
+      setOriginError(null);
+      setIsDestinationActive(true);
       return;
     }
 
-    if (!origin.location) {
-      setOriginError('Select a campus starting point before choosing a destination.');
-      return;
-    }
-
-    setOriginError(null);
-    setIsDestinationActive(true);
+    calculateRoute();
   };
+
+  const isGetDirectionsDisabled = !origin.location || (isDestinationActive && !destination.location) || isCalculating;
 
   return (
     <Card className="border-border shadow-md">
-      <CardHeader className="pb-3 flex items-center justify-between gap-3">
+      <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-lg">
           <Navigation className="h-5 w-5 text-primary" />
           Get Directions
         </CardTitle>
-        <Button variant={isDestinationActive ? 'secondary' : 'outline'} size="sm" onClick={toggleDestination}>
-          {isDestinationActive ? 'Hide Destination' : 'Directions'}
-        </Button>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-2">
@@ -165,12 +163,12 @@ export const DirectionsPanel = () => {
         </div>
 
         <div className="flex gap-2">
-          <Button
-            onClick={calculateRoute}
-            disabled={!origin.location || !destination.location || !isDestinationActive || isCalculating}
-            className="flex-1"
-          >
-            {isCalculating ? 'Calculating...' : 'Get Directions'}
+          <Button onClick={handleGetDirectionsClick} disabled={isGetDirectionsDisabled} className="flex-1">
+            {isCalculating
+              ? 'Calculating...'
+              : isDestinationActive
+                ? 'Get Directions'
+                : 'Choose Destination'}
           </Button>
           {directionsResponse && (
             <Button variant="outline" onClick={clearRoute}>
