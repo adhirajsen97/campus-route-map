@@ -1,5 +1,6 @@
+import { useCallback, useState } from 'react';
+import { DirectionsRenderer } from '@react-google-maps/api';
 import { MapCanvas } from '@/components/maps/MapCanvas';
-import { SearchAutocomplete } from '@/components/maps/SearchAutocomplete';
 import { DirectionsPanel } from '@/components/maps/DirectionsPanel';
 import { MarkerLayer } from '@/components/maps/MarkerLayer';
 import { BuildingFootprints } from '@/components/maps/BuildingFootprints';
@@ -13,16 +14,16 @@ import { CampusMask } from '@/components/maps/CampusMask';
 import { CampusBoundary } from '@/components/maps/CampusBoundary';
 
 const Index = () => {
-  const { center, zoom, selectedBuilding, setSelectedBuilding, setCenter, setZoom } = useMapStore();
+  const { center, zoom, selectedBuilding, setSelectedBuilding } = useMapStore();
+  const [directionsResult, setDirectionsResult] = useState<google.maps.DirectionsResult | null>(null);
 
-  const handlePlaceSelected = (place: google.maps.places.PlaceResult) => {
-    if (place.geometry?.location) {
-      const lat = place.geometry.location.lat();
-      const lng = place.geometry.location.lng();
-      setCenter({ lat, lng });
-      setZoom(17);
-    }
-  };
+  const handleRouteComputed = useCallback((result: google.maps.DirectionsResult) => {
+    setDirectionsResult(result);
+  }, []);
+
+  const handleRouteCleared = useCallback(() => {
+    setDirectionsResult(null);
+  }, []);
 
   return (
     <div className="h-screen w-full flex flex-col">
@@ -34,12 +35,6 @@ const Index = () => {
               <MapPin className="h-7 w-7" />
               <h1 className="text-2xl font-bold">Campus Navigator</h1>
             </div>
-            <div className="flex-1 max-w-md">
-              <SearchAutocomplete
-                onPlaceSelected={handlePlaceSelected}
-                placeholder="Search campus locations..."
-              />
-            </div>
           </div>
         </div>
       </header>
@@ -49,6 +44,18 @@ const Index = () => {
         {/* Map */}
         <div className="flex-1 relative">
           <MapCanvas center={center} zoom={zoom}>
+            {directionsResult && (
+              <DirectionsRenderer
+                options={{
+                  directions: directionsResult,
+                  suppressMarkers: false,
+                  polylineOptions: {
+                    strokeColor: '#1d7ce3',
+                    strokeWeight: 5,
+                  },
+                }}
+              />
+            )}
             <CampusMask />
             <CampusBoundary />
             <BuildingFootprints />
@@ -78,16 +85,20 @@ const Index = () => {
             )}
 
             {/* Directions Panel */}
-            <DirectionsPanel />
+            <DirectionsPanel
+              directionsResponse={directionsResult}
+              onRouteComputed={handleRouteComputed}
+              onRouteCleared={handleRouteCleared}
+            />
 
             {/* Instructions */}
             {!selectedBuilding && (
               <div className="rounded-lg bg-muted p-4 space-y-2">
                 <h3 className="font-semibold text-sm text-foreground">Quick Start</h3>
                 <ul className="text-sm text-muted-foreground space-y-1.5">
-                  <li>• Search locations using the search bar</li>
+                  <li>• Select a starting point in the directions panel</li>
                   <li>• Click building markers for details</li>
-                  <li>• Use directions panel to plan routes</li>
+                  <li>• Use the directions button to add a destination</li>
                   <li>• Toggle layers to show/hide buildings & events</li>
                   <li>• Click the target icon to center on your location</li>
                 </ul>

@@ -1,45 +1,135 @@
-import { useState, useCallback } from 'react';
-import { DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
+import { useCallback, useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Navigation, MapPin } from 'lucide-react';
 import { TravelMode } from '@/lib/types';
+import { SearchAutocomplete } from '@/components/maps/SearchAutocomplete';
 
-export const DirectionsPanel = () => {
-  const [origin, setOrigin] = useState('');
-  const [destination, setDestination] = useState('');
+type PlaceSelection = {
+  text: string;
+  location: google.maps.LatLngLiteral | null;
+  placeId?: string;
+};
+
+interface DirectionsPanelProps {
+  directionsResponse: google.maps.DirectionsResult | null;
+  onRouteComputed: (result: google.maps.DirectionsResult) => void;
+  onRouteCleared: () => void;
+}
+
+export const DirectionsPanel = ({ directionsResponse, onRouteComputed, onRouteCleared }: DirectionsPanelProps) => {
+  const [origin, setOrigin] = useState<PlaceSelection>({ text: '', location: null });
+  const [destination, setDestination] = useState<PlaceSelection>({ text: '', location: null });
   const [travelMode, setTravelMode] = useState<TravelMode>('WALKING');
-  const [directionsResponse, setDirectionsResponse] = useState<google.maps.DirectionsResult | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
+  const [isDestinationActive, setIsDestinationActive] = useState(false);
+  const [originError, setOriginError] = useState<string | null>(null);
+  const [lastRouteMode, setLastRouteMode] = useState<TravelMode | null>(null);
 
-  const directionsCallback = useCallback((result: google.maps.DirectionsResult | null, status: google.maps.DirectionsStatus) => {
-    if (status === 'OK' && result) {
-      setDirectionsResponse(result);
-      
-      // TODO(api): Future integration - log route to analytics
-      // await fetch('/api/routes/log', {
-      //   method: 'POST',
-      //   body: JSON.stringify({ origin, destination, mode: travelMode })
-      // });
-    } else {
-      console.error('Directions request failed:', status);
+  const calculateRoute = useCallback(async () => {
+    if (!origin.location || !destination.location) return;
+    if (!window.google?.maps) {
+      console.error('Google Maps API is not loaded.');
+      return;
     }
-    setIsCalculating(false);
-  }, []);
 
-  const calculateRoute = () => {
-    if (!origin || !destination) return;
     setIsCalculating(true);
-  };
+
+    const service = new google.maps.DirectionsService();
+
+    try {
+      const result = await service.route({
+        origin: origin.location,
+        destination: destination.location,
+        travelMode: travelMode as google.maps.TravelMode,
+      });
+
+      onRouteComputed(result);
+      setLastRouteMode(travelMode);
+    } catch (error) {
+      console.error('Directions request failed:', error);
+    } finally {
+      setIsCalculating(false);
+    }
+  }, [destination.location, onRouteComputed, origin.location, travelMode]);
+
+  useEffect(() => {
+    if (lastRouteMode === null) return;
+    if (!isDestinationActive) return;
+    if (!origin.location || !destination.location) return;
+    if (travelMode === lastRouteMode) return;
+
+    void calculateRoute();
+  }, [calculateRoute, destination.location, isDestinationActive, lastRouteMode, origin.location, travelMode]);
 
   const clearRoute = () => {
-    setDirectionsResponse(null);
-    setOrigin('');
-    setDestination('');
+    setOrigin({ text: '', location: null });
+    setDestination({ text: '', location: null });
+    setIsDestinationActive(false);
+    setOriginError(null);
+    setLastRouteMode(null);
+    onRouteCleared();
   };
+
+  const getPlaceDisplayName = (place: google.maps.places.PlaceResult) => {
+    if (place.name && place.formatted_address) {
+      return `${place.name}, ${place.formatted_address}`;
+    }
+    return place.formatted_address || place.name || '';
+  };
+
+  const handleOriginValueChange = (value: string) => {
+    setOrigin({ text: value, location: null });
+    setOriginError(null);
+    if (value === '') {
+      setIsDestinationActive(false);
+      setDestination({ text: '', location: null });
+    }
+  };
+
+  const handleDestinationValueChange = (value: string) => {
+    setDestination({ text: value, location: null });
+  };
+
+  const handleOriginPlaceSelected = (place: google.maps.places.PlaceResult) => {
+    if (!place.geometry?.location) return;
+    const location = place.geometry.location;
+    setOrigin({
+      text: getPlaceDisplayName(place),
+      location: { lat: location.lat(), lng: location.lng() },
+      placeId: place.place_id ?? undefined,
+    });
+    setOriginError(null);
+  };
+
+  const handleDestinationPlaceSelected = (place: google.maps.places.PlaceResult) => {
+    if (!place.geometry?.location) return;
+    const location = place.geometry.location;
+    setDestination({
+      text: getPlaceDisplayName(place),
+      location: { lat: location.lat(), lng: location.lng() },
+      placeId: place.place_id ?? undefined,
+    });
+  };
+
+  const handleGetDirectionsClick = () => {
+    if (!isDestinationActive) {
+      if (!origin.location) {
+        setOriginError('Select a campus starting point before choosing a destination.');
+        return;
+      }
+
+      setOriginError(null);
+      setIsDestinationActive(true);
+      return;
+    }
+
+    void calculateRoute();
+  };
+
+  const isGetDirectionsDisabled = !origin.location || (isDestinationActive && !destination.location) || isCalculating;
 
   return (
     <Card className="border-border shadow-md">
@@ -52,31 +142,32 @@ export const DirectionsPanel = () => {
       <CardContent className="space-y-4">
         <div className="space-y-2">
           <Label htmlFor="origin" className="text-sm font-medium">From</Label>
-          <div className="relative">
-            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              id="origin"
-              value={origin}
-              onChange={(e) => setOrigin(e.target.value)}
-              placeholder="Starting point..."
-              className="pl-10"
-            />
-          </div>
+          <SearchAutocomplete
+            placeholder="Starting point..."
+            value={origin.text}
+            onValueChange={handleOriginValueChange}
+            onPlaceSelected={handleOriginPlaceSelected}
+            leadingIcon={<MapPin className="h-4 w-4 text-muted-foreground" />}
+            hideDefaultIcon
+          />
+          {originError && (
+            <p className="text-xs text-destructive">{originError}</p>
+          )}
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="destination" className="text-sm font-medium">To</Label>
-          <div className="relative">
-            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-accent" />
-            <Input
-              id="destination"
-              value={destination}
-              onChange={(e) => setDestination(e.target.value)}
+        {isDestinationActive && (
+          <div className="space-y-2">
+            <Label htmlFor="destination" className="text-sm font-medium">To</Label>
+            <SearchAutocomplete
               placeholder="Destination..."
-              className="pl-10"
+              value={destination.text}
+              onValueChange={handleDestinationValueChange}
+              onPlaceSelected={handleDestinationPlaceSelected}
+              leadingIcon={<MapPin className="h-4 w-4 text-accent" />}
+              hideDefaultIcon
             />
           </div>
-        </div>
+        )}
 
         <div className="space-y-2">
           <Label htmlFor="mode" className="text-sm font-medium">Travel Mode</Label>
@@ -94,12 +185,12 @@ export const DirectionsPanel = () => {
         </div>
 
         <div className="flex gap-2">
-          <Button 
-            onClick={calculateRoute} 
-            disabled={!origin || !destination || isCalculating}
-            className="flex-1"
-          >
-            {isCalculating ? 'Calculating...' : 'Get Directions'}
+          <Button onClick={handleGetDirectionsClick} disabled={isGetDirectionsDisabled} className="flex-1">
+            {isCalculating
+              ? 'Calculating...'
+              : isDestinationActive
+                ? 'Get Directions'
+                : 'Choose Destination'}
           </Button>
           {directionsResponse && (
             <Button variant="outline" onClick={clearRoute}>
@@ -128,32 +219,6 @@ export const DirectionsPanel = () => {
           </div>
         )}
       </CardContent>
-
-      {/* DirectionsService triggers on origin/destination/mode change */}
-      {origin && destination && isCalculating && (
-        <DirectionsService
-          options={{
-            origin,
-            destination,
-            travelMode: travelMode as google.maps.TravelMode,
-          }}
-          callback={directionsCallback}
-        />
-      )}
-
-      {/* DirectionsRenderer displays the route on the map */}
-      {directionsResponse && (
-        <DirectionsRenderer
-          options={{
-            directions: directionsResponse,
-            suppressMarkers: false,
-            polylineOptions: {
-              strokeColor: '#1d7ce3',
-              strokeWeight: 5,
-            },
-          }}
-        />
-      )}
     </Card>
   );
 };
