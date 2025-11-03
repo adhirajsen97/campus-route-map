@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { ChangeEvent, ReactNode, useMemo, useRef, useState } from 'react';
 import { Autocomplete, useJsApiLoader } from '@react-google-maps/api';
 import { getCampusLatLngBounds, getMapsConfig } from '@/lib/mapsClient';
 import { Input } from '@/components/ui/input';
@@ -9,16 +9,33 @@ interface SearchAutocompleteProps {
   onPlaceSelected?: (place: google.maps.places.PlaceResult) => void;
   placeholder?: string;
   className?: string;
+  value?: string;
+  defaultValue?: string;
+  onValueChange?: (value: string) => void;
+  onClear?: () => void;
+  leadingIcon?: ReactNode;
+  hideDefaultIcon?: boolean;
+  inputClassName?: string;
 }
 
 export const SearchAutocomplete = ({
   onPlaceSelected,
   placeholder = "Search campus locations...",
-  className
+  className,
+  value,
+  defaultValue = '',
+  onValueChange,
+  onClear,
+  leadingIcon,
+  hideDefaultIcon,
+  inputClassName,
 }: SearchAutocompleteProps) => {
   const [autocomplete, setAutocomplete] = useState<google.maps.places.Autocomplete | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [internalValue, setInternalValue] = useState(defaultValue);
+  const isControlled = value !== undefined;
+  const inputValue = isControlled ? value : internalValue;
 
   // Ensure Maps JS API (with Places) is loaded before rendering Autocomplete
   const mapsConfig = getMapsConfig();
@@ -35,9 +52,11 @@ export const SearchAutocomplete = ({
   };
 
   const resetInput = () => {
-    if (inputRef.current) {
-      inputRef.current.value = '';
+    if (!isControlled) {
+      setInternalValue('');
     }
+    onValueChange?.('');
+    onClear?.();
   };
 
   const isLocationWithinCampusBounds = (location: google.maps.LatLng) => {
@@ -76,18 +95,40 @@ export const SearchAutocomplete = ({
     }
 
     setErrorMessage(null);
+    const displayName = place.name && place.formatted_address
+      ? `${place.name}, ${place.formatted_address}`
+      : place.formatted_address || place.name || '';
+
+    if (!isControlled) {
+      setInternalValue(displayName);
+    }
+    onValueChange?.(displayName);
     onPlaceSelected?.(place);
   };
 
-  const handleInputChange = () => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (errorMessage) {
       setErrorMessage(null);
     }
+    if (!isControlled) {
+      setInternalValue(event.target.value);
+    }
+    onValueChange?.(event.target.value);
   };
 
+  const leadingIconNode = leadingIcon
+    ? (
+        <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 flex h-4 w-4 items-center justify-center">
+          {leadingIcon}
+        </span>
+      )
+    : !hideDefaultIcon ? (
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+      ) : null;
+
   return (
-    <div className={`relative ${className}`}>
-      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+    <div className={`relative ${className ?? ''}`}>
+      {leadingIconNode}
       {isLoaded ? (
         <Autocomplete
           onLoad={onLoad}
@@ -102,7 +143,8 @@ export const SearchAutocomplete = ({
             ref={inputRef}
             type="text"
             placeholder={placeholder}
-            className="pl-10 bg-background text-foreground"
+            value={inputValue}
+            className={`pl-10 bg-background text-foreground ${inputClassName ?? ''}`}
             onChange={handleInputChange}
             aria-invalid={errorMessage ? 'true' : 'false'}
             aria-describedby={errorMessage ? 'search-error' : undefined}
@@ -113,7 +155,7 @@ export const SearchAutocomplete = ({
           ref={inputRef}
           type="text"
           placeholder="Loading Google Maps..."
-          className="pl-10 bg-background text-foreground"
+          className={`pl-10 bg-background text-foreground ${inputClassName ?? ''}`}
           disabled
           aria-disabled="true"
         />

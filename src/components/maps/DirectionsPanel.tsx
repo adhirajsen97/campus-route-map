@@ -2,18 +2,26 @@ import { useState, useCallback } from 'react';
 import { DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Navigation, MapPin } from 'lucide-react';
 import { TravelMode } from '@/lib/types';
+import { SearchAutocomplete } from '@/components/maps/SearchAutocomplete';
+
+type PlaceSelection = {
+  text: string;
+  location: google.maps.LatLngLiteral | null;
+  placeId?: string;
+};
 
 export const DirectionsPanel = () => {
-  const [origin, setOrigin] = useState('');
-  const [destination, setDestination] = useState('');
+  const [origin, setOrigin] = useState<PlaceSelection>({ text: '', location: null });
+  const [destination, setDestination] = useState<PlaceSelection>({ text: '', location: null });
   const [travelMode, setTravelMode] = useState<TravelMode>('WALKING');
   const [directionsResponse, setDirectionsResponse] = useState<google.maps.DirectionsResult | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
+  const [isDestinationActive, setIsDestinationActive] = useState(false);
+  const [originError, setOriginError] = useState<string | null>(null);
 
   const directionsCallback = useCallback((result: google.maps.DirectionsResult | null, status: google.maps.DirectionsStatus) => {
     if (status === 'OK' && result) {
@@ -31,52 +39,115 @@ export const DirectionsPanel = () => {
   }, []);
 
   const calculateRoute = () => {
-    if (!origin || !destination) return;
+    if (!origin.location || !destination.location) return;
     setIsCalculating(true);
   };
 
   const clearRoute = () => {
     setDirectionsResponse(null);
-    setOrigin('');
-    setDestination('');
+    setOrigin({ text: '', location: null });
+    setDestination({ text: '', location: null });
+    setIsDestinationActive(false);
+    setOriginError(null);
+  };
+
+  const getPlaceDisplayName = (place: google.maps.places.PlaceResult) => {
+    if (place.name && place.formatted_address) {
+      return `${place.name}, ${place.formatted_address}`;
+    }
+    return place.formatted_address || place.name || '';
+  };
+
+  const handleOriginValueChange = (value: string) => {
+    setOrigin({ text: value, location: null });
+    setOriginError(null);
+    if (value === '') {
+      setIsDestinationActive(false);
+      setDestination({ text: '', location: null });
+    }
+  };
+
+  const handleDestinationValueChange = (value: string) => {
+    setDestination({ text: value, location: null });
+  };
+
+  const handleOriginPlaceSelected = (place: google.maps.places.PlaceResult) => {
+    if (!place.geometry?.location) return;
+    const location = place.geometry.location;
+    setOrigin({
+      text: getPlaceDisplayName(place),
+      location: { lat: location.lat(), lng: location.lng() },
+      placeId: place.place_id ?? undefined,
+    });
+    setOriginError(null);
+  };
+
+  const handleDestinationPlaceSelected = (place: google.maps.places.PlaceResult) => {
+    if (!place.geometry?.location) return;
+    const location = place.geometry.location;
+    setDestination({
+      text: getPlaceDisplayName(place),
+      location: { lat: location.lat(), lng: location.lng() },
+      placeId: place.place_id ?? undefined,
+    });
+  };
+
+  const toggleDestination = () => {
+    if (isDestinationActive) {
+      setIsDestinationActive(false);
+      setDestination({ text: '', location: null });
+      return;
+    }
+
+    if (!origin.location) {
+      setOriginError('Select a campus starting point before choosing a destination.');
+      return;
+    }
+
+    setOriginError(null);
+    setIsDestinationActive(true);
   };
 
   return (
     <Card className="border-border shadow-md">
-      <CardHeader className="pb-3">
+      <CardHeader className="pb-3 flex items-center justify-between gap-3">
         <CardTitle className="flex items-center gap-2 text-lg">
           <Navigation className="h-5 w-5 text-primary" />
           Get Directions
         </CardTitle>
+        <Button variant={isDestinationActive ? 'secondary' : 'outline'} size="sm" onClick={toggleDestination}>
+          {isDestinationActive ? 'Hide Destination' : 'Directions'}
+        </Button>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-2">
           <Label htmlFor="origin" className="text-sm font-medium">From</Label>
-          <div className="relative">
-            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              id="origin"
-              value={origin}
-              onChange={(e) => setOrigin(e.target.value)}
-              placeholder="Starting point..."
-              className="pl-10"
-            />
-          </div>
+          <SearchAutocomplete
+            placeholder="Starting point..."
+            value={origin.text}
+            onValueChange={handleOriginValueChange}
+            onPlaceSelected={handleOriginPlaceSelected}
+            leadingIcon={<MapPin className="h-4 w-4 text-muted-foreground" />}
+            hideDefaultIcon
+          />
+          {originError && (
+            <p className="text-xs text-destructive">{originError}</p>
+          )}
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="destination" className="text-sm font-medium">To</Label>
-          <div className="relative">
-            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-accent" />
-            <Input
-              id="destination"
-              value={destination}
-              onChange={(e) => setDestination(e.target.value)}
+        {isDestinationActive && (
+          <div className="space-y-2">
+            <Label htmlFor="destination" className="text-sm font-medium">To</Label>
+            <SearchAutocomplete
               placeholder="Destination..."
-              className="pl-10"
+              value={destination.text}
+              onValueChange={handleDestinationValueChange}
+              onPlaceSelected={handleDestinationPlaceSelected}
+              leadingIcon={<MapPin className="h-4 w-4 text-accent" />}
+              hideDefaultIcon
             />
           </div>
-        </div>
+        )}
 
         <div className="space-y-2">
           <Label htmlFor="mode" className="text-sm font-medium">Travel Mode</Label>
@@ -94,9 +165,9 @@ export const DirectionsPanel = () => {
         </div>
 
         <div className="flex gap-2">
-          <Button 
-            onClick={calculateRoute} 
-            disabled={!origin || !destination || isCalculating}
+          <Button
+            onClick={calculateRoute}
+            disabled={!origin.location || !destination.location || !isDestinationActive || isCalculating}
             className="flex-1"
           >
             {isCalculating ? 'Calculating...' : 'Get Directions'}
@@ -130,11 +201,11 @@ export const DirectionsPanel = () => {
       </CardContent>
 
       {/* DirectionsService triggers on origin/destination/mode change */}
-      {origin && destination && isCalculating && (
+      {origin.location && destination.location && isCalculating && (
         <DirectionsService
           options={{
-            origin,
-            destination,
+            origin: origin.location,
+            destination: destination.location,
             travelMode: travelMode as google.maps.TravelMode,
           }}
           callback={directionsCallback}
