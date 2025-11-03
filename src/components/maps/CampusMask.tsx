@@ -36,7 +36,7 @@ export const CampusMask = () => {
       paths={[WORLD_OUTER_RING, campusHole]}
       options={{
         fillColor: '#020817',
-        fillOpacity: 0.45,
+        fillOpacity: 0,
         strokeOpacity: 0,
         clickable: false,
         zIndex: 1,
