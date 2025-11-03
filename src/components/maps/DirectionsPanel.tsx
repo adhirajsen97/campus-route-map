@@ -1,5 +1,4 @@
-import { useState, useCallback } from 'react';
-import { DirectionsRenderer, DirectionsService } from '@react-google-maps/api';
+import { useCallback, useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -14,41 +13,64 @@ type PlaceSelection = {
   placeId?: string;
 };
 
-export const DirectionsPanel = () => {
+interface DirectionsPanelProps {
+  directionsResponse: google.maps.DirectionsResult | null;
+  onRouteComputed: (result: google.maps.DirectionsResult) => void;
+  onRouteCleared: () => void;
+}
+
+export const DirectionsPanel = ({ directionsResponse, onRouteComputed, onRouteCleared }: DirectionsPanelProps) => {
   const [origin, setOrigin] = useState<PlaceSelection>({ text: '', location: null });
   const [destination, setDestination] = useState<PlaceSelection>({ text: '', location: null });
   const [travelMode, setTravelMode] = useState<TravelMode>('WALKING');
-  const [directionsResponse, setDirectionsResponse] = useState<google.maps.DirectionsResult | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
   const [isDestinationActive, setIsDestinationActive] = useState(false);
   const [originError, setOriginError] = useState<string | null>(null);
+  const [lastRouteMode, setLastRouteMode] = useState<TravelMode | null>(null);
 
-  const directionsCallback = useCallback((result: google.maps.DirectionsResult | null, status: google.maps.DirectionsStatus) => {
-    if (status === 'OK' && result) {
-      setDirectionsResponse(result);
-      
-      // TODO(api): Future integration - log route to analytics
-      // await fetch('/api/routes/log', {
-      //   method: 'POST',
-      //   body: JSON.stringify({ origin, destination, mode: travelMode })
-      // });
-    } else {
-      console.error('Directions request failed:', status);
-    }
-    setIsCalculating(false);
-  }, []);
-
-  const calculateRoute = () => {
+  const calculateRoute = useCallback(async () => {
     if (!origin.location || !destination.location) return;
+    if (!window.google?.maps) {
+      console.error('Google Maps API is not loaded.');
+      return;
+    }
+
     setIsCalculating(true);
-  };
+
+    const service = new google.maps.DirectionsService();
+
+    try {
+      const result = await service.route({
+        origin: origin.location,
+        destination: destination.location,
+        travelMode: travelMode as google.maps.TravelMode,
+      });
+
+      onRouteComputed(result);
+      setLastRouteMode(travelMode);
+    } catch (error) {
+      console.error('Directions request failed:', error);
+    } finally {
+      setIsCalculating(false);
+    }
+  }, [destination.location, onRouteComputed, origin.location, travelMode]);
+
+  useEffect(() => {
+    if (lastRouteMode === null) return;
+    if (!isDestinationActive) return;
+    if (!origin.location || !destination.location) return;
+    if (travelMode === lastRouteMode) return;
+
+    void calculateRoute();
+  }, [calculateRoute, destination.location, isDestinationActive, lastRouteMode, origin.location, travelMode]);
 
   const clearRoute = () => {
-    setDirectionsResponse(null);
     setOrigin({ text: '', location: null });
     setDestination({ text: '', location: null });
     setIsDestinationActive(false);
     setOriginError(null);
+    setLastRouteMode(null);
+    onRouteCleared();
   };
 
   const getPlaceDisplayName = (place: google.maps.places.PlaceResult) => {
@@ -104,7 +126,7 @@ export const DirectionsPanel = () => {
       return;
     }
 
-    calculateRoute();
+    void calculateRoute();
   };
 
   const isGetDirectionsDisabled = !origin.location || (isDestinationActive && !destination.location) || isCalculating;
@@ -197,32 +219,6 @@ export const DirectionsPanel = () => {
           </div>
         )}
       </CardContent>
-
-      {/* DirectionsService triggers on origin/destination/mode change */}
-      {origin.location && destination.location && isCalculating && (
-        <DirectionsService
-          options={{
-            origin: origin.location,
-            destination: destination.location,
-            travelMode: travelMode as google.maps.TravelMode,
-          }}
-          callback={directionsCallback}
-        />
-      )}
-
-      {/* DirectionsRenderer displays the route on the map */}
-      {directionsResponse && (
-        <DirectionsRenderer
-          options={{
-            directions: directionsResponse,
-            suppressMarkers: false,
-            polylineOptions: {
-              strokeColor: '#1d7ce3',
-              strokeWeight: 5,
-            },
-          }}
-        />
-      )}
     </Card>
   );
 };

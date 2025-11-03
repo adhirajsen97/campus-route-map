@@ -1,3 +1,5 @@
+import { useCallback, useState } from 'react';
+import { DirectionsRenderer } from '@react-google-maps/api';
 import { MapCanvas } from '@/components/maps/MapCanvas';
 import { DirectionsPanel } from '@/components/maps/DirectionsPanel';
 import { MarkerLayer } from '@/components/maps/MarkerLayer';
@@ -13,6 +15,15 @@ import { CampusBoundary } from '@/components/maps/CampusBoundary';
 
 const Index = () => {
   const { center, zoom, selectedBuilding, setSelectedBuilding } = useMapStore();
+  const [directionsResult, setDirectionsResult] = useState<google.maps.DirectionsResult | null>(null);
+
+  const handleRouteComputed = useCallback((result: google.maps.DirectionsResult) => {
+    setDirectionsResult(result);
+  }, []);
+
+  const handleRouteCleared = useCallback(() => {
+    setDirectionsResult(null);
+  }, []);
 
   return (
     <div className="h-screen w-full flex flex-col">
@@ -33,6 +44,18 @@ const Index = () => {
         {/* Map */}
         <div className="flex-1 relative">
           <MapCanvas center={center} zoom={zoom}>
+            {directionsResult && (
+              <DirectionsRenderer
+                options={{
+                  directions: directionsResult,
+                  suppressMarkers: false,
+                  polylineOptions: {
+                    strokeColor: '#1d7ce3',
+                    strokeWeight: 5,
+                  },
+                }}
+              />
+            )}
             <CampusMask />
             <CampusBoundary />
             <BuildingFootprints />
@@ -62,7 +85,11 @@ const Index = () => {
             )}
 
             {/* Directions Panel */}
-            <DirectionsPanel />
+            <DirectionsPanel
+              directionsResponse={directionsResult}
+              onRouteComputed={handleRouteComputed}
+              onRouteCleared={handleRouteCleared}
+            />
 
             {/* Instructions */}
             {!selectedBuilding && (
