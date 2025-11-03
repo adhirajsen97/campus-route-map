@@ -29,10 +29,10 @@ export const DEFAULT_ZOOM = 16;
 
 // Arlington city limits (approximate rectangle)
 export const ARLINGTON_CITY_BOUNDS: google.maps.LatLngBoundsLiteral = {
-  north: 32.8000, // Slightly south of River Legacy Park
-  south: 32.6600, // North of the Mansfield city line
-  east: -96.9500, // West of the Grand Prairie city line
-  west: -97.2000, // East of Lake Viridian and Arlington Highlands
+  north: 32.825673, // Approximate northern edge near River Legacy Park
+  south: 32.706017, // Approximate southern edge near Mansfield city line
+  east: -97.063700, // Approximate eastern edge near Grand Prairie city line
+  west: -97.175978, // Approximate western edge near Lake Viridian
 };
 
 // UTA Campus boundaries (approximate)
