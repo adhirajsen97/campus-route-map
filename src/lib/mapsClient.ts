@@ -27,6 +27,14 @@ export const DEFAULT_CENTER = { lat: 32.7311, lng: -97.1151 };
 
 export const DEFAULT_ZOOM = 16;
 
+// Arlington city limits (approximate rectangle)
+export const ARLINGTON_CITY_BOUNDS: google.maps.LatLngBoundsLiteral = {
+  north: 32.825673, // Approximate northern edge near River Legacy Park
+  south: 32.706017, // Approximate southern edge near Mansfield city line
+  east: -97.063700, // Approximate eastern edge near Grand Prairie city line
+  west: -97.175978, // Approximate western edge near Lake Viridian
+};
+
 // UTA Campus boundaries (approximate)
 // These coordinates define a rectangle around the main UTA campus
 export const UTA_BOUNDS = {
@@ -64,5 +72,10 @@ export const MAP_OPTIONS: google.maps.MapOptions = {
   streetViewControl: false,
   fullscreenControl: true,
   clickableIcons: true,
+  minZoom: 11, // Keep view focused on Arlington
   maxZoom: 20, // Allow close-up details
+  restriction: {
+    latLngBounds: ARLINGTON_CITY_BOUNDS,
+    strictBounds: false,
+  },
 };
