@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { DirectionsRenderer } from '@react-google-maps/api';
 import { MapCanvas } from '@/components/maps/MapCanvas';
 import { DirectionsPanel } from '@/components/maps/DirectionsPanel';
@@ -7,15 +7,25 @@ import { BuildingFootprints } from '@/components/maps/BuildingFootprints';
 import { GeolocateButton } from '@/components/maps/GeolocateButton';
 import { LayersToggle } from '@/components/maps/LayersToggle';
 import { BuildingInfoPanel } from '@/components/panels/BuildingInfoPanel';
+import { EventsPanel } from '@/components/panels/EventsPanel';
 import { mockBuildings } from '@/data/buildings.mock';
 import { useMapStore } from '@/lib/mapState';
-import { MapPin } from 'lucide-react';
+import { MapPin, Navigation, CalendarDays } from 'lucide-react';
 import { CampusMask } from '@/components/maps/CampusMask';
 import { CampusBoundary } from '@/components/maps/CampusBoundary';
+import anime from '@/lib/anime';
 
 const Index = () => {
   const { center, zoom, selectedBuilding, setSelectedBuilding } = useMapStore();
   const [directionsResult, setDirectionsResult] = useState<google.maps.DirectionsResult | null>(null);
+  const [activeSidebarView, setActiveSidebarView] = useState<'directions' | 'events'>('directions');
+
+  const indicatorRef = useRef<HTMLSpanElement | null>(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const menuButtonRefs = useRef<{ directions: HTMLButtonElement | null; events: HTMLButtonElement | null }>({
+    directions: null,
+    events: null,
+  });
 
   const handleRouteComputed = useCallback((result: google.maps.DirectionsResult) => {
     setDirectionsResult(result);
@@ -24,6 +34,45 @@ const Index = () => {
   const handleRouteCleared = useCallback(() => {
     setDirectionsResult(null);
   }, []);
+
+  useEffect(() => {
+    const indicator = indicatorRef.current;
+    const defaultButton = menuButtonRefs.current.directions;
+    if (!indicator || !defaultButton) return;
+
+    indicator.style.width = `${defaultButton.offsetWidth}px`;
+    anime({
+      targets: indicator,
+      translateX: defaultButton.offsetLeft,
+      duration: 0,
+    });
+  }, []);
+
+  useEffect(() => {
+    const indicator = indicatorRef.current;
+    const activeButton = menuButtonRefs.current[activeSidebarView];
+    if (!indicator || !activeButton) return;
+
+    anime({
+      targets: indicator,
+      translateX: activeButton.offsetLeft,
+      width: activeButton.offsetWidth,
+      duration: 450,
+      easing: 'easeOutExpo',
+    });
+  }, [activeSidebarView]);
+
+  useEffect(() => {
+    if (!contentRef.current) return;
+
+    anime({
+      targets: contentRef.current,
+      opacity: [0, 1],
+      translateY: [12, 0],
+      duration: 320,
+      easing: 'easeOutQuad',
+    });
+  }, [activeSidebarView, selectedBuilding]);
 
   return (
     <div className="h-screen w-full flex flex-col">
@@ -74,36 +123,86 @@ const Index = () => {
         </div>
 
         {/* Right Sidebar */}
-        <div className="w-96 bg-background border-l border-border overflow-y-auto">
-          <div className="p-6 space-y-6">
-            {/* Building Info Panel */}
-            {selectedBuilding && (
-              <BuildingInfoPanel
-                building={selectedBuilding}
-                onClose={() => setSelectedBuilding(undefined)}
+        <div className="w-96 bg-background border-l border-border flex flex-col">
+          <div className="border-b border-border/60 bg-background/80 px-6 py-4 backdrop-blur">
+            <div className="relative flex gap-2">
+              <button
+                ref={(node) => {
+                  menuButtonRefs.current.directions = node;
+                }}
+                type="button"
+                onClick={() => setActiveSidebarView('directions')}
+                className={`flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+                  activeSidebarView === 'directions'
+                    ? 'bg-primary/10 text-primary'
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
+                aria-pressed={activeSidebarView === 'directions'}
+              >
+                <Navigation className="h-4 w-4" />
+                Directions
+              </button>
+              <button
+                ref={(node) => {
+                  menuButtonRefs.current.events = node;
+                }}
+                type="button"
+                onClick={() => setActiveSidebarView('events')}
+                className={`flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+                  activeSidebarView === 'events'
+                    ? 'bg-primary/10 text-primary'
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
+                aria-pressed={activeSidebarView === 'events'}
+              >
+                <CalendarDays className="h-4 w-4" />
+                Events
+              </button>
+
+              <span
+                ref={indicatorRef}
+                className="pointer-events-none absolute bottom-0 left-0 h-0.5 rounded-full bg-primary"
+                style={{ width: 0 }}
               />
-            )}
+            </div>
+          </div>
 
-            {/* Directions Panel */}
-            <DirectionsPanel
-              directionsResponse={directionsResult}
-              onRouteComputed={handleRouteComputed}
-              onRouteCleared={handleRouteCleared}
-            />
+          <div className="flex-1 overflow-y-auto">
+            <div className="p-6 space-y-6">
+              {selectedBuilding && (
+                <BuildingInfoPanel
+                  building={selectedBuilding}
+                  onClose={() => setSelectedBuilding(undefined)}
+                />
+              )}
 
-            {/* Instructions */}
-            {!selectedBuilding && (
-              <div className="rounded-lg bg-muted p-4 space-y-2">
-                <h3 className="font-semibold text-sm text-foreground">Quick Start</h3>
-                <ul className="text-sm text-muted-foreground space-y-1.5">
-                  <li>• Select a starting point in the directions panel</li>
-                  <li>• Click building markers for details</li>
-                  <li>• Use the directions button to add a destination</li>
-                  <li>• Toggle layers to show/hide buildings & events</li>
-                  <li>• Click the target icon to center on your location</li>
-                </ul>
+              <div ref={contentRef} className="space-y-6">
+                {activeSidebarView === 'directions' ? (
+                  <>
+                    <DirectionsPanel
+                      directionsResponse={directionsResult}
+                      onRouteComputed={handleRouteComputed}
+                      onRouteCleared={handleRouteCleared}
+                    />
+
+                    {!selectedBuilding && (
+                      <div className="rounded-lg bg-muted p-4 space-y-2">
+                        <h3 className="font-semibold text-sm text-foreground">Quick Start</h3>
+                        <ul className="text-sm text-muted-foreground space-y-1.5">
+                          <li>• Select a starting point in the directions panel</li>
+                          <li>• Click building markers for details</li>
+                          <li>• Use the directions button to add a destination</li>
+                          <li>• Toggle layers to show/hide buildings & events</li>
+                          <li>• Click the target icon to center on your location</li>
+                        </ul>
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <EventsPanel />
+                )}
               </div>
-            )}
+            </div>
           </div>
         </div>
       </div>
