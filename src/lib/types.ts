@@ -22,6 +22,9 @@ export interface CampusEvent {
   lng: number;
   category: 'academic' | 'sports' | 'social' | 'career' | 'wellness';
   buildingId?: string;
+  location?: string;
+  url?: string;
+  tags?: string[];
 }
 
 export interface RouteResult {

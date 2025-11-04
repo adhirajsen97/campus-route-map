@@ -12,6 +12,9 @@ export const mockEvents: CampusEvent[] = [
     lng: -122.4208,
     category: 'career',
     buildingId: 'stu-001',
+    location: 'Maverick Activities Center',
+    url: 'https://events.uta.edu/event/career-fair-2024',
+    tags: ['Career', 'Networking'],
   },
   {
     id: 'evt-002',
@@ -23,6 +26,9 @@ export const mockEvents: CampusEvent[] = [
     lng: -122.4170,
     category: 'social',
     buildingId: 'arts-001',
+    location: 'University Center Ballroom',
+    url: 'https://events.uta.edu/event/spring-concert-series',
+    tags: ['Music', 'Campus Life'],
   },
   {
     id: 'evt-003',
@@ -34,6 +40,9 @@ export const mockEvents: CampusEvent[] = [
     lng: -122.4180,
     category: 'academic',
     buildingId: 'sci-001',
+    location: 'Science & Engineering Innovation & Research Building',
+    url: 'https://events.uta.edu/event/research-symposium',
+    tags: ['Academic', 'Research'],
   },
   {
     id: 'evt-004',
@@ -45,5 +54,8 @@ export const mockEvents: CampusEvent[] = [
     lng: -122.4215,
     category: 'sports',
     buildingId: 'gym-001',
+    location: 'College Park Center',
+    url: 'https://events.uta.edu/event/intramural-basketball-finals',
+    tags: ['Sports', 'Recreation'],
   },
 ];
