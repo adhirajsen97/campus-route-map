@@ -18,8 +18,8 @@ export interface CampusEvent {
   description?: string;
   start: Date;
   end: Date;
-  lat: number;
-  lng: number;
+  lat?: number;
+  lng?: number;
   category: 'academic' | 'sports' | 'social' | 'career' | 'wellness';
   buildingId?: string;
   location?: string;

@@ -26,3 +26,4 @@ Tarrant County Building Footprints.geojson
 
 # Data artifacts
 data/*.sqlite
+.env
