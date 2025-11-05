@@ -44,6 +44,17 @@ A modern, Google Maps-powered campus navigation web app built with React, TypeSc
 
    App will be available at http://localhost:8080
 
+### Events data ingestion
+
+- The campus events scraper runs automatically before `npm run dev`, `npm run build`, and `npm run preview`. When the last scrape happened within the cadence it simply reuses the existing dataset.
+- Set `SCRAPE_EVENTS_FREQUENCY_DAYS` in `.env` (defaults to `3`) to control how often a new scrape is allowed. The script records the most recent run in `SCRAPE_EVENTS_LAST_RUN` so it can calculate the next eligible execution.
+- Trigger a manual refresh at any time with:
+  ```bash
+  npm run scrape:events
+  ```
+
+  The scraper writes fresh results to `data/events.json`, which backs the `/api/events` endpoint used by the Events panel.
+
 ## Project Structure
 
 ```
