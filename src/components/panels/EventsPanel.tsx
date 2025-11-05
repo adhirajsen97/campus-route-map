@@ -188,7 +188,7 @@ export const EventsPanel = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="space-y-3">
+        <div className="space-y-4">
           <div className="relative">
             <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
@@ -198,8 +198,8 @@ export const EventsPanel = () => {
               className="pl-9"
             />
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            <div className="space-y-1">
+          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <div className="space-y-1.5 sm:flex-1 min-w-[200px]">
               <label htmlFor="events-date" className="text-xs font-medium text-muted-foreground">
                 Filter by date
               </label>
@@ -210,7 +210,7 @@ export const EventsPanel = () => {
                 onChange={(event) => setSelectedDate(event.target.value)}
               />
             </div>
-            <div className="space-y-1">
+            <div className="space-y-1.5 sm:flex-1 min-w-[200px]">
               <label htmlFor="events-location" className="text-xs font-medium text-muted-foreground">
                 Filter by location
               </label>
@@ -221,10 +221,10 @@ export const EventsPanel = () => {
                     variant="outline"
                     role="combobox"
                     aria-expanded={isLocationOpen}
-                    className="w-full justify-between"
+                    className="w-full justify-between gap-2"
                   >
                     {selectedLocation === 'all' ? 'All locations' : selectedLocation}
-                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent
@@ -275,7 +275,7 @@ export const EventsPanel = () => {
                 </PopoverContent>
               </Popover>
             </div>
-            <div className="space-y-1 sm:col-span-2 lg:col-span-1">
+            <div className="space-y-1.5 sm:flex-1 min-w-[200px]">
               <label htmlFor="events-tag" className="text-xs font-medium text-muted-foreground">
                 Filter by tag
               </label>
@@ -286,7 +286,7 @@ export const EventsPanel = () => {
                     variant="outline"
                     role="combobox"
                     aria-expanded={isTagOpen}
-                    className="w-full justify-between"
+                    className="w-full justify-between gap-2"
                     disabled={uniqueTags.length === 0}
                   >
                     {selectedTag === 'all'
@@ -294,7 +294,7 @@ export const EventsPanel = () => {
                         ? 'No tags available'
                         : 'All tags'
                       : selectedTag}
-                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent
