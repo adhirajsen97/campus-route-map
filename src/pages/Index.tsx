@@ -3,6 +3,7 @@ import { DirectionsRenderer } from '@react-google-maps/api';
 import { MapCanvas } from '@/components/maps/MapCanvas';
 import { DirectionsPanel } from '@/components/maps/DirectionsPanel';
 import { MarkerLayer } from '@/components/maps/MarkerLayer';
+import { EventsMarkerLayer } from '@/components/maps/EventsMarkerLayer';
 import { BuildingFootprints } from '@/components/maps/BuildingFootprints';
 import { GeolocateButton } from '@/components/maps/GeolocateButton';
 import { LayersToggle } from '@/components/maps/LayersToggle';
@@ -109,6 +110,7 @@ const Index = () => {
             <CampusBoundary />
             <BuildingFootprints />
             <MarkerLayer buildings={mockBuildings} />
+            <EventsMarkerLayer buildings={mockBuildings} />
           </MapCanvas>
 
           {/* Floating Controls - Bottom Left */}
