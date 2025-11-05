@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
@@ -362,11 +361,11 @@ export const EventsPanel = () => {
           </div>
         </div>
 
-        <ScrollArea className="max-h-[420px]" type="always">
-          <div className="space-y-3 pr-4">
+        <div className="max-h-[420px] overflow-y-auto pr-1 sm:pr-2">
+          <div className="space-y-3 pr-3 sm:pr-4">
             {renderContent()}
           </div>
-        </ScrollArea>
+        </div>
       </CardContent>
     </Card>
   );
