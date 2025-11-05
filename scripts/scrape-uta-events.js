@@ -196,6 +196,20 @@ function shouldSkipRun(lastRunIso, frequencyDays, now) {
   return diffDays < frequencyDays;
 }
 
+function calculateNextEligibleRun(lastRunIso, frequencyDays) {
+  if (!lastRunIso) {
+    return null;
+  }
+
+  const lastRun = new Date(lastRunIso);
+  if (Number.isNaN(lastRun.getTime())) {
+    return null;
+  }
+
+  const next = new Date(lastRun.getTime() + frequencyDays * 24 * 60 * 60 * 1000);
+  return next;
+}
+
 function extractJsonFromScript(scriptHtml) {
   const match = scriptHtml.match(/<script[^>]*>([\s\S]*?)<\/script>/);
   if (!match) {
@@ -456,10 +470,17 @@ async function main() {
   const now = new Date();
 
   if (shouldSkipRun(lastRun, frequencyDays, now)) {
-    console.log(`Skipping scrape. Last run at ${lastRun} which is within ${frequencyDays} day(s).`);
+    const nextRun = calculateNextEligibleRun(lastRun, frequencyDays);
+    const nextRunDisplay = nextRun ? nextRun.toISOString() : 'unknown';
+    console.log(
+      `Skipping scrape. Last run at ${lastRun} which is within ${frequencyDays} day(s). ` +
+      `Next eligible run after ${nextRunDisplay}.`
+    );
     db.close();
     return;
   }
+
+  console.log(`Running events scraper. Frequency: every ${frequencyDays} day(s).`);
 
   const startDate = new Date();
   startDate.setUTCHours(0, 0, 0, 0);
@@ -520,6 +541,10 @@ async function main() {
   writeEnvFile(envFile, updates);
 
   console.log(`Finished. Total events stored or updated: ${totalStored}`);
+  const nextRun = calculateNextEligibleRun(now.toISOString(), frequencyDays);
+  if (nextRun) {
+    console.log(`Next eligible run after ${nextRun.toISOString()}`);
+  }
   db.close();
 }
 
