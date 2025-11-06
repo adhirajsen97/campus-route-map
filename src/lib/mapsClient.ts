@@ -18,7 +18,7 @@ export const getMapsConfig = (): MapsConfig => {
   return {
     apiKey: apiKey || '',
     mapId: import.meta.env.VITE_GOOGLE_MAPS_MAP_ID,
-    libraries: ['places', 'geometry'],
+    libraries: ['places', 'geometry', 'marker'],
   };
 };
 

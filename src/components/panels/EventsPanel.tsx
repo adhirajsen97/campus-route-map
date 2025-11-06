@@ -194,7 +194,7 @@ export const EventsPanel = () => {
           </div>
         </div>
 
-        <ScrollArea className="max-h-[420px] pr-4">
+        <ScrollArea className="h-[calc(100vh-28rem)] pr-4">
           <div className="space-y-3">
             {renderContent()}
           </div>

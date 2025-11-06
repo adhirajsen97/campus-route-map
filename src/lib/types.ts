@@ -45,7 +45,6 @@ export type TravelMode = 'DRIVING' | 'WALKING' | 'BICYCLING' | 'TRANSIT';
 export interface MapState {
   center: { lat: number; lng: number };
   zoom: number;
-  selectedBuilding?: Building;
-  showBuildings: boolean;
   showEvents: boolean;
+  mapInstance: google.maps.Map | null;
 }

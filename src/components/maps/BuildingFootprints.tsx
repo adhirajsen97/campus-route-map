@@ -1,5 +1,4 @@
 import { Polygon } from '@react-google-maps/api';
-import { useMapStore } from '@/lib/mapState';
 import { utaBuildings } from '@/data/uta-buildings';
 
 /**
@@ -9,11 +8,6 @@ import { utaBuildings } from '@/data/uta-buildings';
  * building structures on the UTA campus, similar to the official UTA map.
  */
 export const BuildingFootprints = () => {
-  const { showBuildings } = useMapStore();
-
-  if (!showBuildings) {
-    return null;
-  }
 
   return (
     <>

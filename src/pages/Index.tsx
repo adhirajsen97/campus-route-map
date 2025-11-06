@@ -2,13 +2,14 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { DirectionsRenderer } from '@react-google-maps/api';
 import { MapCanvas } from '@/components/maps/MapCanvas';
 import { DirectionsPanel } from '@/components/maps/DirectionsPanel';
-import { MarkerLayer } from '@/components/maps/MarkerLayer';
 import { BuildingFootprints } from '@/components/maps/BuildingFootprints';
+import { BuildingMarkers } from '@/components/maps/BuildingMarkers';
+import { EventMarkers } from '@/components/maps/EventMarkers';
 import { GeolocateButton } from '@/components/maps/GeolocateButton';
 import { LayersToggle } from '@/components/maps/LayersToggle';
-import { BuildingInfoPanel } from '@/components/panels/BuildingInfoPanel';
+// import { BuildingInfoPanel } from '@/components/panels/BuildingInfoPanel';
 import { EventsPanel } from '@/components/panels/EventsPanel';
-import { mockBuildings } from '@/data/buildings.mock';
+// import { mockBuildings } from '@/data/buildings.mock';
 import { useMapStore } from '@/lib/mapState';
 import { MapPin, Navigation, CalendarDays } from 'lucide-react';
 import { CampusMask } from '@/components/maps/CampusMask';
@@ -16,7 +17,7 @@ import { CampusBoundary } from '@/components/maps/CampusBoundary';
 import anime from '@/lib/anime';
 
 const Index = () => {
-  const { center, zoom, selectedBuilding, setSelectedBuilding } = useMapStore();
+  const { center, zoom, setMapInstance } = useMapStore();
   const [directionsResult, setDirectionsResult] = useState<google.maps.DirectionsResult | null>(null);
   const [activeSidebarView, setActiveSidebarView] = useState<'directions' | 'events'>('directions');
 
@@ -72,7 +73,7 @@ const Index = () => {
       duration: 320,
       easing: 'easeOutQuad',
     });
-  }, [activeSidebarView, selectedBuilding]);
+  }, [activeSidebarView]);
 
   return (
     <div className="h-screen w-full flex flex-col">
@@ -92,7 +93,7 @@ const Index = () => {
       <div className="flex-1 flex relative">
         {/* Map */}
         <div className="flex-1 relative">
-          <MapCanvas center={center} zoom={zoom}>
+          <MapCanvas center={center} zoom={zoom} onMapReady={setMapInstance}>
             {directionsResult && (
               <DirectionsRenderer
                 options={{
@@ -108,7 +109,8 @@ const Index = () => {
             <CampusMask />
             <CampusBoundary />
             <BuildingFootprints />
-            <MarkerLayer buildings={mockBuildings} />
+            <BuildingMarkers />
+            <EventMarkers />
           </MapCanvas>
 
           {/* Floating Controls - Bottom Left */}
@@ -167,14 +169,8 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto">
-            <div className="p-6 space-y-6">
-              {selectedBuilding && (
-                <BuildingInfoPanel
-                  building={selectedBuilding}
-                  onClose={() => setSelectedBuilding(undefined)}
-                />
-              )}
+          <div className="flex-1 flex flex-col overflow-hidden">
+            <div className="p-6 overflow-y-auto">
 
               <div ref={contentRef} className="space-y-6">
                 {activeSidebarView === 'directions' ? (
@@ -185,19 +181,17 @@ const Index = () => {
                       onRouteCleared={handleRouteCleared}
                     />
 
-                    {!selectedBuilding && (
-                      <div className="rounded-lg bg-muted p-4 space-y-2">
-                        <h3 className="font-semibold text-sm text-foreground">Quick Start</h3>
-                        <ul className="text-sm text-muted-foreground space-y-1.5">
-                          <li>• Select a starting point in the directions panel</li>
-                          <li>• Click building markers for details</li>
-                          <li>• Use the directions button to add a destination</li>
-                          <li>• Toggle layers to show/hide buildings & events</li>
-                          <li>• Click the target icon to center on your location</li>
-                        </ul>
-                      </div>
-                    )}
-                  </>
+                            <div className="rounded-lg bg-muted p-4 space-y-2">
+                      <h3 className="font-semibold text-sm text-foreground">Quick Start</h3>
+                      <ul className="text-sm text-muted-foreground space-y-1.5">
+                        <li>• Select a starting point in the directions panel</li>
+                        <li>• Click anywhere on the map to see building information</li>
+                        <li>• Use the directions button to add a destination</li>
+                        <li>• Toggle events layer to show/hide campus events</li>
+                        <li>• Click the target icon to center on your location</li>
+                      </ul>
+                    </div>
+                          </>
                 ) : (
                   <EventsPanel />
                 )}
