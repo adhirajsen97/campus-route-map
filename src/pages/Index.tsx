@@ -90,7 +90,7 @@ const Index = () => {
       </header>
 
       {/* Main Content */}
-      <div className="flex-1 flex relative">
+      <div className="flex-1 min-h-0 flex relative">
         {/* Map */}
         <div className="flex-1 relative">
           <MapCanvas center={center} zoom={zoom} onMapReady={setMapInstance}>
@@ -125,7 +125,7 @@ const Index = () => {
         </div>
 
         {/* Right Sidebar */}
-        <div className="w-96 bg-background border-l border-border flex flex-col">
+        <div className="w-96 bg-background border-l border-border flex flex-col min-h-0">
           <div className="border-b border-border/60 bg-background/80 px-6 py-4 backdrop-blur">
             <div className="relative flex gap-2">
               <button
@@ -172,7 +172,12 @@ const Index = () => {
           <div className="flex-1 flex flex-col overflow-hidden">
             <div className="p-6 overflow-y-auto">
 
-              <div ref={contentRef} className="space-y-6">
+              <div
+                ref={contentRef}
+                className={`space-y-6 ${
+                  activeSidebarView === 'events' ? 'flex-1 min-h-0 flex flex-col overflow-hidden' : ''
+                }`}
+              >
                 {activeSidebarView === 'directions' ? (
                   <>
                     <DirectionsPanel
@@ -193,7 +198,9 @@ const Index = () => {
                     </div>
                           </>
                 ) : (
-                  <EventsPanel />
+                  <div className="flex-1 min-h-0 overflow-hidden">
+                    <EventsPanel />
+                  </div>
                 )}
               </div>
             </div>
