@@ -1,31 +1,75 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { format } from 'date-fns';
-import { CalendarSearch, ExternalLink, MapPin, RefreshCw, Search } from 'lucide-react';
+import { CalendarSearch, Check, ChevronsUpDown, ExternalLink, MapPin, RefreshCw, Search } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { cn } from '@/lib/utils';
+import { eventOccursOnDate } from '@/lib/events';
 import { useEvents } from '@/hooks/use-events';
-
-const formatDateForInput = (date: Date) => format(date, 'yyyy-MM-dd');
 
 export const EventsPanel = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [selectedLocation, setSelectedLocation] = useState<string>('all');
+  const [selectedTag, setSelectedTag] = useState<string>('all');
+  const [isLocationOpen, setIsLocationOpen] = useState(false);
+  const [isTagOpen, setIsTagOpen] = useState(false);
   const { data: events = [], isLoading, isError, refetch, isRefetching } = useEvents();
 
-  const uniqueLocations = useMemo(() => (
-    Array.from(
-      new Set(
-        events
-          .map((event) => event.location?.trim())
-          .filter((value): value is string => Boolean(value)),
-      ),
-    ).sort((a, b) => a.localeCompare(b))
-  ), [events]);
+  const uniqueLocations = useMemo(() => {
+    const seen = new Map<string, string>();
+
+    events.forEach((event) => {
+      const location = event.location?.trim();
+      if (!location) {
+        return;
+      }
+
+      const key = location.toLowerCase();
+      if (!seen.has(key)) {
+        seen.set(key, location);
+      }
+    });
+
+    return Array.from(seen.values()).sort((a, b) => a.localeCompare(b));
+  }, [events]);
+
+  const uniqueTags = useMemo(() => {
+    const seen = new Map<string, string>();
+
+    events.forEach((event) => {
+      event.tags?.forEach((tag) => {
+        const normalized = tag.trim();
+        if (normalized.length === 0) {
+          return;
+        }
+
+        const key = normalized.toLowerCase();
+        if (!seen.has(key)) {
+          seen.set(key, normalized);
+        }
+      });
+    });
+
+    return Array.from(seen.values()).sort((a, b) => a.localeCompare(b));
+  }, [events]);
+
+  const normalizedSelectedLocation = selectedLocation === 'all' ? null : selectedLocation.trim().toLowerCase();
+  const normalizedSelectedTag = selectedTag === 'all' ? null : selectedTag.trim().toLowerCase();
+
+  useEffect(() => {
+    if (selectedTag !== 'all' && (!normalizedSelectedTag || !uniqueTags.some((tag) => tag.toLowerCase() === normalizedSelectedTag))) {
+      setSelectedTag('all');
+    }
+
+    if (uniqueTags.length === 0 && isTagOpen) {
+      setIsTagOpen(false);
+    }
+  }, [selectedTag, normalizedSelectedTag, uniqueTags, isTagOpen]);
 
   const filteredEvents = useMemo(() => {
     const normalizedSearch = searchTerm.trim().toLowerCase();
@@ -36,25 +80,27 @@ export const EventsPanel = () => {
           normalizedSearch.length === 0 ||
           event.title.toLowerCase().includes(normalizedSearch) ||
           event.description?.toLowerCase().includes(normalizedSearch) ||
+          event.location?.toLowerCase().includes(normalizedSearch) ||
           event.tags?.some((tag) => tag.toLowerCase().includes(normalizedSearch));
 
-        const matchesDate =
-          selectedDate === '' ||
-          formatDateForInput(event.start) === selectedDate ||
-          formatDateForInput(event.end) === selectedDate;
+        const matchesDate = selectedDate === '' || eventOccursOnDate(event, selectedDate);
 
         const matchesLocation =
-          selectedLocation === 'all' || event.location?.toLowerCase() === selectedLocation.toLowerCase();
+          !normalizedSelectedLocation || event.location?.trim().toLowerCase() === normalizedSelectedLocation;
 
-        return matchesSearch && matchesDate && matchesLocation;
+        const matchesTag =
+          !normalizedSelectedTag || event.tags?.some((tag) => tag.toLowerCase() === normalizedSelectedTag) === true;
+
+        return matchesSearch && matchesDate && matchesLocation && matchesTag;
       })
       .sort((a, b) => a.start.getTime() - b.start.getTime());
-  }, [events, searchTerm, selectedDate, selectedLocation]);
+  }, [events, searchTerm, selectedDate, normalizedSelectedLocation, normalizedSelectedTag]);
 
   const handleResetFilters = () => {
     setSearchTerm('');
     setSelectedDate('');
     setSelectedLocation('all');
+    setSelectedTag('all');
   };
 
   const renderContent = () => {
@@ -133,26 +179,26 @@ export const EventsPanel = () => {
   };
 
   return (
-    <Card className="border-border shadow-md">
-      <CardHeader className="pb-3">
+    <Card className="border-border shadow-md h-full min-h-0 flex flex-col">
+      <CardHeader className="pb-3 flex-shrink-0">
         <CardTitle className="flex items-center gap-2 text-lg">
           <CalendarSearch className="h-5 w-5 text-primary" />
           Campus Events
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="space-y-3">
+      <CardContent className="flex-1 min-h-0 flex flex-col gap-4 overflow-hidden">
+        <div className="flex-shrink-0 space-y-4">
           <div className="relative">
             <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               value={searchTerm}
               onChange={(event) => setSearchTerm(event.target.value)}
-              placeholder="Search events by name or tag"
+              placeholder="Search events by name, location, or tag"
               className="pl-9"
             />
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className="space-y-1">
+          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <div className="space-y-1.5 sm:flex-1 min-w-[200px]">
               <label htmlFor="events-date" className="text-xs font-medium text-muted-foreground">
                 Filter by date
               </label>
@@ -163,23 +209,139 @@ export const EventsPanel = () => {
                 onChange={(event) => setSelectedDate(event.target.value)}
               />
             </div>
-            <div className="space-y-1">
+            <div className="space-y-1.5 sm:flex-1 min-w-[200px]">
               <label htmlFor="events-location" className="text-xs font-medium text-muted-foreground">
                 Filter by location
               </label>
-              <Select value={selectedLocation} onValueChange={setSelectedLocation}>
-                <SelectTrigger id="events-location">
-                  <SelectValue placeholder="All locations" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All locations</SelectItem>
-                  {uniqueLocations.map((location) => (
-                    <SelectItem key={location} value={location}>
-                      {location}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Popover open={isLocationOpen} onOpenChange={setIsLocationOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    id="events-location"
+                    variant="outline"
+                    role="combobox"
+                    aria-expanded={isLocationOpen}
+                    className="w-full justify-between gap-2"
+                  >
+                    {selectedLocation === 'all' ? 'All locations' : selectedLocation}
+                    <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent
+                  className="p-0 w-[260px] sm:w-[320px]"
+                  align="start"
+                  sideOffset={8}
+                  style={{ width: 'var(--radix-popover-trigger-width, 260px)' }}
+                >
+                  <Command>
+                    <CommandInput placeholder="Search locations..." />
+                    <CommandList>
+                      <CommandEmpty>No locations found.</CommandEmpty>
+                      <CommandGroup>
+                        <CommandItem
+                          value="all"
+                          onSelect={() => {
+                            setSelectedLocation('all');
+                            setIsLocationOpen(false);
+                          }}
+                        >
+                          <Check className={cn('mr-2 h-4 w-4', selectedLocation === 'all' ? 'opacity-100' : 'opacity-0')} />
+                          All locations
+                        </CommandItem>
+                        {uniqueLocations.map((location) => (
+                          <CommandItem
+                            key={location}
+                            value={location}
+                            onSelect={() => {
+                              setSelectedLocation(location);
+                              setIsLocationOpen(false);
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                'mr-2 h-4 w-4',
+                                normalizedSelectedLocation &&
+                                  location.toLowerCase() === normalizedSelectedLocation
+                                  ? 'opacity-100'
+                                  : 'opacity-0',
+                              )}
+                            />
+                            {location}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
+            </div>
+            <div className="space-y-1.5 sm:flex-1 min-w-[200px]">
+              <label htmlFor="events-tag" className="text-xs font-medium text-muted-foreground">
+                Filter by tag
+              </label>
+              <Popover open={isTagOpen} onOpenChange={setIsTagOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    id="events-tag"
+                    variant="outline"
+                    role="combobox"
+                    aria-expanded={isTagOpen}
+                    className="w-full justify-between gap-2"
+                    disabled={uniqueTags.length === 0}
+                  >
+                    {selectedTag === 'all'
+                      ? uniqueTags.length === 0
+                        ? 'No tags available'
+                        : 'All tags'
+                      : selectedTag}
+                    <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent
+                  className="p-0 w-[260px] sm:w-[320px]"
+                  align="start"
+                  sideOffset={8}
+                  style={{ width: 'var(--radix-popover-trigger-width, 260px)' }}
+                >
+                  <Command>
+                    <CommandInput placeholder="Search tags..." />
+                    <CommandList>
+                      <CommandEmpty>No tags found.</CommandEmpty>
+                      <CommandGroup>
+                        <CommandItem
+                          value="all"
+                          onSelect={() => {
+                            setSelectedTag('all');
+                            setIsTagOpen(false);
+                          }}
+                        >
+                          <Check className={cn('mr-2 h-4 w-4', selectedTag === 'all' ? 'opacity-100' : 'opacity-0')} />
+                          All tags
+                        </CommandItem>
+                        {uniqueTags.map((tag) => (
+                          <CommandItem
+                            key={tag}
+                            value={tag}
+                            onSelect={() => {
+                              setSelectedTag(tag);
+                              setIsTagOpen(false);
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                'mr-2 h-4 w-4',
+                                normalizedSelectedTag && tag.toLowerCase() === normalizedSelectedTag
+                                  ? 'opacity-100'
+                                  : 'opacity-0',
+                              )}
+                            />
+                            {tag}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
             </div>
           </div>
           <div className="flex justify-end">
@@ -187,18 +349,23 @@ export const EventsPanel = () => {
               variant="ghost"
               size="sm"
               onClick={handleResetFilters}
-              disabled={!searchTerm && !selectedDate && selectedLocation === 'all'}
+              disabled={
+                !searchTerm &&
+                !selectedDate &&
+                selectedLocation === 'all' &&
+                selectedTag === 'all'
+              }
             >
               Reset filters
             </Button>
           </div>
         </div>
 
-        <ScrollArea className="max-h-[420px] pr-4">
-          <div className="space-y-3">
-            {renderContent()}
+        <div className="flex-1 min-h-0 overflow-hidden">
+          <div className="h-full overflow-y-auto pr-1 sm:pr-2">
+            <div className="space-y-3 pr-3 sm:pr-4">{renderContent()}</div>
           </div>
-        </ScrollArea>
+        </div>
       </CardContent>
     </Card>
   );

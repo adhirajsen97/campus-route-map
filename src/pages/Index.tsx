@@ -3,6 +3,7 @@ import { DirectionsRenderer } from '@react-google-maps/api';
 import { MapCanvas } from '@/components/maps/MapCanvas';
 import { DirectionsPanel } from '@/components/maps/DirectionsPanel';
 import { MarkerLayer } from '@/components/maps/MarkerLayer';
+import { EventsMarkerLayer } from '@/components/maps/EventsMarkerLayer';
 import { BuildingFootprints } from '@/components/maps/BuildingFootprints';
 import { GeolocateButton } from '@/components/maps/GeolocateButton';
 import { LayersToggle } from '@/components/maps/LayersToggle';
@@ -89,7 +90,7 @@ const Index = () => {
       </header>
 
       {/* Main Content */}
-      <div className="flex-1 flex relative">
+      <div className="flex-1 min-h-0 flex relative">
         {/* Map */}
         <div className="flex-1 relative">
           <MapCanvas center={center} zoom={zoom}>
@@ -109,6 +110,7 @@ const Index = () => {
             <CampusBoundary />
             <BuildingFootprints />
             <MarkerLayer buildings={mockBuildings} />
+            <EventsMarkerLayer buildings={mockBuildings} />
           </MapCanvas>
 
           {/* Floating Controls - Bottom Left */}
@@ -123,7 +125,7 @@ const Index = () => {
         </div>
 
         {/* Right Sidebar */}
-        <div className="w-96 bg-background border-l border-border flex flex-col">
+        <div className="w-96 bg-background border-l border-border flex flex-col min-h-0">
           <div className="border-b border-border/60 bg-background/80 px-6 py-4 backdrop-blur">
             <div className="relative flex gap-2">
               <button
@@ -167,16 +169,31 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto">
-            <div className="p-6 space-y-6">
+          <div
+            className={`flex-1 min-h-0 bg-background/70 backdrop-blur supports-[backdrop-filter]:bg-background/60 ${
+              activeSidebarView === 'events' ? 'overflow-hidden' : 'overflow-y-auto'
+            }`}
+          >
+            <div
+              className={`p-6 space-y-6 ${
+                activeSidebarView === 'events' ? 'h-full min-h-0 flex flex-col overflow-hidden' : ''
+              }`}
+            >
               {selectedBuilding && (
-                <BuildingInfoPanel
-                  building={selectedBuilding}
-                  onClose={() => setSelectedBuilding(undefined)}
-                />
+                <div className="flex-shrink-0">
+                  <BuildingInfoPanel
+                    building={selectedBuilding}
+                    onClose={() => setSelectedBuilding(undefined)}
+                  />
+                </div>
               )}
 
-              <div ref={contentRef} className="space-y-6">
+              <div
+                ref={contentRef}
+                className={`space-y-6 ${
+                  activeSidebarView === 'events' ? 'flex-1 min-h-0 flex flex-col overflow-hidden' : ''
+                }`}
+              >
                 {activeSidebarView === 'directions' ? (
                   <>
                     <DirectionsPanel
@@ -199,7 +216,9 @@ const Index = () => {
                     )}
                   </>
                 ) : (
-                  <EventsPanel />
+                  <div className="flex-1 min-h-0 overflow-hidden">
+                    <EventsPanel />
+                  </div>
                 )}
               </div>
             </div>
