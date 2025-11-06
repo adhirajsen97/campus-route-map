@@ -12,8 +12,8 @@ export const LayersToggle = () => {
 
   return (
     <Card className="border-border shadow-md">
-      <CardContent className="pt-6">
-        <div className="flex items-center justify-between">
+      <CardContent className="p-3">
+        <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <Calendar className="h-4 w-4 text-accent" />
             <Label htmlFor="events" className="text-sm font-medium cursor-pointer">

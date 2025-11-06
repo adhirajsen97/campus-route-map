@@ -119,7 +119,7 @@ const Index = () => {
           </div>
 
           {/* Floating Layers Toggle - Top Right */}
-          <div className="absolute top-6 right-6 z-10">
+          <div className="absolute top-20 right-3 z-10">
             <LayersToggle />
           </div>
         </div>
