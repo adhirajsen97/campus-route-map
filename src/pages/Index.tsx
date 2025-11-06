@@ -170,13 +170,13 @@ const Index = () => {
           </div>
 
           <div
-            className={`flex-1 bg-background/70 backdrop-blur supports-[backdrop-filter]:bg-background/60 ${
+            className={`flex-1 min-h-0 bg-background/70 backdrop-blur supports-[backdrop-filter]:bg-background/60 ${
               activeSidebarView === 'events' ? 'overflow-hidden' : 'overflow-y-auto'
             }`}
           >
             <div
               className={`p-6 space-y-6 ${
-                activeSidebarView === 'events' ? 'h-full flex flex-col overflow-hidden' : ''
+                activeSidebarView === 'events' ? 'h-full min-h-0 flex flex-col overflow-hidden' : ''
               }`}
             >
               {selectedBuilding && (
@@ -191,7 +191,7 @@ const Index = () => {
               <div
                 ref={contentRef}
                 className={`space-y-6 ${
-                  activeSidebarView === 'events' ? 'flex-1 flex flex-col overflow-hidden' : ''
+                  activeSidebarView === 'events' ? 'flex-1 min-h-0 flex flex-col overflow-hidden' : ''
                 }`}
               >
                 {activeSidebarView === 'directions' ? (
@@ -216,7 +216,7 @@ const Index = () => {
                     )}
                   </>
                 ) : (
-                  <div className="flex-1 overflow-hidden">
+                  <div className="flex-1 min-h-0 overflow-hidden">
                     <EventsPanel />
                   </div>
                 )}
