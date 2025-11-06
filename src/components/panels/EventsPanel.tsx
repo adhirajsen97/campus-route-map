@@ -179,15 +179,15 @@ export const EventsPanel = () => {
   };
 
   return (
-    <Card className="border-border shadow-md">
+    <Card className="border-border shadow-md h-full flex flex-col">
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center gap-2 text-lg">
           <CalendarSearch className="h-5 w-5 text-primary" />
           Campus Events
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="space-y-4">
+      <CardContent className="flex-1 space-y-4 overflow-hidden">
+        <div className="space-y-4 flex-shrink-0">
           <div className="relative">
             <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
@@ -361,9 +361,9 @@ export const EventsPanel = () => {
           </div>
         </div>
 
-        <div className="max-h-[420px] overflow-y-auto pr-1 sm:pr-2">
-          <div className="space-y-3 pr-3 sm:pr-4">
-            {renderContent()}
+        <div className="flex-1 overflow-hidden">
+          <div className="h-full overflow-y-auto pr-1 sm:pr-2">
+            <div className="space-y-3 pr-3 sm:pr-4">{renderContent()}</div>
           </div>
         </div>
       </CardContent>
