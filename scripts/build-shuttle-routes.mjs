@@ -3,13 +3,14 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Papa from 'papaparse';
 
-type CsvRow = string[];
+/** @typedef {string[]} CsvRow */
 
-type StopCoordinate = {
-  lat: number;
-  lng: number;
-  name?: string;
-};
+/**
+ * @typedef StopCoordinate
+ * @property {number} lat
+ * @property {number} lng
+ * @property {string} [name]
+ */
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,7 +21,7 @@ const lookupPath = path.join(projectRoot, 'data', 'shuttle-stop-locations.json')
 const outputPath = path.join(projectRoot, 'src', 'data', 'shuttleRoutes.ts');
 
 const rawCsv = readFileSync(csvPath, 'utf8');
-const parsed = Papa.parse<CsvRow>(rawCsv, { header: false, skipEmptyLines: true });
+const parsed = Papa.parse(rawCsv, { header: false, skipEmptyLines: true });
 
 if (parsed.errors.length > 0) {
   const formatted = parsed.errors.map((error) => `${error.message} (row ${error.row})`).join('\n');
@@ -32,11 +33,10 @@ if (!headerRow || headerRow.length < 18) {
   throw new Error('Unexpected shuttle routes CSV header shape.');
 }
 
-const stopCoordinates: Record<string, StopCoordinate> = JSON.parse(
-  readFileSync(lookupPath, 'utf8')
-);
+/** @type {Record<string, StopCoordinate>} */
+const stopCoordinates = JSON.parse(readFileSync(lookupPath, 'utf8'));
 
-const normalizeStopId = (name: string): string =>
+const normalizeStopId = (name) =>
   name
     .normalize('NFD')
     .replace(/\p{Diacritic}/gu, '')
@@ -49,19 +49,19 @@ const normalizeStopId = (name: string): string =>
     .replace(/^-+|-+$/g, '')
     .toLowerCase();
 
-const cleanString = (value?: string | null): string | undefined => {
+const cleanString = (value) => {
   if (!value) return undefined;
   const trimmed = value.trim();
   return trimmed.length > 0 ? trimmed : undefined;
 };
 
-const parseBoolean = (value?: string | null): boolean => {
+const parseBoolean = (value) => {
   if (!value) return false;
   const normalized = value.trim().toLowerCase();
   return normalized === 'true' || normalized === 'yes';
 };
 
-const parseDelimited = (value: string | undefined, delimiter: RegExp): string[] => {
+const parseDelimited = (value, delimiter) => {
   if (!value) return [];
   return value
     .split(delimiter)
@@ -69,33 +69,32 @@ const parseDelimited = (value: string | undefined, delimiter: RegExp): string[] 
     .filter((segment) => segment.length > 0);
 };
 
-type RouteAccumulator = {
-  code: string;
-  name: string;
-  color: string;
-  service: {
-    label: string;
-    days: string;
-    timeZone: string;
-    start: string;
-    end: string;
-  };
-  stops: {
-    id: string;
-    name: string;
-    sequence: number;
-    lat: number;
-    lng: number;
-    address?: string;
-    isTransferHub: boolean;
-    transfersTo: string[];
-    departurePattern?: string;
-    departureTimes?: string[];
-    notes?: string;
-  }[];
-};
+/** @typedef {ReturnType<typeof createRouteAccumulator>} RouteAccumulator */
 
-const routes = new Map<string, RouteAccumulator>();
+const createRouteAccumulator = ({
+  routeCode,
+  routeName,
+  routeColor,
+  serviceLabel,
+  serviceDays,
+  serviceTz,
+  serviceStart,
+  serviceEnd,
+}) => ({
+  code: routeCode,
+  name: routeName,
+  color: routeColor,
+  service: {
+    label: serviceLabel,
+    days: serviceDays,
+    timeZone: serviceTz,
+    start: serviceStart,
+    end: serviceEnd,
+  },
+  stops: [],
+});
+
+const routes = new Map();
 
 for (const row of dataRows) {
   if (!row || row.length === 0) {
@@ -158,22 +157,19 @@ for (const row of dataRows) {
   let route = routes.get(routeCode);
 
   if (!route) {
-    route = {
-      code: routeCode,
-      name: routeName,
-      color: routeColor,
-      service: {
-        label: serviceLabel,
-        days: serviceDays,
-        timeZone: serviceTz,
-        start: serviceStart,
-        end: serviceEnd,
-      },
-      stops: [],
-    };
+    route = createRouteAccumulator({
+      routeCode,
+      routeName,
+      routeColor,
+      serviceLabel,
+      serviceDays,
+      serviceTz,
+      serviceStart,
+      serviceEnd,
+    });
     routes.set(routeCode, route);
   } else {
-    const inconsistentFields: string[] = [];
+    const inconsistentFields = [];
     if (route.name !== routeName) inconsistentFields.push('route_name');
     if (route.color !== routeColor) inconsistentFields.push('route_color');
     if (route.service.label !== serviceLabel) inconsistentFields.push('service_label');
@@ -183,9 +179,7 @@ for (const row of dataRows) {
     if (route.service.end !== serviceEnd) inconsistentFields.push('service_end');
 
     if (inconsistentFields.length > 0) {
-      throw new Error(
-        `Route metadata mismatch for ${routeCode}: ${inconsistentFields.join(', ')}.`
-      );
+      throw new Error(`Route metadata mismatch for ${routeCode}: ${inconsistentFields.join(', ')}.`);
     }
   }
 
@@ -221,7 +215,7 @@ const orderedRoutes = Array.from(routes.values())
   }))
   .sort((a, b) => a.code.localeCompare(b.code));
 
-const fileHeader = `// This file is auto-generated by scripts/build-shuttle-routes.ts.\n` +
+const fileHeader = `// This file is auto-generated by scripts/build-shuttle-routes.mjs.\n` +
   `// Do not edit this file directly. Update data/shuttle_routes_all.csv instead and\n` +
   `// run \`npm run build:shuttle-routes\`.\n\n`;
 
