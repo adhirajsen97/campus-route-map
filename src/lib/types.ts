@@ -74,5 +74,8 @@ export interface MapState {
   center: { lat: number; lng: number };
   zoom: number;
   showEvents: boolean;
+  routeVisibility: Record<string, boolean>;
   mapInstance: google.maps.Map | null;
+  hoveredStopId: string | null;
+  selectedStopId: string | null;
 }

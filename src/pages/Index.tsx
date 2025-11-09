@@ -7,6 +7,7 @@ import { BuildingMarkers } from '@/components/maps/BuildingMarkers';
 import { EventMarkers } from '@/components/maps/EventMarkers';
 import { GeolocateButton } from '@/components/maps/GeolocateButton';
 import { LayersToggle } from '@/components/maps/LayersToggle';
+import { ShuttleRoutesLayer } from '@/components/maps/ShuttleRoutesLayer';
 // import { BuildingInfoPanel } from '@/components/panels/BuildingInfoPanel';
 import { EventsPanel } from '@/components/panels/EventsPanel';
 // import { mockBuildings } from '@/data/buildings.mock';
@@ -109,6 +110,7 @@ const Index = () => {
             <CampusMask />
             <CampusBoundary />
             <BuildingFootprints />
+            <ShuttleRoutesLayer />
             <BuildingMarkers />
             <EventMarkers />
           </MapCanvas>
