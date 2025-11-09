@@ -25,6 +25,12 @@ export const useMapStore = create<MapStore>((set) => ({
   setMapInstance: (map) => set({ mapInstance: map }),
   toggleEvents: () => set((state) => ({ showEvents: !state.showEvents })),
   toggleShuttles: () => set((state) => ({ showShuttles: !state.showShuttles })),
-  setHoveredStopId: (stopId) => set({ hoveredStopId: stopId }),
-  setSelectedStopId: (stopId) => set({ selectedStopId: stopId }),
+  setHoveredStopId: (stopId) =>
+    set((state) =>
+      state.hoveredStopId === stopId ? state : { hoveredStopId: stopId }
+    ),
+  setSelectedStopId: (stopId) =>
+    set((state) =>
+      state.selectedStopId === stopId ? state : { selectedStopId: stopId }
+    ),
 }));
