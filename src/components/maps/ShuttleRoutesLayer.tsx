@@ -26,10 +26,21 @@ export const ShuttleRoutesLayer = () => {
 
   useEffect(() => {
     if (!showShuttles) {
-      setHoveredStopId(null);
-      setSelectedStopId(null);
+      if (hoveredStopId !== null) {
+        setHoveredStopId(null);
+      }
+
+      if (selectedStopId !== null) {
+        setSelectedStopId(null);
+      }
     }
-  }, [showShuttles, setHoveredStopId, setSelectedStopId]);
+  }, [
+    showShuttles,
+    hoveredStopId,
+    selectedStopId,
+    setHoveredStopId,
+    setSelectedStopId,
+  ]);
 
   useEffect(() => {
     return () => {
