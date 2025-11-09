@@ -5,6 +5,7 @@ import {
   Marker,
   Polyline,
 } from '@react-google-maps/api';
+
 import { shuttleRoutes } from '@/data/shuttleRoutes';
 import { useMapStore } from '@/lib/mapState';
 import type { ShuttleRoute, ShuttleStop } from '@/lib/types';
@@ -15,7 +16,7 @@ interface StopEntry {
 }
 
 export const ShuttleRoutesLayer = () => {
-  const showShuttles = useMapStore((state) => state.showShuttles);
+  const routeVisibility = useMapStore((state) => state.routeVisibility);
   const hoveredStopId = useMapStore((state) => state.hoveredStopId);
   const selectedStopId = useMapStore((state) => state.selectedStopId);
   const setHoveredStopId = useMapStore((state) => state.setHoveredStopId);
@@ -25,8 +26,14 @@ export const ShuttleRoutesLayer = () => {
   >({});
   const pendingRoutesRef = useRef(new Set<string>());
 
+  const visibleRoutes = useMemo(
+    () => shuttleRoutes.filter((route) => routeVisibility[route.code]),
+    [routeVisibility]
+  );
+  const hasVisibleRoutes = visibleRoutes.length > 0;
+
   useEffect(() => {
-    if (!showShuttles) {
+    if (!hasVisibleRoutes) {
       const { hoveredStopId: currentHover, selectedStopId: currentSelected } =
         useMapStore.getState();
 
@@ -38,7 +45,7 @@ export const ShuttleRoutesLayer = () => {
         setSelectedStopId(null);
       }
     }
-  }, [showShuttles, setHoveredStopId, setSelectedStopId]);
+  }, [hasVisibleRoutes, setHoveredStopId, setSelectedStopId]);
 
   useEffect(() => {
     return () => {
@@ -71,7 +78,9 @@ export const ShuttleRoutesLayer = () => {
       });
     });
 
-    return Array.from(map.values()).sort((a, b) => a.stop.name.localeCompare(b.stop.name));
+    return Array.from(map.values()).sort((a, b) =>
+      a.stop.name.localeCompare(b.stop.name)
+    );
   }, []);
 
   const selectedStopEntry = useMemo(() => {
@@ -80,13 +89,53 @@ export const ShuttleRoutesLayer = () => {
   }, [selectedStopId, stopEntries]);
 
   useEffect(() => {
-    if (!showShuttles || typeof google === 'undefined') {
+    if (!hoveredStopId) {
+      return;
+    }
+
+    const entry = stopEntries.find((stopEntry) => stopEntry.stop.id === hoveredStopId);
+    if (!entry) {
+      return;
+    }
+
+    const hasActiveRoute = entry.routes.some((route) => routeVisibility[route.code]);
+    if (!hasActiveRoute) {
+      setHoveredStopId(null);
+    }
+  }, [hoveredStopId, routeVisibility, setHoveredStopId, stopEntries]);
+
+  useEffect(() => {
+    if (!selectedStopId) {
+      return;
+    }
+
+    const entry = stopEntries.find((stopEntry) => stopEntry.stop.id === selectedStopId);
+    if (!entry) {
+      return;
+    }
+
+    const hasActiveRoute = entry.routes.some((route) => routeVisibility[route.code]);
+    if (!hasActiveRoute) {
+      setSelectedStopId(null);
+    }
+  }, [routeVisibility, selectedStopId, setSelectedStopId, stopEntries]);
+
+  const activeSelectedRoutes = useMemo(() => {
+    if (!selectedStopEntry) {
+      return [] as ShuttleRoute[];
+    }
+
+    return selectedStopEntry.routes.filter((route) => routeVisibility[route.code]);
+  }, [routeVisibility, selectedStopEntry]);
+
+  useEffect(() => {
+    if (!hasVisibleRoutes || typeof google === 'undefined') {
       return;
     }
 
     const pendingRoutes = pendingRoutesRef.current;
 
-    const routesToFetch = shuttleRoutes.filter((route) => {
+    const routesToFetch = visibleRoutes.filter((route) => {
       if (route.stops.length < 2) return false;
       if (directionsByRoute[route.code]) return false;
       if (pendingRoutes.has(route.code)) return false;
@@ -147,15 +196,15 @@ export const ShuttleRoutesLayer = () => {
         pendingRoutes.delete(route.code);
       });
     };
-  }, [showShuttles, directionsByRoute]);
+  }, [hasVisibleRoutes, visibleRoutes, directionsByRoute]);
 
-  if (!showShuttles || typeof google === 'undefined') {
+  if (!hasVisibleRoutes || typeof google === 'undefined') {
     return null;
   }
 
   return (
     <>
-      {shuttleRoutes.map((route) => {
+      {visibleRoutes.map((route) => {
         const directions = directionsByRoute[route.code];
         const fallbackPath = route.stops.map((stop) => ({
           lat: stop.lat,
@@ -194,9 +243,14 @@ export const ShuttleRoutesLayer = () => {
       })}
 
       {stopEntries.map(({ stop, routes }) => {
+        const activeRoutesForStop = routes.filter((route) => routeVisibility[route.code]);
+        if (activeRoutesForStop.length === 0) {
+          return null;
+        }
+
         const isHovered = hoveredStopId === stop.id;
         const isSelected = selectedStopId === stop.id;
-        const primaryColor = routes[0]?.color ?? '#2563eb';
+        const primaryColor = activeRoutesForStop[0]?.color ?? '#2563eb';
 
         const icon: google.maps.Symbol = {
           path: google.maps.SymbolPath.CIRCLE,
@@ -217,12 +271,14 @@ export const ShuttleRoutesLayer = () => {
             onMouseOver={() => setHoveredStopId(stop.id)}
             onMouseOut={() => setHoveredStopId(null)}
             onClick={() => setSelectedStopId(stop.id)}
-            title={`${stop.name} • ${routes.map((route) => route.code).join(', ')}`}
+            title={`${stop.name} • ${activeRoutesForStop
+              .map((route) => route.code)
+              .join(', ')}`}
           />
         );
       })}
 
-      {selectedStopEntry && (
+      {selectedStopEntry && activeSelectedRoutes.length > 0 && (
         <InfoWindow
           position={{
             lat: selectedStopEntry.stop.lat,
@@ -251,7 +307,7 @@ export const ShuttleRoutesLayer = () => {
                 Routes
               </p>
               <div className="flex flex-wrap gap-1">
-                {selectedStopEntry.routes.map((route) => (
+                {activeSelectedRoutes.map((route) => (
                   <span
                     key={route.code}
                     className="rounded-full px-2 py-0.5 text-xs font-medium text-primary-foreground"
