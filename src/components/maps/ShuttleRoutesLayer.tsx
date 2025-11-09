@@ -1,5 +1,10 @@
-import { Fragment, useEffect, useMemo } from 'react';
-import { InfoWindow, Marker, Polyline } from '@react-google-maps/api';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  DirectionsRenderer,
+  InfoWindow,
+  Marker,
+  Polyline,
+} from '@react-google-maps/api';
 import { shuttleRoutes } from '@/data/shuttleRoutes';
 import { useMapStore } from '@/lib/mapState';
 import type { ShuttleRoute, ShuttleStop } from '@/lib/types';
@@ -15,6 +20,10 @@ export const ShuttleRoutesLayer = () => {
   const selectedStopId = useMapStore((state) => state.selectedStopId);
   const setHoveredStopId = useMapStore((state) => state.setHoveredStopId);
   const setSelectedStopId = useMapStore((state) => state.setSelectedStopId);
+  const [directionsByRoute, setDirectionsByRoute] = useState<
+    Record<string, google.maps.DirectionsResult>
+  >({});
+  const pendingRoutesRef = useRef(new Set<string>());
 
   useEffect(() => {
     if (!showShuttles) {
@@ -70,6 +79,76 @@ export const ShuttleRoutesLayer = () => {
     return stopEntries.find((entry) => entry.stop.id === selectedStopId) ?? null;
   }, [selectedStopId, stopEntries]);
 
+  useEffect(() => {
+    if (!showShuttles || typeof google === 'undefined') {
+      return;
+    }
+
+    const pendingRoutes = pendingRoutesRef.current;
+
+    const routesToFetch = shuttleRoutes.filter((route) => {
+      if (route.stops.length < 2) return false;
+      if (directionsByRoute[route.code]) return false;
+      if (pendingRoutes.has(route.code)) return false;
+      return true;
+    });
+
+    if (routesToFetch.length === 0) {
+      return;
+    }
+
+    let isCancelled = false;
+    const directionsService = new google.maps.DirectionsService();
+
+    routesToFetch.forEach((route) => {
+      pendingRoutes.add(route.code);
+
+      const originStop = route.stops[0];
+      const destinationStop = route.stops[route.stops.length - 1];
+      const waypointStops = route.stops.slice(1, -1);
+
+      const request: google.maps.DirectionsRequest = {
+        origin: { lat: originStop.lat, lng: originStop.lng },
+        destination: { lat: destinationStop.lat, lng: destinationStop.lng },
+        waypoints: waypointStops.map((stop) => ({
+          location: { lat: stop.lat, lng: stop.lng },
+          stopover: true,
+        })),
+        travelMode: google.maps.TravelMode.DRIVING,
+        optimizeWaypoints: false,
+        provideRouteAlternatives: false,
+      };
+
+      directionsService.route(request, (result, status) => {
+        pendingRoutes.delete(route.code);
+
+        if (isCancelled) {
+          return;
+        }
+
+        if (status === google.maps.DirectionsStatus.OK && result) {
+          setDirectionsByRoute((prev) => ({
+            ...prev,
+            [route.code]: result,
+          }));
+        } else {
+          console.warn(
+            `Failed to fetch directions for shuttle route ${route.code}:`,
+            status,
+            result
+          );
+        }
+      });
+    });
+
+    return () => {
+      isCancelled = true;
+      routesToFetch.forEach((route) => {
+        pendingRoutes.delete(route.code);
+      });
+    };
+  }, [showShuttles, directionsByRoute]);
+
   if (!showShuttles || typeof google === 'undefined') {
     return null;
   }
@@ -77,19 +156,39 @@ export const ShuttleRoutesLayer = () => {
   return (
     <>
       {shuttleRoutes.map((route) => {
-        const path = route.stops.map((stop) => ({ lat: stop.lat, lng: stop.lng }));
+        const directions = directionsByRoute[route.code];
+        const fallbackPath = route.stops.map((stop) => ({
+          lat: stop.lat,
+          lng: stop.lng,
+        }));
 
         return (
           <Fragment key={route.code}>
-            <Polyline
-              path={path}
-              options={{
-                strokeColor: route.color,
-                strokeOpacity: 0.85,
-                strokeWeight: 4,
-                zIndex: 30,
-              }}
-            />
+            {directions ? (
+              <DirectionsRenderer
+                directions={directions}
+                options={{
+                  suppressMarkers: true,
+                  preserveViewport: true,
+                  polylineOptions: {
+                    strokeColor: route.color,
+                    strokeOpacity: 0.9,
+                    strokeWeight: 4,
+                    zIndex: 30,
+                  },
+                }}
+              />
+            ) : (
+              <Polyline
+                path={fallbackPath}
+                options={{
+                  strokeColor: route.color,
+                  strokeOpacity: 0.5,
+                  strokeWeight: 3,
+                  zIndex: 20,
+                }}
+              />
+            )}
           </Fragment>
         );
       })}
