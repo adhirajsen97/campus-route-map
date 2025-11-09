@@ -10,31 +10,28 @@ interface StopEntry {
 }
 
 export const ShuttleRoutesLayer = () => {
-  const {
-    showShuttles,
-    hoveredStopId,
-    setHoveredStopId,
-    selectedStopId,
-    setSelectedStopId,
-  } = useMapStore((state) => ({
-    showShuttles: state.showShuttles,
-    hoveredStopId: state.hoveredStopId,
-    setHoveredStopId: state.setHoveredStopId,
-    selectedStopId: state.selectedStopId,
-    setSelectedStopId: state.setSelectedStopId,
-  }));
+  const showShuttles = useMapStore((state) => state.showShuttles);
+  const hoveredStopId = useMapStore((state) => state.hoveredStopId);
+  const selectedStopId = useMapStore((state) => state.selectedStopId);
+  const setHoveredStopId = useMapStore((state) => state.setHoveredStopId);
+  const setSelectedStopId = useMapStore((state) => state.setSelectedStopId);
 
   useEffect(() => {
     if (!showShuttles) {
-      if (hoveredStopId !== null) {
+      const { hoveredStopId: currentHover, selectedStopId: currentSelected } =
+        useMapStore.getState();
+
+      if (currentHover !== null) {
         setHoveredStopId(null);
       }
 
-      if (selectedStopId !== null) {
+      if (currentSelected !== null) {
         setSelectedStopId(null);
       }
     }
+  }, [showShuttles, setHoveredStopId, setSelectedStopId]);
 
+  useEffect(() => {
     return () => {
       const { hoveredStopId: currentHover, selectedStopId: currentSelected } =
         useMapStore.getState();
@@ -47,13 +44,7 @@ export const ShuttleRoutesLayer = () => {
         setSelectedStopId(null);
       }
     };
-  }, [
-    showShuttles,
-    hoveredStopId,
-    selectedStopId,
-    setHoveredStopId,
-    setSelectedStopId,
-  ]);
+  }, [setHoveredStopId, setSelectedStopId]);
 
   const stopEntries = useMemo<StopEntry[]>(() => {
     const map = new Map<string, StopEntry>();
