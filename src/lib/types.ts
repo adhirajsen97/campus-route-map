@@ -27,6 +27,34 @@ export interface CampusEvent {
   tags?: string[];
 }
 
+export interface ShuttleStop {
+  id: string;
+  name: string;
+  sequence: number;
+  lat: number;
+  lng: number;
+  address?: string;
+  isTransferHub: boolean;
+  transfersTo: string[];
+  departurePattern?: string;
+  departureTimes?: string[];
+  notes?: string;
+}
+
+export interface ShuttleRoute {
+  code: string;
+  name: string;
+  color: string;
+  service: {
+    label: string;
+    days: string;
+    timeZone: string;
+    start: string;
+    end: string;
+  };
+  stops: ShuttleStop[];
+}
+
 export interface RouteResult {
   distance: string;
   duration: string;

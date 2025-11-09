@@ -55,6 +55,16 @@ A modern, Google Maps-powered campus navigation web app built with React, TypeSc
 
   The scraper writes fresh results to `data/events.json`, which backs the `/api/events` endpoint used by the Events panel.
 
+### Shuttle route data pipeline
+
+- Source schedules live in `data/shuttle_routes_all.csv`. Update that CSV when UTA posts new route times or stop ordering.
+- Geographic coordinates for each stop are curated in `data/shuttle-stop-locations.json`. Add new entries (using the slugified stop id) whenever a new stop appears in the CSV. The build script fails fast if a stop is missing coordinates so you will know immediately when the lookup needs to be updated.
+- Generate the strongly typed TypeScript module with:
+  ```bash
+  npm run build:shuttle-routes
+  ```
+  The command runs automatically before `npm run dev`, `npm run build`, and `npm run preview`, and writes `src/data/shuttleRoutes.ts` which exports a `ShuttleRoute[]` used by the map layer.
+
 ## Project Structure
 
 ```
