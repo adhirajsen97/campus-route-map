@@ -1,315 +1,6 @@
 {
-  "scrapedAt": "2025-11-06T15:36:34.982Z",
+  "scrapedAt": "2025-11-08T22:40:26.951Z",
   "events": [
-    {
-      "id": "50906136009873",
-      "title": "First Gen Graduate Student Celebration - Care Package Pickup",
-      "description": "Each November, the First Generation College Celebration is observed to commemorate the signing of the Higher Education Act (HEA) of 1965 by then-President Lyndon B. Johnson. This act created federal financial aid programs to fund students’ education and made key investments in colleges & universities. Many of the HEA’s programs continue to promote college access, retention, & completion for today’s first-generation college students. Stop by the EDGE Center between November 4-6 from 8 a.m. to 7 p.m. to pick-up your #GraduateFirstGen Care Package! Supplies are limited, so don't delay!",
-      "start": "2025-11-06T14:30:00.000Z",
-      "end": "2025-11-07T01:00:00.000Z",
-      "location": "Science Hall",
-      "url": "https://events.uta.edu/event/first-gen-graduate-student-celebration-care-package-pickup-915",
-      "tags": [],
-      "category": "academic",
-      "lat": 32.733454,
-      "lng": -97.113244
-    },
-    {
-      "id": "50906145266157",
-      "title": "First Gen Graduate Student Celebration - Care Package Pickup",
-      "description": "Each November, the First Generation College Celebration is observed to commemorate the signing of the Higher Education Act (HEA) of 1965 by then-President Lyndon B. Johnson. This act created federal financial aid programs to fund students’ education and made key investments in colleges & universities. Many of the HEA’s programs continue to promote college access, retention, & completion for today’s first-generation college students. Stop by the EDGE Center between November 4-6 from 8 a.m. to 7 p.m. to pick-up your #GraduateFirstGen Care Package! Supplies are limited, so don't delay!",
-      "start": "2025-11-06T14:30:00.000Z",
-      "end": "2025-11-07T01:00:00.000Z",
-      "location": "Science Hall",
-      "url": "https://events.uta.edu/event/first-gen-graduate-student-celebration-care-package-pickup-6887",
-      "tags": [
-        "Campus & Community"
-      ],
-      "category": "social",
-      "lat": 32.733454,
-      "lng": -97.113244
-    },
-    {
-      "id": "50942779136821",
-      "title": "CMAS Community Series Presents:\" La Invasión Mexicana\" by Celso T. Castilho",
-      "description": "The Center for Mexican American Studies Community Series is proud to present \"La Invasión Mexicana: Immigration, La Opinión, & a Latino retelling of the 1994 World Cup,\" with Celso Thomas Castilho. About the Talk: This lecture examines the 1994 FIFA World Cup as a pivotal moment in the cultural and political expression of Latino communities in the United States. Drawing on archival materials from La Opinión, Los Angeles’ leading Spanish-language newspaper, Dr. Celso Thomas Castilho analyzes immigrant experiences, negotiating identity, and asserting cultural agency. This presentation offers a fresh perspective on how Latinos reshaped mainstream narratives during a pivotal moment in U.S. and Mexican history. About the Speaker: Celso Thomas Castilho is an associate professor of history at Vanderbilt University, where he's directed CLACX, the Center for Latin American, Caribbean, and Latinx Studies, since 2021. He has published prize-winning studies on the histories of slavery and abolition in Brazil and across the Atlantic world. He is currently working on a book about Latino culture and politics from the perspective of sports studies. Today's talk comes from his book-in-progress, La gran fiesta: A Latino History of the 1994 World Cup. Coffee and Snacks will be provided. UTA students, faculty, and staff, please RSVP at MAV Engage to help us plan accordingly. This event is open to the public. If you are unable to access Mav Engage (alumni or guests), please don't hesitate to contact monica.lopez@uta.edu to reserve your spot and obtain a parking pass before November 4th. If you need special accommodations or have questions, contact cmas@uta.edu. We are live-streaming through the Facebook CMAS page.",
-      "start": "2025-11-06T18:30:00.000Z",
-      "end": "2025-11-06T20:00:00.000Z",
-      "location": "San Saba Room, University Center",
-      "url": "https://events.uta.edu/event/cmas-community-series-presents-la-invasion-mexicana-by-celso-t-castilho-8271",
-      "tags": [
-        "New",
-        "Talks & Lectures"
-      ],
-      "category": "academic",
-      "lat": 32.731835,
-      "lng": -97.110618
-    },
-    {
-      "id": "50766030320439",
-      "title": "Drone Workshop: Design & Fight",
-      "description": "Learn the in's and out's of a quadcopter drone and how to safely fly them. Come and see some of the drones we have built in the CREAT Studio and get pointed in the right direction to becoming a drone pilot yourself.",
-      "start": "2025-11-06T19:30:00.000Z",
-      "end": "2025-11-07T06:00:00.000Z",
-      "location": "UTA Central Library",
-      "url": "https://events.uta.edu/event/drone-workshop-design-fight",
-      "tags": [
-        "Science & Technology"
-      ],
-      "category": "academic",
-      "lat": null,
-      "lng": null
-    },
-    {
-      "id": "50453830338875",
-      "title": "Espresso with EDGE: WIS International",
-      "description": "Representatives from WIS International, a Mavs EDGE employer, will meet with students in a casual setting to discuss internship opportunities. WIS International is a global leader in inventory management, data collection, and technology innovation, helping businesses improve accuracy, reduce costs, and optimize operations. With over 70 years of experience and a workforce of 20,000+ employees, WIS provides comprehensive inventory solutions for industries such as retail, healthcare, manufacturing, and automotive dealerships.",
-      "start": "2025-11-06T20:00:00.000Z",
-      "end": "2025-11-06T21:00:00.000Z",
-      "location": null,
-      "url": "https://events.uta.edu/event/espresso-with-edge-wis-international",
-      "tags": [
-        "Workshops"
-      ],
-      "category": "academic",
-      "lat": null,
-      "lng": null
-    },
-    {
-      "id": "50849238903300",
-      "title": "Homecoming Tabling",
-      "description": "Come learn about what's in store for Homecoming week. Save the Date for November 9-15 for a week of Maverick Spirit and amazing events.",
-      "start": "2025-11-06T20:00:00.000Z",
-      "end": "2025-11-06T21:00:00.000Z",
-      "location": "UC Mall",
-      "url": "https://events.uta.edu/event/homecoming-tabling-8886",
-      "tags": [
-        "Recreation & Fun"
-      ],
-      "category": "academic",
-      "lat": null,
-      "lng": null
-    },
-    {
-      "id": "49905179278797",
-      "title": "Global Grounds",
-      "description": "Take a chai break! Network with hundreds of Global Mavericks, and get to know more about UTA resources all while enjoying free chai, coffee, and snacks. For accommodations, email globalengagement@uta.edu.",
-      "start": "2025-11-06T22:00:00.000Z",
-      "end": "2025-11-06T23:30:00.000Z",
-      "location": "Palo Duro Lounge, University Center",
-      "url": "https://events.uta.edu/event/global-grounds-857",
-      "tags": [
-        "Campus & Community"
-      ],
-      "category": "social",
-      "lat": 32.731835,
-      "lng": -97.110618
-    },
-    {
-      "id": "51158307326470",
-      "title": "The Real Estate Clinic: Part One",
-      "description": "Join us to learn the essentials of financial modeling and underwriting in real estate! Build valuable skills, gain practical insights, and get familiar with concepts that can help you stand out as you start your career in the industry. No experience is needed. Just come ready to learn skills, meet new people, and grab a slice of pizza!",
-      "start": "2025-11-06T22:00:00.000Z",
-      "end": "2025-11-06T23:00:00.000Z",
-      "location": "COBA Room 245W",
-      "url": "https://events.uta.edu/event/the-real-estate-clinic-part-one",
-      "tags": [
-        "New",
-        "Recreation & Fun"
-      ],
-      "category": "academic",
-      "lat": null,
-      "lng": null
-    },
-    {
-      "id": "51167148396369",
-      "title": "Wellness Workshop",
-      "description": "Join us for a session on breathing practices and the effect they have on the body and mind.",
-      "start": "2025-11-06T23:00:00.000Z",
-      "end": "2025-11-07T01:00:00.000Z",
-      "location": "Commons",
-      "url": "https://events.uta.edu/event/wellness-workshop-2750",
-      "tags": [
-        "New",
-        "Recreation & Fun"
-      ],
-      "category": "academic",
-      "lat": null,
-      "lng": null
-    },
-    {
-      "id": "51153094164254",
-      "title": "Work in Progress | Print & Glass",
-      "description": "Gallery West is pleased to present Work in Progress | Print & Glass, a group exhibition featuring work by Frank Anderson, Sitar Balaban, Celeste Esparza, Verania Gonzalez, Reagan Grunewald, Emely Guerrero, Evelyn Kennedy, Angelica Lopez, Taylor McMillan, Yasmine Muhammad, Tyler Rosenkrantz, and Amy Tigner. The show features work in progress developed in Special Studies: Print & Glass (4392-002), a studio course taught by printmaking faculty Carrie Iverson. The course investigates the experimental intersection between printmaking and glass and its potential for contemporary art practices. Work in Progress | Print & Glass is on view on November 3-7 at Gallery West, located in the Studio Art Center, 810 S. Davis Drive, Arlington, TX. The exhibition's closing reception is on Friday, November 7, from 3–5 p.m. The exhibition and reception are free and open to the public.",
-      "start": "2025-11-07T00:00:00.000Z",
-      "end": "2025-11-07T00:00:00.000Z",
-      "location": "Gallery West",
-      "url": "https://events.uta.edu/event/work-in-progress-print-glass",
-      "tags": [
-        "New",
-        "Arts & Culture"
-      ],
-      "category": "social",
-      "lat": 32.729073,
-      "lng": -97.124497
-    },
-    {
-      "id": "51140616267048",
-      "title": "Goolsby Movie Night",
-      "description": "Join us for a movie night and pumpkin decorating fun and discover what makes the Goolsby Leadership Academy so special! This event is the perfect chance for non-Goolsby students to meet current Goolsby scholars, ask questions, and learn more about the program in a relaxed, fun setting. What to Expect: Halloween movie screening Pumpkin decorating Fun conversation, cards, and games Popcorn, snow cones, and candy galore Opportunities to chat one-on-one with Goolsby students Whether you’re interested in joining Goolsby or just want to enjoy a cozy fall night, come for the fun and stay for the connections!",
-      "start": "2025-11-07T00:00:00.000Z",
-      "end": "2025-11-07T02:30:00.000Z",
-      "location": "Brazos Park",
-      "url": "https://events.uta.edu/event/goolsby-spooktacular-movie-night",
-      "tags": [
-        "New",
-        "Recreation & Fun"
-      ],
-      "category": "academic",
-      "lat": 32.730937,
-      "lng": -97.110735
-    },
-    {
-      "id": "50818347832509",
-      "title": "Saxophone Studio Recital",
-      "description": "Join us for a concert featuring our saxophone students under the direction of Prof. Mike Nguyen. This performance is free and open to the public. It takes place in Irons Recital Hall, FA105, located in the South Section of the Fine Arts Building. The doors will open approximately 30 minutes before the performance time. Please be aware, no food or drink, aside from bottled water, is allowed in the recital hall. Parking is available in the West Campus Garage, and ADA parking is available at the meters on Nedderman Drive in front of Texas Hall. Visit our parking page for more information. This recital will also be live streamed at uta.edu/music/live.php.",
-      "start": "2025-11-07T01:30:00.000Z",
-      "end": "2025-11-06T00:00:00.000Z",
-      "location": "Irons Recital Hall, Fine Arts Building",
-      "url": "https://events.uta.edu/event/saxophone-studio-recital-1905",
-      "tags": [
-        "Arts & Culture"
-      ],
-      "category": "social",
-      "lat": 32.730496,
-      "lng": -97.115139
-    },
-    {
-      "id": "50957336491066",
-      "title": "Archer Fellowship Virtual Interest Session",
-      "description": "The Archer Fellowship Program provides undergraduate students from across the nine institutions of The University of Texas System with the life-changing opportunity to live, learn, and intern in our nation’s capital during the fall or spring semester. While in Washington, D.C., students earn in-residence UTA credit for their coursework and gain hands-on work experience in an internship. Archer Fellows live together near Capitol Hill, experiencing fellowship and signature events that foster lasting friendships and professional connections.",
-      "start": "2025-11-07T18:00:00.000Z",
-      "end": "2025-11-07T19:00:00.000Z",
-      "location": null,
-      "url": "https://events.uta.edu/event/archer-fellowship-interest-session-1694",
-      "tags": [
-        "New",
-        "Information Session"
-      ],
-      "category": "academic",
-      "lat": null,
-      "lng": null
-    },
-    {
-      "id": "51125813466163",
-      "title": "Visualizing Molecular Events in the Brain with Hemogenetic MRI",
-      "description": "Join and register for this Frontiers of Brain Health Lunchtime Lecture. Learn more about hemogenetic MRI tools designed to probe brain function at cell-type and subcellular resolution in this hybrid event at The University of Texas at Dallas.",
-      "start": "2025-11-07T18:00:00.000Z",
-      "end": "2025-11-07T19:00:00.000Z",
-      "location": "Center for BrainHealth in Dallas, Texas",
-      "url": "https://events.uta.edu/event/visualizing-molecular-events-in-the-brain-with-hemogenetic-mri",
-      "tags": [
-        "New",
-        "Information Session"
-      ],
-      "category": "academic",
-      "lat": 32.824832,
-      "lng": -96.847785
-    },
-    {
-      "id": "51073278409336",
-      "title": "Handmade Glass Coaster",
-      "description": "Come make your own glass coaster! Learners will be guided through the foundations of kiln formed glass, the tools and methods used for glass cutting, and how to effectively follow a pre-made glass design. Spots are limited, sign up by filling out this form https://forms.office.com/r/xErCd75ZWJ Closed toed shoes are required.",
-      "start": "2025-11-07T18:30:00.000Z",
-      "end": "2025-11-07T21:30:00.000Z",
-      "location": "FabLab, Central Library",
-      "url": "https://events.uta.edu/event/handmade-glass-coaster-9738",
-      "tags": [
-        "New",
-        "Arts & Culture"
-      ],
-      "category": "social",
-      "lat": 32.729678,
-      "lng": -97.112926
-    },
-    {
-      "id": "51153182285016",
-      "title": "Print as Dialogue: Process, Surface, and Possibility",
-      "description": "In this conversation Emily Friedman, prints curator at the Dallas Museum of Art; artist Lisa Lapinski, currently in residence at the Corsicana Artist and Writer Residency; and Carrie Iverson, artist and faculty member at the UTA Art and Art History Department, explore the evolving language of printmaking across the studio, classroom, and museum. Engaging both historical precedents and contemporary practices, the speakers consider how surfaces function as sites of material impression and intellectual inquiry, registering touch, thought, and time. This event is part of Art & Art History Department's \"Dialogues in Art\" series and is free to attend for everyone.",
-      "start": "2025-11-07T20:00:00.000Z",
-      "end": "2025-11-07T21:00:00.000Z",
-      "location": "Printmaking Studio",
-      "url": "https://events.uta.edu/event/print-as-dialogue-process-surface-and-possibility",
-      "tags": [
-        "New",
-        "Arts & Culture"
-      ],
-      "category": "social",
-      "lat": 32.729073,
-      "lng": -97.124497
-    },
-    {
-      "id": "51025607468542",
-      "title": "Arbor Day Celebration",
-      "description": "Texas Arbor Day honors trees and promotes community involvement in tree planting and care. Taking place in November, this event coincides with the optimal time of year to plant trees in Texas, allowing them to establish roots before the summer heat. Join the Office of Sustainability for a nature walk, exploring trees and identification of leaves. By then end you'll have your own collection of leave prints to keep! This statewide celebration highlights the vital role trees play in creating healthier, more livable communities. Trees clean the air, provide shade, reduce noise, lower energy costs, support wildlife, and improve water quality by reducing runoff and erosion. In both rural and urban areas, they contribute to the well-being of people and the planet.",
-      "start": "2025-11-07T21:00:00.000Z",
-      "end": "2025-11-07T23:00:00.000Z",
-      "location": "Meeting @ Brazos Park",
-      "url": "https://events.uta.edu/event/arbor-day-celebration",
-      "tags": [
-        "New",
-        "Recreation & Fun"
-      ],
-      "category": "academic",
-      "lat": null,
-      "lng": null
-    },
-    {
-      "id": "50601012003948",
-      "title": "Ride of Passage",
-      "description": "Join us for a series of empowering monthly community rides on the last Friday of the month! These group rides unite cyclists of all levels for enjoyable rides through Arlington's streets. By participating, you help promote cycling as a sustainable transportation mode, advocate for bike-friendly infrastructure, and raise road safety awareness. The group rides kick off on campus in front of the Central Library, we'll ride together exploring diverse routes through Arlington's streets.",
-      "start": "2025-11-08T00:00:00.000Z",
-      "end": "2025-11-08T01:00:00.000Z",
-      "location": "UTA Central Library",
-      "url": "https://events.uta.edu/event/ride-of-passage-3837",
-      "tags": [
-        "Recreation & Fun"
-      ],
-      "category": "academic",
-      "lat": null,
-      "lng": null
-    },
-    {
-      "id": "51117656629202",
-      "title": "Women's Basketball vs. Missouri State",
-      "description": "Show your Greek pride at Fraternity & Sorority Life Night, presented by Whataburger! Enjoy a fun evening for all fraternities and sororities as the Mavs take on Missouri State. We'd love to see everyone there! Go MAVS!",
-      "start": "2025-11-08T00:30:00.000Z",
-      "end": "2025-11-07T00:00:00.000Z",
-      "location": "College Park Center",
-      "url": "https://events.uta.edu/event/womens-basketball-vs-missouri-state",
-      "tags": [
-        "New",
-        "Athletics"
-      ],
-      "category": "sports",
-      "lat": 32.73108,
-      "lng": -97.107261
-    },
-    {
-      "id": "50818356967665",
-      "title": "Student Percussion Recital: Ges Leon",
-      "description": "Ges Leon, a student at UTA, will take the stage to share their passion for music with the audience. This recital promises a delightful experience of beautiful melodies and impressive musical talent. This performance is free and open to the public. It takes place in Irons Recital Hall, FA105, located in the South Section of the Fine Arts Building. The doors will open approximately 30 minutes before the performance time. Please be aware that no food or drink, aside from bottled water, is allowed in the recital hall. Parking is available in the West Campus Garage, and ADA parking is available at the meters on Nedderman Drive in front of Texas Hall. Visit our parking page for more information.",
-      "start": "2025-11-08T01:30:00.000Z",
-      "end": "2025-11-07T00:00:00.000Z",
-      "location": "Irons Recital Hall, Fine Arts Building",
-      "url": "https://events.uta.edu/event/student-percussion-recital-ges-leon",
-      "tags": [
-        "Arts & Culture"
-      ],
-      "category": "social",
-      "lat": 32.730496,
-      "lng": -97.115139
-    },
     {
       "id": "50818369238630",
       "title": "Student Percussion Recital: Justin Sumling",
@@ -431,6 +122,22 @@
       "lng": -97.115139
     },
     {
+      "id": "51205678981861",
+      "title": "Light the Night hosted by The Leukemia & Lymphoma Society",
+      "description": "Unite with the Leukemia & Lymphoma Society & Spread Awareness as a community to honor and remember those affected by blood cancers. All community members are invited.",
+      "start": "2025-11-09T22:30:00.000Z",
+      "end": "2025-11-10T01:00:00.000Z",
+      "location": "Trinity Shelter Pavilion: Trinity Park",
+      "url": "https://events.uta.edu/event/light-the-night-hosted-by-the-leukemia-lymphoma-society",
+      "tags": [
+        "New",
+        "Health & Wellness"
+      ],
+      "category": "wellness",
+      "lat": 32.75132,
+      "lng": -97.350179
+    },
+    {
       "id": "49649895677723",
       "title": "Maverick Formal",
       "description": "Join us for a night of elegance, dancing, and fun at Maverick Formal, where students show up and show off not only their outfits but their dance moves. This event is free and open to all students.",
@@ -484,7 +191,6 @@
       "location": "Tierra Verde Golf Club",
       "url": "https://events.uta.edu/event/homecoming-golf-tournament-3565",
       "tags": [
-        "New",
         "Recreation & Fun"
       ],
       "category": "academic",
@@ -549,21 +255,6 @@
         "Recreation & Fun"
       ],
       "category": "academic",
-      "lat": null,
-      "lng": null
-    },
-    {
-      "id": "50693293348793",
-      "title": "Wicked Movie Screening",
-      "description": "The theme for UTA Homecoming 2025 is \"There's No Place Like Homecoming,\" with Oz as an undertone. Defy gravity this Homecoming! Join us on Monday, Nov 10, for a WICKED movie night on the lawn! Sing along to the iconic soundtrack and savor “Wicked” themed popcorn, provided by the Intercultural Student Engagement Center! 👀💚🩷✨ #UTAHomecoming #WickedMovieNight",
-      "start": "2025-11-11T00:00:00.000Z",
-      "end": "2025-11-11T03:00:00.000Z",
-      "location": "Brazos Park",
-      "url": "https://events.uta.edu/event/wicked-movie-screening-a-homecoming-event",
-      "tags": [
-        "Arts & Culture"
-      ],
-      "category": "social",
       "lat": null,
       "lng": null
     },
@@ -847,6 +538,22 @@
       "lng": null
     },
     {
+      "id": "51211385456728",
+      "title": "Maverick Trivia Wedne$day",
+      "description": "Hosted by UTA Ambassadors, Maverick Trivia Wedne$days celebrates our UTA spirit with a fun and interactive way to test your knowledge of all things Maverick. Do you know a lot about UTA? Join us each Wednesday for a chance to showcase your trivia skills. Answer our questions correctly, and you could win a gift card! Occasionally, we’ll mix things up by offering trivia rides on a golf cart around campus, where you can answer questions while enjoying a lift. Participate in Maverick Trivia Wedne$days to engage with your campus community, have fun, and maybe even score a prize!",
+      "start": "2025-11-12T17:00:00.000Z",
+      "end": "2025-11-12T18:00:00.000Z",
+      "location": "UC Mall",
+      "url": "https://events.uta.edu/event/maverick-trivia-wedneday-1111",
+      "tags": [
+        "New",
+        "Recreation & Fun"
+      ],
+      "category": "academic",
+      "lat": null,
+      "lng": null
+    },
+    {
       "id": "50393555014446",
       "title": "Stop. Drop (In). Write. | Graduate Writing Days",
       "description": "Writing is a core aspect of the graduate experience, so why shouldn't writing support be at the center of our efforts to support Maverick graduates? Join us as our EDGE Center graduate assistants lead you through our structured writing days to provide you with the community and tools to boost your academic writing, research development, proofreading skills, and so much more. A light lunch will be provided for each session - please RSVP to reserve your seat! 9/17/25 (11:30 a,m, - 1:30 p.m.) - Think It, Ink It...Just Write It!The EDGE Center presents a focused writing lab designed to help graduate students get words on the page through structured writing sprints. Whether you’re stuck, overwhelmed, or just need a push, this session gives you time, tools, and encouragement to move forward. Come ready to write, reflect, and reset your momentum.​​​​​​10/15/25 (11:30 a.m. - 1:30 p.m.) - Find Your Flow & Keep It MovingThis session offers quiet, structured time to focus, reset, and make meaningful progress whether you’re drafting, revising, or brainstorming. With built-in writing sprints, reflection, and optional support, you’ll walk away with clarity, confidence, and the tools to stay in motion long after the session ends. Just show up—we’ll help you keep it moving.​​​​​​11/12/25 (11:30am - 1:30pm) - Trim, Tweak, & Edit Like a ProThis session is designed to help graduate students tackle the revision process with confidence and ease. You’ll learn practical strategies and tools to make editing less overwhelming with differnt tools. Whether you’re obsessing over commas or struggling to cut clutter, this lab will guide you to clarify your message and polish your writing step by step.​​​​​​",
@@ -862,21 +569,6 @@
       "lng": -97.113244
     },
     {
-      "id": "50671761823088",
-      "title": "Career Lab: Pathways & Possibilities",
-      "description": "Career Lab Presents our 4th session titled: Pathways & Possibilities: Certifications, M.S. Degrees, and More in Science & Data Join the College of Science for a discussion of career options and next steps for students with science degrees. We will be offering Free Chick-fil-A to all attendees. RSVP in MavEngage now. Do you want a free gift? This is our final and 4th session of Career. If you attend all four sessions, you will receive an exclusive gift from the College of Science!",
-      "start": "2025-11-12T18:00:00.000Z",
-      "end": "2025-11-12T19:00:00.000Z",
-      "location": "SEIR 198",
-      "url": "https://events.uta.edu/event/career-lab-pathways-possibilities",
-      "tags": [
-        "Recreation & Fun"
-      ],
-      "category": "academic",
-      "lat": null,
-      "lng": null
-    },
-    {
       "id": "50781906827901",
       "title": "Career Lab: Pathways & Possibilities",
       "description": "Career Lab Presents our fourth session titled: Pathways & Possibilities: Certifications, M.S. Degrees, and More in Science & Data Join the College of Science for a discussion of career options and next steps for students with science degrees. We will be offering free snacks to all attendees, while supplies last. RSVP in MavEngage now. Do you want a free gift? This is our final session. If you attend all four sessions, you will receive an exclusive gift from the College of Science!",
@@ -886,6 +578,21 @@
       "url": "https://events.uta.edu/event/career-lab-pathways-possibilities-348",
       "tags": [
         "Talks & Lectures"
+      ],
+      "category": "academic",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "50671761823088",
+      "title": "Career Lab: Pathways & Possibilities",
+      "description": "Career Lab Presents our 4th session titled: Pathways & Possibilities: Certifications, M.S. Degrees, and More in Science & Data Join the College of Science for a discussion of career options and next steps for students with science degrees. We will be offering Free Chick-fil-A to all attendees. RSVP in MavEngage now. Do you want a free gift? This is our final and 4th session of Career. If you attend all four sessions, you will receive an exclusive gift from the College of Science!",
+      "start": "2025-11-12T18:00:00.000Z",
+      "end": "2025-11-12T19:00:00.000Z",
+      "location": "SEIR 198",
+      "url": "https://events.uta.edu/event/career-lab-pathways-possibilities",
+      "tags": [
+        "Recreation & Fun"
       ],
       "category": "academic",
       "lat": null,
@@ -936,6 +643,22 @@
       "category": "academic",
       "lat": 32.731835,
       "lng": -97.110618
+    },
+    {
+      "id": "51207205112382",
+      "title": "Planning for Healthcare Costs and Coverage in Retirement",
+      "description": "Register and join in this informational seminar hosted by Fidelity Investments, a UT System Provider. Learn more about retirement health care costs and how to plan for them.",
+      "start": "2025-11-12T18:00:00.000Z",
+      "end": "2025-11-12T18:45:00.000Z",
+      "location": null,
+      "url": "https://events.uta.edu/event/planning-for-healthcare-costs-and-coverage-in-retirement-hosted-by-fidelity-investments",
+      "tags": [
+        "New",
+        "Information Session"
+      ],
+      "category": "academic",
+      "lat": null,
+      "lng": null
     },
     {
       "id": "51127771601156",
@@ -1015,6 +738,22 @@
       "lng": -97.115139
     },
     {
+      "id": "51202545707456",
+      "title": "Healing HERstory",
+      "description": "Join us for Healing HERstory, a community event dedicated to assembling care packages and writing letters to women seeking refuge and rebuilding their lives after experiencing domestic violence. Together, we’ll pack essential items—such as toiletries, comfort items, journals, and uplifting notes—into care kits that will be distributed to local domestic violence shelters. Each kit is a small gesture of compassion and a powerful reminder that these women are seen, supported, and not alone. Together, we can turn empathy into action and help women take the next steps toward safety, healing, and hope. Let’s build care kits—and community—with courage and compassion",
+      "start": "2025-11-13T16:30:00.000Z",
+      "end": "2025-11-13T20:00:00.000Z",
+      "location": "Commons, Caddo",
+      "url": "https://events.uta.edu/event/healing-herstory",
+      "tags": [
+        "New",
+        "Recreation & Fun"
+      ],
+      "category": "academic",
+      "lat": null,
+      "lng": null
+    },
+    {
       "id": "50260941875894",
       "title": "Life After Grad School: Leveraging Strength-Based Assessments",
       "description": "The Life After Grad School speaker series features industry professionals who share insights and advice to help graduate students prepare for a life after graduate school. Each session covers real-world topics designed to support your transition into the workforce and long-term career success. Join us in November for Life After Grad School: Leveraging Strength-Based Assessments! Discover how strength-based assessments can help you better understand your unique talents and how to apply them in your career journey. This workshop will guide you through interpreting your results and using them to enhance your job search, interviews, and professional development. Learn how to confidently communicate your strengths to potential employers. If you have questions, email the EDGE Center at edgecenter@uta.edu. Registration is required for event link access. The registration link is below!",
@@ -1075,21 +814,6 @@
       "category": "academic",
       "lat": null,
       "lng": null
-    },
-    {
-      "id": "50710983254363",
-      "title": "Survivor Support Group",
-      "description": "Healing looks different for everyone, and you deserve a space that feels safe and supportive. The Relationship Violence and Sexual Assault Prevention Program’s confidential advocates welcome you to connect with others, share if you choose, and know you are not alone. This group focuses on care, community, and encouragement at your own pace! Join us in Trinity Hall 102 every Thursday, 3p.m. to 4p.m.",
-      "start": "2025-11-13T21:00:00.000Z",
-      "end": "2025-11-13T22:00:00.000Z",
-      "location": "Trinity Hall",
-      "url": "https://events.uta.edu/event/survivor-support-group-in-person",
-      "tags": [
-        "Campus & Community"
-      ],
-      "category": "social",
-      "lat": 32.730179,
-      "lng": -97.117052
     },
     {
       "id": "51158313779450",
@@ -1184,22 +908,6 @@
       "lng": -97.114967
     },
     {
-      "id": "50906014223408",
-      "title": "Fine Arts Building: From 1975 to Golden Jubilee",
-      "description": "2025 marks half a century as UTA welcomes students in the Fine Arts Building. Classrooms, studio spaces, and communal areas have changed and moved quite a lot since spring 1975. This mini-exhibit, open through December 19, features materials from the archives of the Department of Art & Art History and UTA Special Collections that focus on the period between 1970-1975 when the new arts complex came into being. When in the late 1960s, UTA’s fine arts curricula was elevated from 2-year transfer programs to 4-year degree granting status, this area became one of the fastest growing on campus. Noting that, the 1970 letter from UTA President Frank Harrison, addresses the need for “a building of approximately 225,000 sq ft” to house the Departments of Architecture, Art, Music and Speech-Drama, which by 1972 together counted 1,326 majors - nearly 10% of the total UTA student population (15,432). Fine Arts Complex began to take shape along South Cooper Street around the existing University Theatre in the summer 1973. In January 1975, Shorthorn article showed perplexed students next to a building map in a “castle-like” maze of a newly opened Fine Arts Center. The writers of Ft.Worth Star Telegram called it “the mammoth 4-story building,” the “great Wall of China” cutting through UTA campus and pointed at its “massive and impersonal” style, with a giant loggia as its most distinguishing feature. On display at the Visual Resource Collections Gallery are historic photographs, press clippings, old UTA yearbooks, the remnants of former art building, which got demolished, and the materials from the original Fine Arts Building blueprints. Special thanks to Heather Claney (Reference Services Manager at UTA Special Collections), Mark Cook (UTA Digitization Services Manager), Nicholas William (Lead Digitization Specialist), Jack Plummer (Professor Emeritus, Department of Art and Art History), and Rita Lasater (former Director of the Visual Resource Commons) for documenting, preserving the traces of time, and helping us navigate through the archives to carry the memory further. The Visual Resource Collectiosn Gallery is open Monday-Friday, 9 a.m.-5 p.m.",
-      "start": "2025-11-14T15:00:00.000Z",
-      "end": "2025-11-14T23:00:00.000Z",
-      "location": "Visual Resource Collections & Gallery",
-      "url": "https://events.uta.edu/event/fine-arts-building-from-1975-to-golden-jubilee",
-      "tags": [
-        "New",
-        "Arts & Culture"
-      ],
-      "category": "social",
-      "lat": 32.731474,
-      "lng": -97.115124
-    },
-    {
       "id": "50959361455969",
       "title": "Gallery at UTA Art Exhibition: Faculty Biennial XX",
       "description": "The Gallery at UTA is pleased to present its 20th “Faculty Biennial,” a showcase for recent work created by faculty from the University of Texas at Arlington Department of Art and Art History. Scheduled every two years, this exhibition presents a sampling of what the art and design professors accomplish in their creative and scholarly endeavors outside the classroom. The 2025 exhibition, which runs October 20 through November 15, features 31 faculty members working in a wide variety of media including painting, drawing, sculpture, ceramics, photography, glass, printmaking, cinematic arts, and design. In addition, the department's art historians and art educators will have examples of recent publications on display. \"As we near the 40th anniversary of this gallery of contemporary art, it is wonderful to see the range of work our faculty are engaged in making and how it serves as an exemplar of what The Gallery at UTA is all about. We are focused on bringing innovative art and design to our public community and our faculty's creative work does just that, time and again. We look forward to welcoming you to this exhibition and having you join us celebrating this milestone,\" says gallery director and Art & Art History Department Chair August Davis.",
@@ -1246,6 +954,22 @@
       "category": "academic",
       "lat": null,
       "lng": null
+    },
+    {
+      "id": "51224079195455",
+      "title": "Honors Research Symposium",
+      "description": "The Honors Research Symposium is a culmination of months of hard work and dedication of Honors students in conducting undergraduate research in a variety of disciplines. This semester’s poster presentations will be held on Friday, Nov. 14, from 11:30 a.m.-1:30 p.m. in the Central Library, 6th Floor Atrium. The event is free and open to faculty, staff, students, and the larger community. For more information, please visit Honors Research Symposium.",
+      "start": "2025-11-14T17:30:00.000Z",
+      "end": "2025-11-14T19:30:00.000Z",
+      "location": "Sixth Floor Atrium, Central Library",
+      "url": "https://events.uta.edu/event/honors-research-symposium-1141",
+      "tags": [
+        "New",
+        "Conference/Symposium"
+      ],
+      "category": "academic",
+      "lat": 32.729678,
+      "lng": -97.112926
     },
     {
       "id": "51151558685297",
@@ -1818,64 +1542,6 @@
       "lng": null
     },
     {
-      "id": "51145718647447",
-      "title": "Celebrating Native American Heritage Month",
-      "description": "In celebration of Native American Heritage Month, UTA Special Collections will have a mini-exhibit on display showcasing items in the collection relating to the surrounding Indigenous community. Special Collections invites the UTA community to learn more and view the mini-exhibit during the Central Library’s open hours, starting Nov. 1 and continuing through Nov. 30. The exhibit is located just outside the doors of Special Collections in the Atrium, on the sixth floor of the Central Library.",
-      "start": "2025-11-19T00:00:00.000Z",
-      "end": "2025-11-19T06:00:00.000Z",
-      "location": "Library Atrium, Central Library",
-      "url": "https://events.uta.edu/event/celebrating-native-american-heritage-month",
-      "tags": [
-        "New",
-        "Arts & Culture"
-      ],
-      "category": "social",
-      "lat": 32.729678,
-      "lng": -97.112926
-    },
-    {
-      "id": "51136218651033",
-      "title": "Homecoming Shoe Drive",
-      "description": "For this year's Homecoming, the Office of Sustainability is excited to collaborate with Intercollegiate Athletics and Campus Recreation to host a shoe drive benefiting Soles4Souls, as part of America Recycles Day! Collection will take place November 3-21 with drop off locations at the UC (near Starbucks) and the Maverick Activities Center entrance. We will also be at the Homecoming Games and 5K taking place on November 14-15. Please bring gently used or new shoes for donation and support Mavericks on this great initiative!",
-      "start": "2025-11-19T00:00:00.000Z",
-      "end": "2025-11-19T00:00:00.000Z",
-      "location": null,
-      "url": "https://events.uta.edu/event/homecoming-shoe-drive",
-      "tags": [
-        "New",
-        "Campus & Community"
-      ],
-      "category": "social",
-      "lat": null,
-      "lng": null
-    },
-    {
-      "id": "50906203106610",
-      "title": "McNair Scholars Application Open (Apply Now)",
-      "description": "The McNair Scholars Program is a competitive program funded by the U.S. Department of Education to prepare university juniors and seniors who are low-income, first generation, and/or underrepresented in graduate education for doctoral education. This program assists students in the attainment of their educational, professional, and personal goals through participation in research and other academic/scholarly activities. APPLICATIONS The priority deadline is Nov. 3, 2025.The general application closes Dec. 1, 2025. Click the link below for more information and to apply. https://www.uta.edu/research/opportunities/undergraduate-research/programs/mcnair Contact us at mcnair@uta.edu",
-      "start": "2025-11-19T00:00:00.000Z",
-      "end": "2025-11-19T00:00:00.000Z",
-      "location": null,
-      "url": "https://events.uta.edu/event/mcnair-scholars-application-open-apply-now",
-      "tags": [],
-      "category": "academic",
-      "lat": null,
-      "lng": null
-    },
-    {
-      "id": "50906011324223",
-      "title": "Undergraduate Research Spring 2026 Application Open",
-      "description": "The application for the Spring 2026 Undergraduate Research Opportunity Program (UROP) and Undergraduate Research Assistant Program (UGRAP) is now open! These programs offer undergraduate students the opportunity to engage in hands-on research alongside UTA faculty members across various disciplines. Whether you are interested in engineering, business management, psychology, biology, or any other field, these programs are open to all majors! For more information about these programs, click here. By participating in UROP/UGRAP, students will have the chance to: • Gain practical research experience • Collaborate with faculty members and peers • Contribute to cutting-edge projects • Enhance their critical thinking and problem-solving skills • Prepare for future career or academic endeavors • Receive funding Eligibility Requirements: • Full-time UTA student • Minimum 2.75 CGPA • UROP: Open to U.S. citizens, permanent residents, and international students • UGRAP: Open to U.S. citizens and permanent residents – Work-study eligibility (required) Important Dates: • Applications Open: October 1, 2025 • Deadline to Apply: November 30, 2025 How to Apply: To apply, scan the QR code on the attached flyer or visit this link. For more information, please contact the Office of Undergraduate Research at ugresearch@uta.edu or call us at 817-272-1272. Don't miss this opportunity to enhance your academic experience and build invaluable research skills. Apply today! Follow us on social media, click here!",
-      "start": "2025-11-19T00:00:00.000Z",
-      "end": "2025-11-19T00:00:00.000Z",
-      "location": null,
-      "url": "https://events.uta.edu/event/undergraduate-research-spring-2026-application-open",
-      "tags": [],
-      "category": "academic",
-      "lat": null,
-      "lng": null
-    },
-    {
       "id": "50852105391740",
       "title": "Clavier Recital",
       "description": "Join us for an enchanting evening of piano mastery led by Dr. John Solomons. This performance is free and open to the public. It takes place in Irons Recital Hall, FA105, located in the South Section of the Fine Arts Building. Doors open approximately 30 minutes before the performance time. Please be aware that no food or drink, aside from bottled water, is allowed in the recital hall. Parking is available in the West Campus Garage, and ADA parking is available at the meters on Nedderman Drive in front of Texas Hall. Visit our parking page for more information. This recital will be live-streamed at www.uta.edu/music/live.php.",
@@ -1889,37 +1555,6 @@
       "category": "social",
       "lat": 32.730496,
       "lng": -97.115139
-    },
-    {
-      "id": "51125605783893",
-      "title": "See the Unseen: Global Photograph Exhibition",
-      "description": "The Department of Global Engagement and Office of Study Abroad presents the See the Unseen Photo Gallery Exhibition which features photography submitted by our very own UTA students. This International Education Week exhibition will be available for viewing from 8 a.m.-5 p.m. from November 17-21, at the Bluebonnet Foyer in the University Center.",
-      "start": "2025-11-19T14:00:00.000Z",
-      "end": "2025-11-19T23:00:00.000Z",
-      "location": "Bluebonnet Ballroom Foyer, University Center",
-      "url": "https://events.uta.edu/event/see-the-unseen-global-photograph-exhibition",
-      "tags": [
-        "New",
-        "Arts & Culture"
-      ],
-      "category": "social",
-      "lat": null,
-      "lng": null
-    },
-    {
-      "id": "50658268795964",
-      "title": "Trajé del Bailé: Selections from the UTA Latin American Collection",
-      "description": "Dance and public performance are two elements of human society that span across all cultures and peoples of the globe. This system of cultural expression often consists of detailed choreography and elaborate costumes, uniting our communities through shared connections and ritual presentation. For Latin America, dance is interwoven throughout the tapestry of their historical traditions. Beginning with the indigenous cultures of the Aztec, Inca, Maya, and Olmec, their celebratory carnivals and festivals evolved under the influence of European and African dance traditions to incorporate not only celebrational experiences but also used for expressions of faith, mourning, and even resistance. On view for the fall 2025 semester are a series of vibrantly painted and intricately decorated masks and dance costumes from Bolivia, Guatemala, and Mexico. They represent Latin America’s wide breadth of historical dance and parade traditions, ranging from the Bailé de los Animales to the annual Carnaval. Please join us throughout the semester to celebrate these works and their expressions of beauty, creativity, and connection through dance. It will be open Monday, September 8 – Thursday, November 20; 9am – 5pm. Visual Resource Collections and Gallery, Ste. 2109, Fine Arts Building, 2nd floor.",
-      "start": "2025-11-19T15:00:00.000Z",
-      "end": "2025-11-20T06:00:00.000Z",
-      "location": "Visual Resource Collections & Gallery",
-      "url": "https://events.uta.edu/event/traje-del-baile-selections-from-the-uta-latin-american-collection",
-      "tags": [
-        "Arts & Culture"
-      ],
-      "category": "social",
-      "lat": 32.731474,
-      "lng": -97.115124
     },
     {
       "id": "48720935689667",
@@ -2012,6 +1647,21 @@
       "category": "social",
       "lat": null,
       "lng": null
+    },
+    {
+      "id": "51214685842608",
+      "title": "Exploring a Path to Graduate School at UTA",
+      "description": "Join us for an engaging Graduate School Information Session featuring a panel of current graduate students and faculty. Panelists will share their personal experiences, insights, and advice on topics such as deciding to pursue graduate school, overcoming fears and challenges, maintaining balance and well-being, and preparing for life after graduate studies. This session is designed to provide undergraduates with relatable perspectives on motivation, resilience, mentorship, and professional growth—helping you make informed decisions about whether graduate school is the right next step for you. Click here to register! Contact us: ugresearch@uta.edu | 817-272-1272 | uta_ugresearch This event will be hosted by the Office of Undergraduate Research, the Graduate School, and the Office of Graduate Admissions.",
+      "start": "2025-11-19T18:00:00.000Z",
+      "end": "2025-11-19T20:00:00.000Z",
+      "location": "Nedderman Hall",
+      "url": "https://events.uta.edu/event/exploring-a-path-to-graduate-school-at-uta",
+      "tags": [
+        "New"
+      ],
+      "category": "academic",
+      "lat": 32.732283,
+      "lng": -97.113551
     },
     {
       "id": "50450553099646",
@@ -2161,6 +1811,390 @@
       "end": "2025-11-19T00:00:00.000Z",
       "location": "Irons Recital Hall, Fine Arts Building",
       "url": "https://events.uta.edu/event/violin-studio-recital",
+      "tags": [
+        "Arts & Culture"
+      ],
+      "category": "social",
+      "lat": 32.730496,
+      "lng": -97.115139
+    },
+    {
+      "id": "50658268795964",
+      "title": "Trajé del Bailé: Selections from the UTA Latin American Collection",
+      "description": "Dance and public performance are two elements of human society that span across all cultures and peoples of the globe. This system of cultural expression often consists of detailed choreography and elaborate costumes, uniting our communities through shared connections and ritual presentation. For Latin America, dance is interwoven throughout the tapestry of their historical traditions. Beginning with the indigenous cultures of the Aztec, Inca, Maya, and Olmec, their celebratory carnivals and festivals evolved under the influence of European and African dance traditions to incorporate not only celebrational experiences but also used for expressions of faith, mourning, and even resistance. On view for the fall 2025 semester are a series of vibrantly painted and intricately decorated masks and dance costumes from Bolivia, Guatemala, and Mexico. They represent Latin America’s wide breadth of historical dance and parade traditions, ranging from the Bailé de los Animales to the annual Carnaval. Please join us throughout the semester to celebrate these works and their expressions of beauty, creativity, and connection through dance. It will be open Monday, September 8 – Thursday, November 20; 9am – 5pm. Visual Resource Collections and Gallery, Ste. 2109, Fine Arts Building, 2nd floor.",
+      "start": "2025-11-20T15:00:00.000Z",
+      "end": "2025-11-21T06:00:00.000Z",
+      "location": "Visual Resource Collections & Gallery",
+      "url": "https://events.uta.edu/event/traje-del-baile-selections-from-the-uta-latin-american-collection",
+      "tags": [
+        "Arts & Culture"
+      ],
+      "category": "social",
+      "lat": 32.731474,
+      "lng": -97.115124
+    },
+    {
+      "id": "51016801015816",
+      "title": "Terry Toy Drive",
+      "description": "This is the annual fundraiser hosted by the Terry Scholars where we work directly with the Arlington Police Department and raise money for families in the Arlington area who cannot afford to buy their kids Christmas gifts. We use all of the money we raise to buy toys for the kids. We then drop off the toys we buy with the Arlington Police Department for distribution.",
+      "start": "2025-11-20T15:00:00.000Z",
+      "end": "2025-11-20T22:00:00.000Z",
+      "location": "UC - West",
+      "url": "https://events.uta.edu/event/terry-toy-drive-160",
+      "tags": [
+        "New",
+        "Recreation & Fun"
+      ],
+      "category": "academic",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "50764204448014",
+      "title": "Career Readiness with AI",
+      "description": "Become Career Ready with AI! Join us for an interactive, hands-on workshop where you’ll learn how to use AI tools to enhance your career readiness. Whether you're exploring careers, crafting your résumé, or preparing for interviews, AI can help, and we’ll show you how.",
+      "start": "2025-11-20T17:00:00.000Z",
+      "end": "2025-11-20T18:00:00.000Z",
+      "location": null,
+      "url": "https://events.uta.edu/event/career-readiness-with-ai-2679",
+      "tags": [
+        "Career/Job Search"
+      ],
+      "category": "career",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "50769592022211",
+      "title": "Career Readiness with AI",
+      "description": "Become Career Ready with AI! Join us for an interactive, hands-on workshop where you’ll learn how to use AI tools to enhance your career readiness. Whether you're exploring careers, crafting your résumé, or preparing for interviews, AI can help, and we’ll show you how.",
+      "start": "2025-11-20T17:00:00.000Z",
+      "end": "2025-11-20T18:00:00.000Z",
+      "location": "Career Development Center",
+      "url": "https://events.uta.edu/event/career-readiness-with-ai-4513",
+      "tags": [
+        "Recreation & Fun"
+      ],
+      "category": "academic",
+      "lat": 32.731606,
+      "lng": -97.110005
+    },
+    {
+      "id": "51083281098211",
+      "title": "Great American Smoke Out",
+      "description": "Enjoy fun activities and learn about smoking cessation resources. Free sandwiches will be available for the first 100 students to sign a pledge to live a smoke-free life.",
+      "start": "2025-11-20T17:00:00.000Z",
+      "end": "2025-11-20T19:00:00.000Z",
+      "location": "In front of Ransom Hall",
+      "url": "https://events.uta.edu/event/great-american-smoke-out",
+      "tags": [
+        "New",
+        "Health & Wellness"
+      ],
+      "category": "wellness",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "50453860974984",
+      "title": "Mavs EDGE Employers INSPIRE: Fastenal",
+      "description": "Join us for INSPIRE (Industry, Non-Technical, Skillset Presentations Intended for Experiential Learning) with Fastenal. Representatives will share real-world insights on the non-technical skills that drive professional success, from workplace professionalism to thriving on day one. Fastenal partners with businesses to simplify and secure supply chains for a wide range of industrial products, helping partners execute daily needs and optimize performance to create more value, more efficiently.",
+      "start": "2025-11-20T20:00:00.000Z",
+      "end": "2025-11-20T21:00:00.000Z",
+      "location": null,
+      "url": "https://events.uta.edu/event/mavs-edge-employers-inspire-fastenal",
+      "tags": [
+        "Workshops"
+      ],
+      "category": "academic",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "50710983254363",
+      "title": "Survivor Support Group",
+      "description": "Healing looks different for everyone, and you deserve a space that feels safe and supportive. The Relationship Violence and Sexual Assault Prevention Program’s confidential advocates welcome you to connect with others, share if you choose, and know you are not alone. This group focuses on care, community, and encouragement at your own pace! Join us in Trinity Hall 102 every Thursday, 3p.m. to 4p.m.",
+      "start": "2025-11-20T21:00:00.000Z",
+      "end": "2025-11-20T22:00:00.000Z",
+      "location": "Trinity Hall",
+      "url": "https://events.uta.edu/event/survivor-support-group-in-person",
+      "tags": [
+        "Campus & Community"
+      ],
+      "category": "social",
+      "lat": 32.730179,
+      "lng": -97.117052
+    },
+    {
+      "id": "51125761151125",
+      "title": "Global Grounds: International Education Week Edition",
+      "description": "Take a chai break! Network with hundreds of Mavericks from around the world.",
+      "start": "2025-11-20T22:00:00.000Z",
+      "end": "2025-11-20T23:30:00.000Z",
+      "location": "Palo Duro Lounge, University Center",
+      "url": "https://events.uta.edu/event/global-grounds-iew-edition",
+      "tags": [
+        "New",
+        "Campus & Community"
+      ],
+      "category": "social",
+      "lat": 32.731835,
+      "lng": -97.110618
+    },
+    {
+      "id": "50393800789499",
+      "title": "The Graduate AdvantEDGE: Skills for Graduate Success",
+      "description": "Designed to give graduate students the strategic tools, skills, and support they need to thrive academically, each session in this series focuses on building core competencies—from mastering time management and research strategies to navigating academic writing and productivity—so students can stay sharp, focused, and ahead of the curve! 9/11/25 (5:30 -6:30 p.m.) - The Grad School Survival GuideKnowing how you learn is crucial when it comes to graduate success. During this engaging session, we'll explore and identify our personal learning styles, identify study skills to best suit your unique learning style, distinguish between working harder and working smarter, and work to apply practical techniques to better manage your time and academic resilience. This is one you won't want to miss!​​​​​​10/9/25 (5:30-6:30 p.m.) - Writing Strategies for Grad SchoolEven the most experienced scholar can often struggle with the high academic writing standards of grad school. Lucky for you, the EDGE Center is here to make sure you have what you need to succeed! Join us as we reframe the writing process, using simple structural and organizational tools to turbocharge your progress and reduce your academic stress. Together, we'll build consistent writing habits that support your long-term academic success. ​​​​​​11/20/25 (5:30-6:30 p.m.) - Boost Your Grad Game with AIReady or not, AI is here! Join us as we explore the ethical and effective use of AI tools to support your academic writing, research, and productivity. Through a hands-on session, you'll gain experience in prompt generation, various AI tools, and best practices in AI use. Once it's all said and done, you'll walk away with the resources you'll need to start integrating AI into your daily academic workflow. Ready to get started?​​​​​​",
+      "start": "2025-11-20T23:30:00.000Z",
+      "end": "2025-11-21T00:30:00.000Z",
+      "location": "Science Hall",
+      "url": "https://events.uta.edu/event/the-graduate-advantedge-skills-for-graduate-success",
+      "tags": [
+        "Workshops"
+      ],
+      "category": "academic",
+      "lat": 32.733454,
+      "lng": -97.113244
+    },
+    {
+      "id": "51145718647447",
+      "title": "Celebrating Native American Heritage Month",
+      "description": "In celebration of Native American Heritage Month, UTA Special Collections will have a mini-exhibit on display showcasing items in the collection relating to the surrounding Indigenous community. Special Collections invites the UTA community to learn more and view the mini-exhibit during the Central Library’s open hours, starting Nov. 1 and continuing through Nov. 30. The exhibit is located just outside the doors of Special Collections in the Atrium, on the sixth floor of the Central Library.",
+      "start": "2025-11-21T00:00:00.000Z",
+      "end": "2025-11-21T06:00:00.000Z",
+      "location": "Library Atrium, Central Library",
+      "url": "https://events.uta.edu/event/celebrating-native-american-heritage-month",
+      "tags": [
+        "New",
+        "Arts & Culture"
+      ],
+      "category": "social",
+      "lat": 32.729678,
+      "lng": -97.112926
+    },
+    {
+      "id": "50906203106610",
+      "title": "McNair Scholars Application Open (Apply Now)",
+      "description": "The McNair Scholars Program is a competitive program funded by the U.S. Department of Education to prepare university juniors and seniors who are low-income, first generation, and/or underrepresented in graduate education for doctoral education. This program assists students in the attainment of their educational, professional, and personal goals through participation in research and other academic/scholarly activities. APPLICATIONS The priority deadline is Nov. 3, 2025.The general application closes Dec. 1, 2025. Click the link below for more information and to apply. https://www.uta.edu/research/opportunities/undergraduate-research/programs/mcnair Contact us at mcnair@uta.edu",
+      "start": "2025-11-21T00:00:00.000Z",
+      "end": "2025-11-21T00:00:00.000Z",
+      "location": null,
+      "url": "https://events.uta.edu/event/mcnair-scholars-application-open-apply-now",
+      "tags": [],
+      "category": "academic",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "50906011324223",
+      "title": "Undergraduate Research Spring 2026 Application Open",
+      "description": "The application for the Spring 2026 Undergraduate Research Opportunity Program (UROP) and Undergraduate Research Assistant Program (UGRAP) is now open! These programs offer undergraduate students the opportunity to engage in hands-on research alongside UTA faculty members across various disciplines. Whether you are interested in engineering, business management, psychology, biology, or any other field, these programs are open to all majors! For more information about these programs, click here. By participating in UROP/UGRAP, students will have the chance to: • Gain practical research experience • Collaborate with faculty members and peers • Contribute to cutting-edge projects • Enhance their critical thinking and problem-solving skills • Prepare for future career or academic endeavors • Receive funding Eligibility Requirements: • Full-time UTA student • Minimum 2.75 CGPA • UROP: Open to U.S. citizens, permanent residents, and international students • UGRAP: Open to U.S. citizens and permanent residents – Work-study eligibility (required) Important Dates: • Applications Open: October 1, 2025 • Deadline to Apply: November 30, 2025 How to Apply: To apply, scan the QR code on the attached flyer or visit this link. For more information, please contact the Office of Undergraduate Research at ugresearch@uta.edu or call us at 817-272-1272. Don't miss this opportunity to enhance your academic experience and build invaluable research skills. Apply today! Follow us on social media, click here!",
+      "start": "2025-11-21T00:00:00.000Z",
+      "end": "2025-11-21T00:00:00.000Z",
+      "location": null,
+      "url": "https://events.uta.edu/event/undergraduate-research-spring-2026-application-open",
+      "tags": [],
+      "category": "academic",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "51136218651033",
+      "title": "Homecoming Shoe Drive",
+      "description": "For this year's Homecoming, the Office of Sustainability is excited to collaborate with Intercollegiate Athletics and Campus Recreation to host a shoe drive benefiting Soles4Souls, as part of America Recycles Day! Collection will take place November 3-21 with drop off locations at the UC (near Starbucks) and the Maverick Activities Center entrance. We will also be at the Homecoming Games and 5K taking place on November 14-15. Please bring gently used or new shoes for donation and support Mavericks on this great initiative!",
+      "start": "2025-11-21T00:00:00.000Z",
+      "end": "2025-11-21T00:00:00.000Z",
+      "location": null,
+      "url": "https://events.uta.edu/event/homecoming-shoe-drive",
+      "tags": [
+        "New",
+        "Campus & Community"
+      ],
+      "category": "social",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "50852204945790",
+      "title": "UTA Fall Jazz Concert",
+      "description": "🎶✨ Get ready for an unforgettable evening of jazz as the UTA Jazz Department presents its Annual Fall Concert in Texas Hall! 🌟 The doors will open approximately 30 minutes before the performance time. Please be aware that no food or drink, aside from bottled water, is allowed in concert hall. Parking is available in the West Campus Garage, and ADA parking is available at the meters on Nedderman Drive in front of Texas Hall. Visit our parking page for more information. Tickets are $10 for adults and $7 for students, alumni, and seniors. You can purchase them in advance at www.utatickets.com.",
+      "start": "2025-11-21T01:30:00.000Z",
+      "end": "2025-11-20T00:00:00.000Z",
+      "location": "Texas Hall",
+      "url": "https://events.uta.edu/event/uta-fall-jazz-concert-6719",
+      "tags": [
+        "Arts & Culture"
+      ],
+      "category": "social",
+      "lat": 32.72926,
+      "lng": -97.114967
+    },
+    {
+      "id": "51125605783893",
+      "title": "See the Unseen: Global Photograph Exhibition",
+      "description": "The Department of Global Engagement and Office of Study Abroad presents the See the Unseen Photo Gallery Exhibition which features photography submitted by our very own UTA students. This International Education Week exhibition will be available for viewing from 8 a.m.-5 p.m. from November 17-21, at the Bluebonnet Foyer in the University Center.",
+      "start": "2025-11-21T14:00:00.000Z",
+      "end": "2025-11-21T23:00:00.000Z",
+      "location": "Bluebonnet Ballroom Foyer, University Center",
+      "url": "https://events.uta.edu/event/see-the-unseen-global-photograph-exhibition",
+      "tags": [
+        "New",
+        "Arts & Culture"
+      ],
+      "category": "social",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "50906014223408",
+      "title": "Fine Arts Building: From 1975 to Golden Jubilee",
+      "description": "2025 marks half a century as UTA welcomes students in the Fine Arts Building. Classrooms, studio spaces, and communal areas have changed and moved quite a lot since spring 1975. This mini-exhibit, open through December 19, features materials from the archives of the Department of Art & Art History and UTA Special Collections that focus on the period between 1970-1975 when the new arts complex came into being. When in the late 1960s, UTA’s fine arts curricula was elevated from 2-year transfer programs to 4-year degree granting status, this area became one of the fastest growing on campus. Noting that, the 1970 letter from UTA President Frank Harrison, addresses the need for “a building of approximately 225,000 sq ft” to house the Departments of Architecture, Art, Music and Speech-Drama, which by 1972 together counted 1,326 majors - nearly 10% of the total UTA student population (15,432). Fine Arts Complex began to take shape along South Cooper Street around the existing University Theatre in the summer 1973. In January 1975, Shorthorn article showed perplexed students next to a building map in a “castle-like” maze of a newly opened Fine Arts Center. The writers of Ft.Worth Star Telegram called it “the mammoth 4-story building,” the “great Wall of China” cutting through UTA campus and pointed at its “massive and impersonal” style, with a giant loggia as its most distinguishing feature. On display at the Visual Resource Collections Gallery are historic photographs, press clippings, old UTA yearbooks, the remnants of former art building, which got demolished, and the materials from the original Fine Arts Building blueprints. Special thanks to Heather Claney (Reference Services Manager at UTA Special Collections), Mark Cook (UTA Digitization Services Manager), Nicholas William (Lead Digitization Specialist), Jack Plummer (Professor Emeritus, Department of Art and Art History), and Rita Lasater (former Director of the Visual Resource Commons) for documenting, preserving the traces of time, and helping us navigate through the archives to carry the memory further. The Visual Resource Collectiosn Gallery is open Monday-Friday, 9 a.m.-5 p.m.",
+      "start": "2025-11-21T15:00:00.000Z",
+      "end": "2025-11-21T23:00:00.000Z",
+      "location": "Visual Resource Collections & Gallery",
+      "url": "https://events.uta.edu/event/fine-arts-building-from-1975-to-golden-jubilee",
+      "tags": [
+        "New",
+        "Arts & Culture"
+      ],
+      "category": "social",
+      "lat": 32.731474,
+      "lng": -97.115124
+    },
+    {
+      "id": "51016802198653",
+      "title": "Terry Toy Drive",
+      "description": "This is the annual fundraiser hosted by the Terry Scholars where we work directly with the Arlington Police Department and raise money for families in the Arlington area who cannot afford to buy their kids Christmas gifts. We use all of the money we raise to buy toys for the kids. We then drop off the toys we buy with the Arlington Police Department for distribution.",
+      "start": "2025-11-21T15:00:00.000Z",
+      "end": "2025-11-21T22:00:00.000Z",
+      "location": "UC- West",
+      "url": "https://events.uta.edu/event/terry-toy-drive-1930",
+      "tags": [
+        "New",
+        "Recreation & Fun"
+      ],
+      "category": "academic",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "50601011950686",
+      "title": "American Marketing Association Spacial Interest Groups! (Cancelled)",
+      "description": "Within the AMA you'll find three Special Interest Groups, aka SIGs, designed to help you dive deeper into the world of marketing! Whether you're passionate about Sales, eager to grow your personal brand , or curious about the world of digital marketing, there's a place for you! Join us every other Friday from 10:00- 11:00am for engaging SIG meetings where you'll learn, connect, and grow alongside fellow AMA members! 6th floor, College of Business September 12- Sales SIG Elevator Pitch Workshop September 19- Digital SIG Coffee chat September 25- Slingshot Agency Tour October 3- Professional Development SIG- Resume and interview workshop. October 10- Fastenal Elevator Pitch Competition October 17- Sales SIG Livenation October 24- Tentative AT&T Stadium Tour November 7- LinkedIn Workshop November 14- Personal Branding workshop November 21- Agency Tour",
+      "start": "2025-11-21T16:00:00.000Z",
+      "end": "2025-11-21T17:00:00.000Z",
+      "location": "Room 633/34",
+      "url": "https://events.uta.edu/event/american-marketing-association-spacial-interest-groups-1604",
+      "tags": [
+        "Recreation & Fun"
+      ],
+      "category": "academic",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "51125901353271",
+      "title": "Brain Health Starts with Brain Care",
+      "description": "Join this Frontiers of Brain Health Lunchtime Lecture to learn more about the Global Brain Care Coalition and their mission to provide individuals with knowledge and tools to promote brain health and prevent disease. This session is hosted by the University of Texas at Dallas. Register to join virtually.",
+      "start": "2025-11-21T18:00:00.000Z",
+      "end": "2025-11-21T19:00:00.000Z",
+      "location": "Center for Brain Health in Dallas, Texas",
+      "url": "https://events.uta.edu/event/brain-health-starts-with-brain-care-a-scalable-solution-to-the-pandemic-of-age-related-brain-disease",
+      "tags": [
+        "New",
+        "Science & Technology"
+      ],
+      "category": "academic",
+      "lat": 32.824832,
+      "lng": -96.847785
+    },
+    {
+      "id": "51083934943030",
+      "title": "Meeting Compliance Requirements for Regulated Research Activities",
+      "description": "Please join The Center for Proposal Development, online or in-person, as the Office of Regulatory Services presents an overview of federal regulations and UTA procedures for the conduct of regulated research activities, including human subject research, animal research, research involving recombinant DNA, research conflicts of interest, and export control. This workshop is open to any UTA faculty, staff, or students interested in learning more about these regulatory areas. RSVP is required for in-person attendance.",
+      "start": "2025-11-21T18:00:00.000Z",
+      "end": "2025-11-21T20:00:00.000Z",
+      "location": "SEIR–Science & Engineering Innovation & Research Building",
+      "url": "https://events.uta.edu/event/research-integrity-meeting-compliance-requirements-for-regulated-research-activities",
+      "tags": [
+        "New",
+        "Conference/Symposium"
+      ],
+      "category": "academic",
+      "lat": 32.727253,
+      "lng": -97.113763
+    },
+    {
+      "id": "51025613692470",
+      "title": "Nepali Night 2025",
+      "description": "Nepali Night is presented by the Nepali Student Association (NSA) annually. Welcoming both Nepali nationals and the wider University of Texas at Arlington (UTA) community, Nepali Night is a cultural extravaganza that offers a captivating glimpse into our heritage and traditions through a myriad of engaging performances. This event is an invitation for everyone to immerse themselves in the vibrant tapestry of Nepali culture. Through a diverse range of entertaining presentations, we take you on a journey that showcases the beauty and depth of our traditions, leaving you with a deeper appreciation for the Nepali way of life. The UTA community is invited to attend the celebration.",
+      "start": "2025-11-21T18:00:00.000Z",
+      "end": "2025-11-21T19:00:00.000Z",
+      "location": "Bluebonnet Ball Room",
+      "url": "https://events.uta.edu/event/nepali-night-2025",
+      "tags": [
+        "New",
+        "Recreation & Fun"
+      ],
+      "category": "academic",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "51202557085123",
+      "title": "Giving Thanks, Giving Back",
+      "description": "Join the RVSP CommUnity Hands group for volunteer opportunity dedicated to giving back this Thanksgiving season. We’ll be partnering with Mission Arlington to support their work serving families across our community. This event is a chance to connect, serve, and make a meaningful impact alongside fellow Mavericks. Spots are limited, so please RSVP by November 6 at 5 p.m. here: https://forms.gle/w3RJEDsQ74KJSjoS9 For accessibility accommodations, email rvsppeers@uta.edu. This event is led by RVSP Peer Educators, who are mandated reporters.",
+      "start": "2025-11-21T20:00:00.000Z",
+      "end": "2025-11-21T22:00:00.000Z",
+      "location": "Mission Arlington",
+      "url": "https://events.uta.edu/event/giving-thanks-giving-back",
+      "tags": [
+        "New",
+        "Recreation & Fun"
+      ],
+      "category": "academic",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "51125749340651",
+      "title": "Optional Practical Training Seminar",
+      "description": "Learn about the Optional Practical Training (OPT) application process and requirements as presented by the International Student and Scholar team.",
+      "start": "2025-11-21T20:00:00.000Z",
+      "end": "2025-11-21T21:30:00.000Z",
+      "location": null,
+      "url": "https://events.uta.edu/event/optional-practical-training-opt-seminar-2753",
+      "tags": [
+        "New",
+        "Campus & Community"
+      ],
+      "category": "social",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "50601012053114",
+      "title": "Ride of Passage",
+      "description": "Join us for a series of empowering monthly community rides on the last Friday of the month! These group rides unite cyclists of all levels for enjoyable rides through Arlington's streets. By participating, you help promote cycling as a sustainable transportation mode, advocate for bike-friendly infrastructure, and raise road safety awareness. The group rides kick off on campus in front of the Central Library, we'll ride together exploring diverse routes through Arlington's streets.",
+      "start": "2025-11-22T00:00:00.000Z",
+      "end": "2025-11-22T01:00:00.000Z",
+      "location": "UTA Central Library",
+      "url": "https://events.uta.edu/event/ride-of-passage-3047",
+      "tags": [
+        "Recreation & Fun"
+      ],
+      "category": "academic",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "50852214804092",
+      "title": "UTA Wind Symphony Concert",
+      "description": "Join us for a concert featuring the UTA Wind Symphony. The performance will be held in Irons Recital Hall, FA105, located in the South Section of the Fine Arts Building. The doors will open approximately 30 minutes before the performance time. Please be aware that no food or drink, aside from bottled water, is allowed in the recital hall. Parking is available in the West Campus Garage, and ADA parking is available at the meters on Nedderman Drive in front of Texas Hall. Visit our parking page for more information. This concert will be live-streamed at uta.edu/music/live.php. Tickets are $10 for adults and $7 for students, alumni, and seniors. You can purchase them in advance at www.utatickets.com.",
+      "start": "2025-11-22T01:30:00.000Z",
+      "end": "2025-11-21T00:00:00.000Z",
+      "location": "Irons Recital Hall, Fine Arts Building",
+      "url": "https://events.uta.edu/event/uta-wind-symphony-concert-1817",
       "tags": [
         "Arts & Culture"
       ],
