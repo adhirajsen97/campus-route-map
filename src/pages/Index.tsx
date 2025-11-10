@@ -16,6 +16,7 @@ import { MapPin, Navigation, CalendarDays } from 'lucide-react';
 import { CampusMask } from '@/components/maps/CampusMask';
 import { CampusBoundary } from '@/components/maps/CampusBoundary';
 import anime from '@/lib/anime';
+import { EventAssistantBubble } from '@/components/chat/EventAssistantBubble';
 
 const Index = () => {
   const { center, zoom, setMapInstance } = useMapStore();
@@ -209,6 +210,7 @@ const Index = () => {
           </div>
         </div>
       </div>
+      <EventAssistantBubble />
     </div>
   );
 };
