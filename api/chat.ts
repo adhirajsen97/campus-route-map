@@ -97,7 +97,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
   }))];
 
   try {
-    const completionResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+    const completionResponse = await fetch('https://api.openai.com/v1/responses', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -105,9 +105,17 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       },
       body: JSON.stringify({
         model: 'gpt-4o-mini',
-        messages: requestMessages,
+        input: requestMessages.map((message) => ({
+          role: message.role,
+          content: [
+            {
+              type: 'text' as const,
+              text: message.content,
+            },
+          ],
+        })),
         temperature: 0.1,
-        max_tokens: 600,
+        max_output_tokens: 600,
       }),
     });
 
@@ -119,15 +127,30 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     }
 
     const completionJson = (await completionResponse.json()) as {
-      choices?: Array<{ message?: ChatMessage }>;
+      output?: Array<{
+        role?: string;
+        content?: Array<{ type: string; text?: string }>;
+      }>;
+      output_text?: string;
     };
 
-    const assistantMessage = completionJson.choices?.[0]?.message;
+    const responseText =
+      typeof completionJson.output_text === 'string'
+        ? completionJson.output_text
+        : completionJson.output
+            ?.flatMap((item) => item.content ?? [])
+            .find((content) => content.type === 'output_text' && typeof content.text === 'string')
+            ?.text;
 
-    if (!assistantMessage || assistantMessage.role !== 'assistant') {
+    if (!responseText) {
       sendJson(res, 502, { error: 'Invalid response from OpenAI' });
       return;
     }
+
+    const assistantMessage: ChatMessage = {
+      role: 'assistant',
+      content: responseText,
+    };
 
     sendJson(res, 200, { message: assistantMessage });
   } catch (error) {
