@@ -5,6 +5,7 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import path from "path";
 import { fileURLToPath } from "node:url";
 import { componentTagger } from "lovable-tagger";
+import chatHandler from "./api/chat";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -52,13 +53,57 @@ const createEventsMiddleware = () =>
     }
   };
 
+const createChatMiddleware = () =>
+  async (req: IncomingMessage, res: ServerResponse) => {
+    if (!req.url) {
+      res.statusCode = 400;
+      res.setHeader("Content-Type", "application/json");
+      res.end(JSON.stringify({ error: "Invalid request" }));
+      return;
+    }
+
+    if (req.method === "OPTIONS") {
+      res.statusCode = 204;
+      res.setHeader("Access-Control-Allow-Origin", req.headers.origin ?? "*");
+      res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+      res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+      res.end();
+      return;
+    }
+
+    if (req.method !== "POST") {
+      res.statusCode = 405;
+      res.setHeader("Allow", "POST");
+      res.setHeader("Content-Type", "application/json");
+      res.end(JSON.stringify({ error: "Method Not Allowed" }));
+      return;
+    }
+
+    res.setHeader("Access-Control-Allow-Origin", req.headers.origin ?? "*");
+
+    try {
+      await chatHandler(req, res);
+    } catch (error) {
+      console.error("Failed to handle /api/chat request", error);
+      if (!res.headersSent) {
+        res.statusCode = 500;
+        res.setHeader("Content-Type", "application/json");
+      }
+      if (!res.writableEnded) {
+        res.end(JSON.stringify({ error: "Unexpected error while handling chat request" }));
+      }
+    }
+  };
+
 const eventsApiPlugin = {
   name: "campus-route-map-events-api",
   configureServer(server) {
     server.middlewares.use("/api/events", createEventsMiddleware());
+    server.middlewares.use("/api/chat", createChatMiddleware());
   },
   configurePreviewServer(server) {
     server.middlewares.use("/api/events", createEventsMiddleware());
+    server.middlewares.use("/api/chat", createChatMiddleware());
   },
 };
 
