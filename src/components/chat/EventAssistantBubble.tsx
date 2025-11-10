@@ -144,6 +144,37 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
     return set.size;
   }, [events]);
 
+  const eventsSnapshot = useMemo(() => {
+    if (!events || events.length === 0) {
+      return "No events data is currently available.";
+    }
+
+    return events
+      .map((event) => {
+        const start = event.start.toISOString();
+        const end = event.end.toISOString();
+        const location = event.location ?? "Unknown location";
+        const tags = event.tags && event.tags.length > 0 ? event.tags.join(", ") : "None";
+
+        return `Title: ${event.title}\nStart: ${start}\nEnd: ${end}\nLocation: ${location}\nCategory: ${event.category}\nTags: ${tags}\n---`;
+      })
+      .join("\n");
+  }, [events]);
+
+  const systemPrompt = useMemo(
+    () =>
+      [
+        "You are an Event Assistant AI. You must ONLY answer questions based on the event data provided.",
+        "If a user asks about anything outside the event data, reply: \"I'm sorry, I can only answer questions related to the events provided.\"",
+        "Do not infer or invent information. Always quote or summarize directly from the provided event data.",
+        "If the question cannot be answered with the available data, state that clearly.",
+        "",
+        "Here is the complete list of events you can reference:",
+        eventsSnapshot,
+      ].join("\n"),
+    [eventsSnapshot],
+  );
+
   const sendMessage = useCallback(
     async (rawContent: string) => {
       const content = rawContent.trim();
@@ -169,32 +200,88 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
         content: message.content,
       }));
 
+      const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+
+      if (!apiKey) {
+        console.error("VITE_OPENAI_API_KEY is not configured for the event assistant");
+        setErrorMessage(
+          "Event assistant is not configured. Please contact the site administrator to add an OpenAI API key.",
+        );
+        setIsSending(false);
+        return;
+      }
+
       try {
-        const response = await fetch("/api/chat", {
+        const response = await fetch("https://api.openai.com/v1/responses", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${apiKey}`,
           },
-          body: JSON.stringify({ messages: payloadMessages }),
+          body: JSON.stringify({
+            model: "gpt-4o-mini",
+            input: [
+              {
+                role: "system",
+                content: [
+                  {
+                    type: "text" as const,
+                    text: systemPrompt,
+                  },
+                ],
+              },
+              ...payloadMessages.map((message) => ({
+                role: message.role,
+                content: [
+                  {
+                    type: "text" as const,
+                    text: message.content,
+                  },
+                ],
+              })),
+            ],
+            temperature: 0.1,
+            max_output_tokens: 600,
+          }),
         });
 
         if (!response.ok) {
-          throw new Error(`Chat endpoint responded with ${response.status}`);
+          const errorPayload = await response.json().catch(() => null);
+          console.error("OpenAI API error", response.status, errorPayload);
+          throw new Error(`OpenAI API responded with ${response.status}`);
         }
 
         const data = (await response.json()) as {
-          message?: { role: ChatRole; content: string };
+          output?: Array<{
+            role?: string;
+            content?: Array<{ type: string; text?: string }>;
+          }>;
+          output_text?: string;
         };
 
-        if (!data.message || data.message.role !== "assistant") {
+        const responseText =
+          typeof data.output_text === "string"
+            ? data.output_text
+            : data.output
+                ?.flatMap((item) => item.content ?? [])
+                .find((content) => content.type === "output_text" && typeof content.text === "string")
+                ?.text;
+
+        if (!responseText) {
           throw new Error("Assistant response missing");
+        }
+
+        const trimmedContent = responseText.trim();
+
+        if (!trimmedContent) {
+          throw new Error("Assistant response empty");
         }
 
         const assistantTimestamp = Date.now();
         const assistantMessage: ChatMessage = {
           id: `assistant-${assistantTimestamp}-${Math.random().toString(36).slice(2, 8)}`,
           role: "assistant",
-          content: data.message.content.trim(),
+          content: trimmedContent,
           createdAt: assistantTimestamp,
         };
 
@@ -208,7 +295,7 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
         setIsSending(false);
       }
     },
-    [isSending],
+    [isSending, systemPrompt],
   );
 
   const handleSubmit = useCallback(
