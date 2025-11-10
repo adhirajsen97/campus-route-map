@@ -1,0 +1,141 @@
+import { readFile } from 'node:fs/promises';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import type { IncomingMessage, ServerResponse } from 'node:http';
+
+type ChatRole = 'system' | 'user' | 'assistant';
+
+interface ChatMessage {
+  role: ChatRole;
+  content: string;
+}
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const eventsPath = join(__dirname, '..', 'data', 'events.json');
+
+function sendJson(res: ServerResponse, statusCode: number, payload: unknown) {
+  res.statusCode = statusCode;
+  res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify(payload));
+}
+
+async function readBody(req: IncomingMessage) {
+  const chunks: Buffer[] = [];
+  for await (const chunk of req) {
+    chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk);
+  }
+  if (chunks.length === 0) {
+    return null;
+  }
+  try {
+    return JSON.parse(Buffer.concat(chunks).toString('utf8')) as { messages?: ChatMessage[] };
+  } catch (error) {
+    console.error('Failed to parse chat request body', error);
+    return null;
+  }
+}
+
+async function loadEventsSnapshot() {
+  try {
+    const raw = await readFile(eventsPath, 'utf8');
+    const parsed = JSON.parse(raw) as { events?: Array<Record<string, unknown>> };
+    const events = Array.isArray(parsed.events) ? parsed.events : [];
+    const formatted = events
+      .map((event) => {
+        if (!event || typeof event !== 'object') {
+          return null;
+        }
+        const title = typeof event.title === 'string' ? event.title : 'Untitled event';
+        const start = typeof event.start === 'string' ? event.start : 'Unknown start';
+        const end = typeof event.end === 'string' ? event.end : 'Unknown end';
+        const location = typeof event.location === 'string' ? event.location : 'Unknown location';
+        const category = typeof event.category === 'string' ? event.category : 'Uncategorized';
+        const tags = Array.isArray(event.tags)
+          ? (event.tags.filter((tag) => typeof tag === 'string') as string[])
+          : [];
+        return `Title: ${title}\nStart: ${start}\nEnd: ${end}\nLocation: ${location}\nCategory: ${category}\nTags: ${tags.join(', ') || 'None'}\n---`;
+      })
+      .filter((snippet): snippet is string => Boolean(snippet))
+      .join('\n');
+    return formatted;
+  } catch (error) {
+    console.error('Failed to read events.json for chat context', error);
+    return '';
+  }
+}
+
+export default async function handler(req: IncomingMessage, res: ServerResponse) {
+  if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST');
+    sendJson(res, 405, { error: 'Method Not Allowed' });
+    return;
+  }
+
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    sendJson(res, 500, { error: 'OpenAI API key is not configured' });
+    return;
+  }
+
+  const body = await readBody(req);
+  if (!body || !Array.isArray(body.messages)) {
+    sendJson(res, 400, { error: 'Invalid request body: expected messages array' });
+    return;
+  }
+
+  const eventsSnapshot = await loadEventsSnapshot();
+
+  const systemMessage: ChatMessage = {
+    role: 'system',
+    content: `You are an Event Assistant AI. You must ONLY answer questions based on the event data provided. If a user asks about anything outside the event data, reply: "I'm sorry, I can only answer questions related to the events provided." Do not infer or invent information. Always quote or summarize directly from the provided event data. If the question cannot be answered with the available data, state that clearly.\n\nHere is the complete list of events you can reference:\n${eventsSnapshot}`,
+  };
+
+  const requestMessages: ChatMessage[] = [systemMessage, ...body.messages.map((message) => ({
+    role: message.role,
+    content: message.content,
+  }))];
+
+  try {
+    const completionResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: requestMessages,
+        temperature: 0.1,
+        max_tokens: 600,
+      }),
+    });
+
+    if (!completionResponse.ok) {
+      const errorPayload = await completionResponse.json().catch(() => null);
+      console.error('OpenAI API error', completionResponse.status, errorPayload);
+      sendJson(res, 502, { error: 'Failed to generate response from OpenAI' });
+      return;
+    }
+
+    const completionJson = (await completionResponse.json()) as {
+      choices?: Array<{ message?: ChatMessage }>;
+    };
+
+    const assistantMessage = completionJson.choices?.[0]?.message;
+
+    if (!assistantMessage || assistantMessage.role !== 'assistant') {
+      sendJson(res, 502, { error: 'Invalid response from OpenAI' });
+      return;
+    }
+
+    sendJson(res, 200, { message: assistantMessage });
+  } catch (error) {
+    console.error('Unexpected error while generating chat response', error);
+    sendJson(res, 500, { error: 'Unexpected error while generating response' });
+  }
+}
+
+export const config = {
+  runtime: 'nodejs18.x',
+};
