@@ -225,7 +225,7 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
                 role: "system",
                 content: [
                   {
-                    type: "text" as const,
+                    type: "input_text" as const,
                     text: systemPrompt,
                   },
                 ],
@@ -234,7 +234,7 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
                 role: message.role,
                 content: [
                   {
-                    type: "text" as const,
+                    type: "input_text" as const,
                     text: message.content,
                   },
                 ],
