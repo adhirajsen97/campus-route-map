@@ -10,16 +10,32 @@ interface MapCanvasProps {
   children?: React.ReactNode;
 }
 
-export const MapCanvas = ({ 
-  center = DEFAULT_CENTER, 
-  zoom = DEFAULT_ZOOM, 
+export const MapCanvas = ({
+  center = DEFAULT_CENTER,
+  zoom = DEFAULT_ZOOM,
   onMapReady,
-  children 
+  children
 }: MapCanvasProps) => {
   const mapsConfig = getMapsConfig();
   const [map, setMap] = useState<google.maps.Map | null>(null);
 
-  // Check if API key is missing before trying to load
+  // Load Maps JS API - must be called before any conditional returns
+  const { isLoaded, loadError } = useJsApiLoader({
+    googleMapsApiKey: mapsConfig.apiKey || 'dummy-key',
+    libraries: mapsConfig.libraries as ('places' | 'geometry' | 'marker')[],
+    mapIds: mapsConfig.mapId ? [mapsConfig.mapId] : undefined,
+  });
+
+  const onLoad = useCallback((mapInstance: google.maps.Map) => {
+    setMap(mapInstance);
+    onMapReady?.(mapInstance);
+  }, [onMapReady]);
+
+  const onUnmount = useCallback(() => {
+    setMap(null);
+  }, []);
+
+  // Check if API key is missing after all hooks have been called
   if (!mapsConfig.apiKey) {
     return (
       <div className="flex h-full w-full items-center justify-center bg-muted">
@@ -41,21 +57,6 @@ export const MapCanvas = ({
       </div>
     );
   }
-
-  const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: mapsConfig.apiKey,
-    libraries: mapsConfig.libraries as any,
-    mapIds: mapsConfig.mapId ? [mapsConfig.mapId] : undefined,
-  });
-
-  const onLoad = useCallback((mapInstance: google.maps.Map) => {
-    setMap(mapInstance);
-    onMapReady?.(mapInstance);
-  }, [onMapReady]);
-
-  const onUnmount = useCallback(() => {
-    setMap(null);
-  }, []);
 
   if (loadError) {
     return (

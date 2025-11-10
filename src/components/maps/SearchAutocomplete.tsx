@@ -41,7 +41,7 @@ export const SearchAutocomplete = ({
   const mapsConfig = getMapsConfig();
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: mapsConfig.apiKey,
-    libraries: mapsConfig.libraries as any,
+    libraries: mapsConfig.libraries as ('places' | 'geometry' | 'marker')[],
     mapIds: mapsConfig.mapId ? [mapsConfig.mapId] : undefined,
   });
 
