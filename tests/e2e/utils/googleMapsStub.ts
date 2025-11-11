@@ -439,13 +439,9 @@ export const googleMapsStub = `
     },
   });
 
-  Object.defineProperty(window, 'google', {
-    configurable: true,
-    get() {
-      return google;
-    },
-    set() {},
-  });
+  if (!window.google) {
+    window.google = google;
+  }
 
   mapsState.reset();
 
