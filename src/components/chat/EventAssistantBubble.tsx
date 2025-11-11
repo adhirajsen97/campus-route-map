@@ -28,6 +28,11 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
 import { useEvents } from "@/hooks/use-events";
+import {
+  EVENT_ASSISTANT_RESPONSE_FORMAT,
+  type AssistantEventDetails,
+  type AssistantStructuredResponse,
+} from "@/lib/event-assistant-schema";
 import { cn } from "@/lib/utils";
 
 const BUBBLE_MARGIN = 24;
@@ -78,22 +83,6 @@ interface ChatWindowProps {
   onClose: () => void;
 }
 
-type AssistantEventDetails = {
-  title: string;
-  time?: string;
-  location?: string | null;
-  category?: string | null;
-  tags: string[];
-  url?: string | null;
-  description?: string | null;
-};
-
-type AssistantStructuredResponse = {
-  summary?: string | null;
-  events: AssistantEventDetails[];
-  notes?: string | null;
-};
-
 const stripJsonWrapper = (value: string) => {
   const trimmed = value.trim();
   if (trimmed.startsWith("```")) {
@@ -105,6 +94,62 @@ const stripJsonWrapper = (value: string) => {
     return withoutFence.trim();
   }
   return trimmed;
+};
+
+const autoCloseJson = (value: string) => {
+  const sanitized = value.trim();
+  let inString = false;
+  let isEscaped = false;
+  const stack: string[] = [];
+
+  for (let index = 0; index < sanitized.length; index += 1) {
+    const char = sanitized[index];
+
+    if (inString) {
+      if (isEscaped) {
+        isEscaped = false;
+        continue;
+      }
+
+      if (char === "\\") {
+        isEscaped = true;
+        continue;
+      }
+
+      if (char === "\"") {
+        inString = false;
+      }
+      continue;
+    }
+
+    if (char === "\"") {
+      inString = true;
+      continue;
+    }
+
+    if (char === "{") {
+      stack.push("}");
+      continue;
+    }
+
+    if (char === "[") {
+      stack.push("]");
+      continue;
+    }
+
+    if (char === "}" || char === "]") {
+      const expected = stack.pop();
+      if (!expected || expected !== char) {
+        return sanitized;
+      }
+    }
+  }
+
+  if (stack.length === 0) {
+    return sanitized;
+  }
+
+  return sanitized + stack.reverse().join("");
 };
 
 const toAssistantEventDetails = (value: unknown): AssistantEventDetails | null => {
@@ -168,6 +213,26 @@ const parseAssistantResponse = (content: string): AssistantStructuredResponse | 
     };
   } catch (error) {
     console.error("Failed to parse assistant response", error);
+    const repaired = autoCloseJson(candidate);
+    if (repaired !== candidate) {
+      try {
+        const parsed = JSON.parse(repaired) as Record<string, unknown>;
+        const summary = typeof parsed.summary === "string" ? parsed.summary.trim() : undefined;
+        const notes = typeof parsed.notes === "string" ? parsed.notes.trim() : undefined;
+        const eventsValue = Array.isArray(parsed.events) ? parsed.events : [];
+        const events = eventsValue
+          .map((item) => toAssistantEventDetails(item))
+          .filter((item): item is AssistantEventDetails => item !== null);
+
+        return {
+          summary: summary ?? undefined,
+          notes: notes ?? undefined,
+          events,
+        };
+      } catch (repairError) {
+        console.error("Failed to parse repaired assistant response", repairError);
+      }
+    }
     return null;
   }
 };
@@ -362,7 +427,8 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
               ...payloadMessages,
             ],
             temperature: 0.1,
-            max_output_tokens: 600,
+            max_output_tokens: 1200,
+            response_format: EVENT_ASSISTANT_RESPONSE_FORMAT,
           }),
         });
 

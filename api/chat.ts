@@ -3,6 +3,8 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 
+import { EVENT_ASSISTANT_RESPONSE_FORMAT } from '../src/lib/event-assistant-schema';
+
 type ChatRole = 'system' | 'user' | 'assistant';
 
 interface ChatMessage {
@@ -125,7 +127,8 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
           ],
         })),
         temperature: 0.1,
-        max_output_tokens: 600,
+        max_output_tokens: 1200,
+        response_format: EVENT_ASSISTANT_RESPONSE_FORMAT,
       }),
     });
 
