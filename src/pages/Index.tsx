@@ -11,7 +11,7 @@ import { ShuttleRoutesLayer } from '@/components/maps/ShuttleRoutesLayer';
 import { EventsPanel } from '@/components/panels/EventsPanel';
 // import { mockBuildings } from '@/data/buildings.mock';
 import { useMapStore } from '@/lib/mapState';
-import { MapPin, Navigation, CalendarDays } from 'lucide-react';
+import { MapPin, Navigation, CalendarDays, Menu, X } from 'lucide-react';
 import { CampusMask } from '@/components/maps/CampusMask';
 import { CampusBoundary } from '@/components/maps/CampusBoundary';
 import anime from '@/lib/anime';
@@ -21,6 +21,9 @@ const Index = () => {
   const { center, zoom, setMapInstance } = useMapStore();
   const [directionsResult, setDirectionsResult] = useState<google.maps.DirectionsResult | null>(null);
   const [activeSidebarView, setActiveSidebarView] = useState<'directions' | 'events'>('directions');
+  const getIsDesktop = () => (typeof window !== 'undefined' ? window.innerWidth >= 1024 : true);
+  const [isDesktop, setIsDesktop] = useState(getIsDesktop);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(getIsDesktop);
 
   const indicatorRef = useRef<HTMLSpanElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
@@ -51,6 +54,21 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(getIsDesktop());
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (isDesktop) {
+      setIsSidebarOpen(true);
+    }
+  }, [isDesktop]);
+
+  useEffect(() => {
     const indicator = indicatorRef.current;
     const activeButton = menuButtonRefs.current[activeSidebarView];
     if (!indicator || !activeButton) return;
@@ -76,6 +94,100 @@ const Index = () => {
     });
   }, [activeSidebarView]);
 
+  const sidebarContent = (
+    <div className="bg-background border-l border-border flex h-full flex-col min-h-0">
+      <div className="border-b border-border/60 bg-background/80 px-6 py-4 backdrop-blur">
+        <div className="relative flex items-center gap-2">
+          <div className="relative flex flex-1 gap-2">
+            <button
+              ref={(node) => {
+                menuButtonRefs.current.directions = node;
+              }}
+              type="button"
+              onClick={() => setActiveSidebarView('directions')}
+              className={`flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+                activeSidebarView === 'directions'
+                  ? 'bg-primary/10 text-primary'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
+              aria-pressed={activeSidebarView === 'directions'}
+            >
+              <Navigation className="h-4 w-4" />
+              Directions
+            </button>
+            <button
+              ref={(node) => {
+                menuButtonRefs.current.events = node;
+              }}
+              type="button"
+              onClick={() => setActiveSidebarView('events')}
+              className={`flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+                activeSidebarView === 'events'
+                  ? 'bg-primary/10 text-primary'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
+              aria-pressed={activeSidebarView === 'events'}
+            >
+              <CalendarDays className="h-4 w-4" />
+              Events
+            </button>
+
+            <span
+              ref={indicatorRef}
+              className="pointer-events-none absolute bottom-0 left-0 h-0.5 rounded-full bg-primary"
+              style={{ width: 0 }}
+            />
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setIsSidebarOpen(false)}
+            className="ml-2 inline-flex h-8 w-8 items-center justify-center rounded-md border border-border/60 bg-background text-muted-foreground transition-colors hover:text-foreground lg:hidden"
+            aria-label="Close sidebar"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+      </div>
+
+      <div className="flex flex-1 flex-col overflow-hidden">
+        <div className="overflow-y-auto p-6">
+          <div
+            ref={contentRef}
+            className={`space-y-6 ${
+              activeSidebarView === 'events' ? 'flex-1 min-h-0 flex flex-col overflow-hidden' : ''
+            }`}
+          >
+            {activeSidebarView === 'directions' ? (
+              <>
+                <DirectionsPanel
+                  directionsResponse={directionsResult}
+                  onRouteComputed={handleRouteComputed}
+                  onRouteCleared={handleRouteCleared}
+                />
+
+                <div className="space-y-2 rounded-lg bg-muted p-4">
+                  <h3 className="text-sm font-semibold text-foreground">Quick Start</h3>
+                  <ul className="space-y-1.5 text-sm text-muted-foreground">
+                    <li>• Select a starting point in the directions panel</li>
+                    <li>• Click anywhere on the map to see building information</li>
+                    <li>• Use the directions button to add a destination</li>
+                    <li>• Toggle events layer to show/hide campus events</li>
+                    <li>• Drag the map or use zoom controls to explore different areas</li>
+                  </ul>
+                </div>
+              </>
+            ) : (
+              <div className="flex-1 min-h-0 overflow-hidden">
+                <EventsPanel />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="h-screen w-full flex flex-col">
       {/* Header */}
@@ -94,6 +206,19 @@ const Index = () => {
       <div className="flex-1 min-h-0 flex relative">
         {/* Map */}
         <div className="flex-1 relative">
+          <button
+            type="button"
+            onClick={() => setIsSidebarOpen(true)}
+            className={`lg:hidden absolute left-4 top-20 z-20 inline-flex items-center gap-2 rounded-md border border-border/60 bg-background/90 px-3 py-2 text-sm font-medium text-foreground shadow-md backdrop-blur transition-opacity ${
+              isSidebarOpen ? 'pointer-events-none opacity-0' : 'opacity-100'
+            }`}
+            aria-expanded={isSidebarOpen}
+            aria-controls="sidebar-panel"
+          >
+            <Menu className="h-4 w-4" />
+            Open panel
+          </button>
+
           <MapCanvas center={center} zoom={zoom} onMapReady={setMapInstance}>
             {directionsResult && (
               <DirectionsRenderer
@@ -121,88 +246,31 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Right Sidebar */}
-        <div className="w-96 bg-background border-l border-border flex flex-col min-h-0">
-          <div className="border-b border-border/60 bg-background/80 px-6 py-4 backdrop-blur">
-            <div className="relative flex gap-2">
-              <button
-                ref={(node) => {
-                  menuButtonRefs.current.directions = node;
-                }}
-                type="button"
-                onClick={() => setActiveSidebarView('directions')}
-                className={`flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
-                  activeSidebarView === 'directions'
-                    ? 'bg-primary/10 text-primary'
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
-                aria-pressed={activeSidebarView === 'directions'}
-              >
-                <Navigation className="h-4 w-4" />
-                Directions
-              </button>
-              <button
-                ref={(node) => {
-                  menuButtonRefs.current.events = node;
-                }}
-                type="button"
-                onClick={() => setActiveSidebarView('events')}
-                className={`flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
-                  activeSidebarView === 'events'
-                    ? 'bg-primary/10 text-primary'
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
-                aria-pressed={activeSidebarView === 'events'}
-              >
-                <CalendarDays className="h-4 w-4" />
-                Events
-              </button>
-
-              <span
-                ref={indicatorRef}
-                className="pointer-events-none absolute bottom-0 left-0 h-0.5 rounded-full bg-primary"
-                style={{ width: 0 }}
-              />
-            </div>
-          </div>
-
-          <div className="flex-1 flex flex-col overflow-hidden">
-            <div className="p-6 overflow-y-auto">
-
-              <div
-                ref={contentRef}
-                className={`space-y-6 ${
-                  activeSidebarView === 'events' ? 'flex-1 min-h-0 flex flex-col overflow-hidden' : ''
-                }`}
-              >
-                {activeSidebarView === 'directions' ? (
-                  <>
-                    <DirectionsPanel
-                      directionsResponse={directionsResult}
-                      onRouteComputed={handleRouteComputed}
-                      onRouteCleared={handleRouteCleared}
-                    />
-
-                            <div className="rounded-lg bg-muted p-4 space-y-2">
-                      <h3 className="font-semibold text-sm text-foreground">Quick Start</h3>
-                      <ul className="text-sm text-muted-foreground space-y-1.5">
-                        <li>• Select a starting point in the directions panel</li>
-                        <li>• Click anywhere on the map to see building information</li>
-                        <li>• Use the directions button to add a destination</li>
-                        <li>• Toggle events layer to show/hide campus events</li>
-                        <li>• Drag the map or use zoom controls to explore different areas</li>
-                      </ul>
-                    </div>
-                          </>
-                ) : (
-                  <div className="flex-1 min-h-0 overflow-hidden">
-                    <EventsPanel />
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
+        {/* Desktop Sidebar */}
+        <div className="hidden w-96 lg:flex">
+          {sidebarContent}
         </div>
+
+        {/* Mobile Sidebar */}
+        <div
+          className={`lg:hidden fixed inset-y-0 right-0 z-40 w-full max-w-sm transform transition-transform duration-300 ease-out ${
+            isSidebarOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
+          id="sidebar-panel"
+          role="dialog"
+          aria-modal="true"
+        >
+          {sidebarContent}
+        </div>
+
+        {/* Mobile Backdrop */}
+        <div
+          className={`lg:hidden fixed inset-0 z-30 bg-background/60 backdrop-blur-sm transition-opacity duration-300 ${
+            isSidebarOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
+          }`}
+          aria-hidden={!isSidebarOpen}
+          onClick={() => setIsSidebarOpen(false)}
+        />
       </div>
       <EventAssistantBubble />
     </div>
