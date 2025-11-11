@@ -499,7 +499,9 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
             ],
             temperature: 0.1,
             max_output_tokens: 1200,
-            response_format: EVENT_ASSISTANT_RESPONSE_FORMAT,
+            text: {
+              format: EVENT_ASSISTANT_RESPONSE_FORMAT,
+            },
           }),
         });
 

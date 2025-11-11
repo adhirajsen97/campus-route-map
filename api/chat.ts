@@ -149,7 +149,9 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
         }),
         temperature: 0.1,
         max_output_tokens: 1200,
-        response_format: EVENT_ASSISTANT_RESPONSE_FORMAT,
+        text: {
+          format: EVENT_ASSISTANT_RESPONSE_FORMAT,
+        },
       }),
     });
 
