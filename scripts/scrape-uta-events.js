@@ -181,6 +181,57 @@ function parseFrequencyDays(value) {
   return parsed;
 }
 
+function readLastScrapedAtFromJson(filePath) {
+  if (!existsSync(filePath)) {
+    return null;
+  }
+
+  try {
+    const contents = readFileSync(filePath, 'utf8');
+    const parsed = JSON.parse(contents);
+    const scrapedAt = parsed?.scrapedAt;
+    if (typeof scrapedAt !== 'string') {
+      return null;
+    }
+
+    const date = new Date(scrapedAt);
+    if (Number.isNaN(date.getTime())) {
+      return null;
+    }
+
+    return scrapedAt;
+  } catch (error) {
+    console.warn(`Failed to read last scraped timestamp from ${filePath}:`, error);
+    return null;
+  }
+}
+
+function resolveLastRunTimestamp(envLastRunIso, jsonLastRunIso) {
+  const candidates = [];
+
+  if (envLastRunIso) {
+    const envDate = new Date(envLastRunIso);
+    if (!Number.isNaN(envDate.getTime())) {
+      candidates.push({ iso: envLastRunIso, timestamp: envDate.getTime(), source: 'SCRAPE_EVENTS_LAST_RUN' });
+    }
+  }
+
+  if (jsonLastRunIso) {
+    const jsonDate = new Date(jsonLastRunIso);
+    if (!Number.isNaN(jsonDate.getTime())) {
+      candidates.push({ iso: jsonLastRunIso, timestamp: jsonDate.getTime(), source: 'data/events.json' });
+    }
+  }
+
+  if (candidates.length === 0) {
+    return { iso: null, source: 'unknown' };
+  }
+
+  candidates.sort((a, b) => b.timestamp - a.timestamp);
+  const [latest] = candidates;
+  return { iso: latest.iso, source: latest.source };
+}
+
 function shouldSkipRun(lastRunIso, frequencyDays, now) {
   if (!lastRunIso) {
     return false;
@@ -466,21 +517,28 @@ async function fetchEventsForDate(date) {
 async function main() {
   const envFile = parseEnvFile(envPath);
   const frequencyDays = parseFrequencyDays(getEnvValue(envFile, 'SCRAPE_EVENTS_FREQUENCY_DAYS'));
-  const lastRun = getEnvValue(envFile, 'SCRAPE_EVENTS_LAST_RUN');
+  const envLastRun = getEnvValue(envFile, 'SCRAPE_EVENTS_LAST_RUN');
+  const jsonLastRun = readLastScrapedAtFromJson(jsonPath);
+  const { iso: lastRun, source: lastRunSource } = resolveLastRunTimestamp(envLastRun, jsonLastRun);
   const now = new Date();
 
   if (shouldSkipRun(lastRun, frequencyDays, now)) {
     const nextRun = calculateNextEligibleRun(lastRun, frequencyDays);
     const nextRunDisplay = nextRun ? nextRun.toISOString() : 'unknown';
     console.log(
-      `Skipping scrape. Last run at ${lastRun} which is within ${frequencyDays} day(s). ` +
+      `Skipping scrape. Last run at ${lastRun} (source: ${lastRunSource}) which is within ${frequencyDays} day(s). ` +
       `Next eligible run after ${nextRunDisplay}.`
     );
     db.close();
     return;
   }
 
-  console.log(`Running events scraper. Frequency: every ${frequencyDays} day(s).`);
+  if (lastRun) {
+    console.log(`Running events scraper. Last run sourced from ${lastRunSource} at ${lastRun}.`);
+  } else {
+    console.log('Running events scraper. No previous run detected.');
+  }
+  console.log(`Frequency: every ${frequencyDays} day(s).`);
 
   const startDate = new Date();
   startDate.setUTCHours(0, 0, 0, 0);
