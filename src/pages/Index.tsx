@@ -5,7 +5,6 @@ import { DirectionsPanel } from '@/components/maps/DirectionsPanel';
 import { BuildingFootprints } from '@/components/maps/BuildingFootprints';
 import { BuildingMarkers } from '@/components/maps/BuildingMarkers';
 import { EventMarkers } from '@/components/maps/EventMarkers';
-import { GeolocateButton } from '@/components/maps/GeolocateButton';
 import { LayersToggle } from '@/components/maps/LayersToggle';
 import { ShuttleRoutesLayer } from '@/components/maps/ShuttleRoutesLayer';
 // import { BuildingInfoPanel } from '@/components/panels/BuildingInfoPanel';
@@ -116,11 +115,6 @@ const Index = () => {
             <EventMarkers />
           </MapCanvas>
 
-          {/* Floating Controls - Bottom Left */}
-          <div className="absolute bottom-6 left-6 flex flex-col gap-3 z-10">
-            <GeolocateButton />
-          </div>
-
           {/* Floating Layers Toggle - Top Right */}
           <div className="absolute top-20 right-3 z-10">
             <LayersToggle />
@@ -196,7 +190,7 @@ const Index = () => {
                         <li>• Click anywhere on the map to see building information</li>
                         <li>• Use the directions button to add a destination</li>
                         <li>• Toggle events layer to show/hide campus events</li>
-                        <li>• Click the target icon to center on your location</li>
+                        <li>• Drag the map or use zoom controls to explore different areas</li>
                       </ul>
                     </div>
                           </>
