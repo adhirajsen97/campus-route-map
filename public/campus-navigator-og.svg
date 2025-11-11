@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title>Campus Navigator Preview</title>
+  <desc>Open graph preview for the Campus Navigator app showing a stylised map pin on a simplified campus grid.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <linearGradient id="pin" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#2563eb" />
+    </linearGradient>
+    <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+      <rect width="80" height="80" fill="none" stroke="#1f2937" stroke-width="2" opacity="0.4" />
+      <path d="M0 40h80M40 0v80" stroke="#1f2937" stroke-width="2" opacity="0.4" />
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect x="80" y="80" width="1040" height="470" rx="24" fill="#111827" stroke="#1f2937" stroke-width="4" />
+  <rect x="120" y="120" width="960" height="390" rx="18" fill="url(#grid)" />
+  <g transform="translate(600 315)">
+    <path d="M0-180c-94.3 0-170.8 74.78-170.8 167.28 0 118.06 141.5 265.45 148.6 272.75 3.6 3.73 9.8 3.73 13.4 0 7.1-7.3 148.6-154.69 148.6-272.75C140.8-105.22 94.3-180 0-180z" fill="url(#pin)" />
+    <circle r="72" cy="-20" fill="#f8fafc" />
+    <circle r="36" cy="-20" fill="#2563eb" opacity="0.3" />
+  </g>
+  <text x="600" y="520" font-family="'Inter', 'Segoe UI', sans-serif" font-size="80" font-weight="600" fill="#f8fafc" text-anchor="middle">Campus Navigator</text>
+  <text x="600" y="580" font-family="'Inter', 'Segoe UI', sans-serif" font-size="32" fill="#cbd5f5" text-anchor="middle">Find your way around campus in seconds</text>
+</svg>

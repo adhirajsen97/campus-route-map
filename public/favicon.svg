@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title>Campus Navigator Favicon</title>
+  <defs>
+    <linearGradient id="pinGradient" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#1e3a8a" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="12" fill="#0f172a" />
+  <path d="M32 12c-8.3 0-15 6.64-15 14.82 0 10.43 12.43 23.46 13 24.05.53.54 1.47.54 2 0 .57-.59 13-13.62 13-24.05C45 18.64 40.3 12 32 12zm0 20.53a5.71 5.71 0 1 1 5.71-5.71A5.71 5.71 0 0 1 32 32.53z" fill="url(#pinGradient)" />
+  <circle cx="32" cy="26.82" r="3.2" fill="#f8fafc" />
+</svg>
