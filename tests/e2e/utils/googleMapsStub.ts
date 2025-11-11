@@ -338,60 +338,63 @@ export const googleMapsStub = `
     }
   }
 
-  const google = {
-    maps: {
-      Map,
-      Marker,
-      Polyline,
-      Polygon,
-      InfoWindow,
-      DirectionsRenderer,
-      DirectionsService,
-      LatLng,
-      LatLngBounds,
-      Size,
-      MVCObject,
-      event: {
-        addListener(target, eventName, handler) {
-          return target.addListener(eventName, handler);
-        },
-        removeListener(listener) {
-          if (listener && typeof listener.remove === 'function') {
-            listener.remove();
-          }
-        },
+  const google = window.google ?? {};
+  const maps = google.maps ?? {};
+
+  Object.assign(maps, {
+    Map,
+    Marker,
+    Polyline,
+    Polygon,
+    InfoWindow,
+    DirectionsRenderer,
+    DirectionsService,
+    LatLng,
+    LatLngBounds,
+    Size,
+    MVCObject,
+    event: {
+      addListener(target, eventName, handler) {
+        return target.addListener(eventName, handler);
       },
-      SymbolPath: {
-        CIRCLE: 'CIRCLE',
-        BACKWARD_CLOSED_ARROW: 'BACKWARD_CLOSED_ARROW',
-        FORWARD_CLOSED_ARROW: 'FORWARD_CLOSED_ARROW',
-      },
-      TravelMode: {
-        DRIVING: 'DRIVING',
-        WALKING: 'WALKING',
-        BICYCLING: 'BICYCLING',
-        TRANSIT: 'TRANSIT',
-      },
-      DirectionsStatus: {
-        OK: 'OK',
-        ZERO_RESULTS: 'ZERO_RESULTS',
-        NOT_FOUND: 'NOT_FOUND',
-      },
-      geometry: {
-        encoding: {
-          decodePath: () => [],
-        },
-      },
-      places: {
-        Autocomplete,
-        PlacesService,
-        PlacesServiceStatus: {
-          OK: 'OK',
-          ZERO_RESULTS: 'ZERO_RESULTS',
-        },
+      removeListener(listener) {
+        if (listener && typeof listener.remove === 'function') {
+          listener.remove();
+        }
       },
     },
-  };
+    SymbolPath: {
+      CIRCLE: 'CIRCLE',
+      BACKWARD_CLOSED_ARROW: 'BACKWARD_CLOSED_ARROW',
+      FORWARD_CLOSED_ARROW: 'FORWARD_CLOSED_ARROW',
+    },
+    TravelMode: {
+      DRIVING: 'DRIVING',
+      WALKING: 'WALKING',
+      BICYCLING: 'BICYCLING',
+      TRANSIT: 'TRANSIT',
+    },
+    DirectionsStatus: {
+      OK: 'OK',
+      ZERO_RESULTS: 'ZERO_RESULTS',
+      NOT_FOUND: 'NOT_FOUND',
+    },
+    geometry: {
+      encoding: {
+        decodePath: () => [],
+      },
+    },
+    places: {
+      Autocomplete,
+      PlacesService,
+      PlacesServiceStatus: {
+        OK: 'OK',
+        ZERO_RESULTS: 'ZERO_RESULTS',
+      },
+    },
+  });
+
+  google.maps = maps;
 
   const importLibrary = async (name) => {
     switch (name) {
