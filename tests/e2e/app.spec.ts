@@ -271,7 +271,7 @@ test('handles geolocation success and failure with toasts', async ({ page }) => 
 
   await geolocateButton.click();
   await expect(geolocateButton).toBeDisabled();
-  await expect(page.getByText('Location found')).toBeVisible();
+  await expect(page.getByText('Location found', { exact: true })).toBeVisible();
   await expect(page.getByText('Map centered on your current location')).toBeVisible();
   await expect(geolocateButton).toBeEnabled();
 

@@ -393,6 +393,42 @@ export const googleMapsStub = `
     },
   };
 
+  const importLibrary = async (name) => {
+    switch (name) {
+      case 'core':
+        return {
+          Map,
+          Marker,
+          Polyline,
+          Polygon,
+          InfoWindow,
+          DirectionsRenderer,
+          DirectionsService,
+          LatLng,
+          LatLngBounds,
+          Size,
+          MVCObject,
+          event: google.maps.event,
+        };
+      case 'places':
+        return {
+          Autocomplete,
+          PlacesService,
+          PlacesServiceStatus: google.maps.places.PlacesServiceStatus,
+        };
+      case 'geometry':
+        return {
+          encoding: google.maps.geometry.encoding,
+        };
+      case 'marker':
+        return {};
+      default:
+        return {};
+    }
+  };
+
+  google.maps.importLibrary = (name) => importLibrary(name);
+
   Object.defineProperty(window, '__googleMapsMock', {
     configurable: true,
     get() {
@@ -421,5 +457,55 @@ export const googleMapsStub = `
   window.__setMockDirectionsResponse = (response) => {
     mapsState.nextDirectionsResponse = response;
   };
+
+  const invokeCallback = (callbackName) => {
+    if (!callbackName) return;
+    const segments = callbackName.split('.');
+    let target = window;
+    for (const segment of segments) {
+      if (!target) return;
+      target = target[segment];
+    }
+    if (typeof target === 'function') {
+      try {
+        target();
+      } catch (error) {
+        console.error('googleMapsStub callback error', error);
+      }
+    }
+  };
+
+  const runCallbacks = () => {
+    const currentScript = document.currentScript;
+    if (currentScript) {
+      try {
+        const url = new URL(currentScript.src);
+        invokeCallback(url.searchParams.get('callback'));
+      } catch {
+        // ignore failures parsing script URL
+      }
+    }
+
+    if (google?.maps?.__ib__) {
+      try {
+        google.maps.__ib__();
+      } catch (error) {
+        console.error('googleMapsStub __ib__ error', error);
+      }
+    }
+
+    ['__googleMapsCallback', 'googleMapsCallback', 'initMap'].forEach((name) => {
+      const callback = window[name];
+      if (typeof callback === 'function') {
+        try {
+          callback();
+        } catch (error) {
+          console.error('googleMapsStub callback error', error);
+        }
+      }
+    });
+  };
+
+  setTimeout(runCallbacks, 0);
 })();
 `;
