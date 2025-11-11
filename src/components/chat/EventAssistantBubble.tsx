@@ -13,6 +13,7 @@ import type {
 import {
   Bot,
   CalendarDays,
+  ExternalLink,
   Loader2,
   MapPin,
   SendHorizontal,
@@ -76,6 +77,100 @@ interface ChatWindowProps {
   onClose: () => void;
 }
 
+type AssistantEventDetails = {
+  title: string;
+  time?: string;
+  location?: string | null;
+  category?: string | null;
+  tags: string[];
+  url?: string | null;
+  description?: string | null;
+};
+
+type AssistantStructuredResponse = {
+  summary?: string | null;
+  events: AssistantEventDetails[];
+  notes?: string | null;
+};
+
+const stripJsonWrapper = (value: string) => {
+  const trimmed = value.trim();
+  if (trimmed.startsWith("```")) {
+    const withoutFence = trimmed.replace(/^```json\s*/i, "").replace(/^```/, "");
+    const closingFenceIndex = withoutFence.lastIndexOf("```");
+    if (closingFenceIndex >= 0) {
+      return withoutFence.slice(0, closingFenceIndex).trim();
+    }
+    return withoutFence.trim();
+  }
+  return trimmed;
+};
+
+const toAssistantEventDetails = (value: unknown): AssistantEventDetails | null => {
+  if (!value || typeof value !== "object") {
+    return null;
+  }
+
+  const event = value as Record<string, unknown>;
+  const title = typeof event.title === "string" ? event.title.trim() : "";
+  if (!title) {
+    return null;
+  }
+
+  const time = typeof event.time === "string" ? event.time.trim() : undefined;
+  const location = typeof event.location === "string" ? event.location.trim() : null;
+  const category = typeof event.category === "string" ? event.category.trim() : null;
+  const description = typeof event.description === "string" ? event.description.trim() : undefined;
+  const url = typeof event.url === "string" && event.url.trim().length > 0 ? event.url.trim() : undefined;
+
+  const tags: string[] = Array.isArray(event.tags)
+    ? event.tags
+        .map((tag) => (typeof tag === "string" ? tag.trim() : ""))
+        .filter((tag): tag is string => tag.length > 0)
+    : [];
+
+  return {
+    title,
+    time,
+    location,
+    category,
+    tags,
+    url,
+    description,
+  };
+};
+
+const parseAssistantResponse = (content: string): AssistantStructuredResponse | null => {
+  const sanitized = stripJsonWrapper(content);
+  const start = sanitized.indexOf("{");
+  const end = sanitized.lastIndexOf("}");
+
+  if (start < 0 || end <= start) {
+    return null;
+  }
+
+  const candidate = sanitized.slice(start, end + 1);
+
+  try {
+    const parsed = JSON.parse(candidate) as Record<string, unknown>;
+    const summary = typeof parsed.summary === "string" ? parsed.summary.trim() : undefined;
+    const notes = typeof parsed.notes === "string" ? parsed.notes.trim() : undefined;
+    const eventsValue = Array.isArray(parsed.events) ? parsed.events : [];
+    const events = eventsValue
+      .map((item) => toAssistantEventDetails(item))
+      .filter((item): item is AssistantEventDetails => item !== null);
+
+    return {
+      summary: summary ?? undefined,
+      notes: notes ?? undefined,
+      events,
+    };
+  } catch (error) {
+    console.error("Failed to parse assistant response", error);
+    return null;
+  }
+};
+
 const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
   const { data: events, isLoading } = useEvents();
   const [draft, setDraft] = useState("");
@@ -92,6 +187,10 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
   const messagesRef = useRef(messages);
+  const hasUserMessages = useMemo(
+    () => messages.some((message) => message.role === "user"),
+    [messages],
+  );
 
   useEffect(() => {
     messagesRef.current = messages;
@@ -168,6 +267,10 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
         "If a user asks about anything outside the event data, reply: \"I'm sorry, I can only answer questions related to the events provided.\"",
         "Do not infer or invent information. Always quote or summarize directly from the provided event data.",
         "If the question cannot be answered with the available data, state that clearly.",
+        "You must respond using a single JSON object with this structure: { \"summary\": string, \"events\": [ { \"title\": string, \"time\": string, \"location\": string | null, \"category\": string | null, \"tags\": string[], \"url\": string | null, \"description\": string | null } ], \"notes\": string | null }.",
+        "Always include an array for \"events\" even when there are no results. When an event includes a URL in the data, place it in the \"url\" field; otherwise, set \"url\" to null.",
+        "Format the \"time\" field as a human-readable range like \"Nov 9, 2025 • 8:30 PM – 10:00 PM\". Use sentence case for the \"summary\" and \"notes\" fields.",
+        "Do not wrap the JSON in markdown code fences and do not include any text outside of the JSON object.",
         "",
         "Here is the complete list of events you can reference:",
         eventsSnapshot,
@@ -325,7 +428,7 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
     <div
       id="event-assistant-window"
       className={cn(
-        "fixed z-[60] flex h-[min(26rem,70vh)] w-[min(24rem,calc(100vw-3rem))] flex-col overflow-hidden rounded-xl border border-border/60 bg-background/95 shadow-2xl backdrop-blur",
+        "fixed z-[60] flex h-[min(34rem,80vh)] w-[min(28rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-xl border border-border/60 bg-background/95 shadow-2xl backdrop-blur",
         "ring-1 ring-black/5",
         corner.startsWith("top") ? "origin-top" : "origin-bottom",
       )}
@@ -365,6 +468,7 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
           <div className="space-y-4">
             {messages.map((message) => {
               const isAssistant = message.role === "assistant";
+              const assistantResponse = isAssistant ? parseAssistantResponse(message.content) : null;
               return (
                 <div
                   key={message.id}
@@ -384,11 +488,77 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
                       isAssistant ? "rounded-tl-sm" : "rounded-tr-sm bg-primary text-primary-foreground",
                     )}
                   >
-                    {message.content.split("\n").map((line, index) => (
-                      <p key={`${message.id}-${index}`} className={index > 0 ? "mt-1.5" : undefined}>
-                        {line.trim()}
-                      </p>
-                    ))}
+                    {assistantResponse ? (
+                      <div className="space-y-3">
+                        {assistantResponse.summary ? (
+                          <p className="text-sm font-medium text-foreground">{assistantResponse.summary}</p>
+                        ) : null}
+                        {assistantResponse.events.length > 0 ? (
+                          <div className="space-y-3">
+                            {assistantResponse.events.map((event, eventIndex) => (
+                              <div
+                                key={`${message.id}-${eventIndex}-${event.title}`}
+                                className="rounded-lg border border-border/60 bg-muted/20 p-3"
+                              >
+                                <div className="flex items-start justify-between gap-3">
+                                  <div>
+                                    <p className="text-sm font-semibold text-foreground">{event.title}</p>
+                                    {event.time ? (
+                                      <p className="mt-1 text-xs text-muted-foreground">{event.time}</p>
+                                    ) : null}
+                                    {event.location ? (
+                                      <p className="mt-1 text-xs text-muted-foreground">{event.location}</p>
+                                    ) : null}
+                                  </div>
+                                  {event.url ? (
+                                    <a
+                                      href={event.url}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2 py-1 text-[11px] font-medium text-primary transition hover:bg-primary/20"
+                                    >
+                                      View event
+                                      <ExternalLink className="h-3 w-3" aria-hidden="true" />
+                                    </a>
+                                  ) : null}
+                                </div>
+                                {event.description ? (
+                                  <p className="mt-2 text-sm text-muted-foreground">{event.description}</p>
+                                ) : null}
+                                <div className="mt-2 flex flex-wrap gap-1.5">
+                                  {event.category ? (
+                                    <span className="inline-flex items-center rounded-full bg-background px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
+                                      {event.category}
+                                    </span>
+                                  ) : null}
+                                  {event.tags.map((tag) => (
+                                    <span
+                                      key={`${message.id}-${eventIndex}-${tag}`}
+                                      className="inline-flex items-center rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-medium text-primary"
+                                    >
+                                      #{tag}
+                                    </span>
+                                  ))}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <p className="text-sm text-muted-foreground">
+                            No matching events were found in the current schedule.
+                          </p>
+                        )}
+                        {assistantResponse.notes ? (
+                          <p className="text-xs text-muted-foreground">{assistantResponse.notes}</p>
+                        ) : null}
+                      </div>
+                    ) : (
+                      message.content.split("\n").map((line, index) => (
+                        <p key={`${message.id}-${index}`} className={index > 0 ? "mt-1.5" : undefined}>
+                          {line.trim()}
+                        </p>
+                      ))
+                    )}
                   </div>
                   {!isAssistant ? (
                     <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
@@ -413,26 +583,28 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
             </div>
           ) : null}
 
-          <div className="rounded-lg border border-dashed border-primary/40 bg-primary/5 p-3">
-            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-primary">
-              <Sparkles className="h-4 w-4" aria-hidden="true" />
-              Knowledge base snapshot
+          {!hasUserMessages ? (
+            <div className="rounded-lg border border-dashed border-primary/40 bg-primary/5 p-3">
+              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-primary">
+                <Sparkles className="h-4 w-4" aria-hidden="true" />
+                Knowledge base snapshot
+              </div>
+              <ul className="mt-2 space-y-1.5 text-sm text-primary/90">
+                <li className="flex items-center gap-2">
+                  <CalendarDays className="h-4 w-4" aria-hidden="true" />
+                  {isLoading ? "Loading events..." : `${totalEvents} upcoming events tracked`}
+                </li>
+                <li className="flex items-center gap-2">
+                  <MapPin className="h-4 w-4" aria-hidden="true" />
+                  {isLoading ? "Gathering locations" : `${locations} unique campus locations`}
+                </li>
+                <li className="flex items-center gap-2">
+                  <Tag className="h-4 w-4" aria-hidden="true" />
+                  {isLoading ? "Collecting tags" : `${tags} descriptive tags across ${categories} categories`}
+                </li>
+              </ul>
             </div>
-            <ul className="mt-2 space-y-1.5 text-sm text-primary/90">
-              <li className="flex items-center gap-2">
-                <CalendarDays className="h-4 w-4" aria-hidden="true" />
-                {isLoading ? "Loading events..." : `${totalEvents} upcoming events tracked`}
-              </li>
-              <li className="flex items-center gap-2">
-                <MapPin className="h-4 w-4" aria-hidden="true" />
-                {isLoading ? "Gathering locations" : `${locations} unique campus locations`}
-              </li>
-              <li className="flex items-center gap-2">
-                <Tag className="h-4 w-4" aria-hidden="true" />
-                {isLoading ? "Collecting tags" : `${tags} descriptive tags across ${categories} categories`}
-              </li>
-            </ul>
-          </div>
+          ) : null}
 
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Quick prompts</p>
@@ -452,11 +624,6 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
             </div>
           </div>
 
-          <div className="rounded-lg border border-border/60 bg-muted/30 p-3 text-xs text-muted-foreground">
-            Instruction guardrails: “You are an Event Assistant AI. You must ONLY answer questions based on the
-            event data provided. If a user asks about anything outside the event data, reply: "I'm sorry, I can
-            only answer questions related to the events provided." Do not infer or invent information.”
-          </div>
         </div>
       </ScrollArea>
 
