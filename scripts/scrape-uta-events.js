@@ -15,7 +15,7 @@ const dbPath = join(projectRoot, 'data', 'events.sqlite');
 const jsonPath = join(projectRoot, 'data', 'events.json');
 const envPath = join(projectRoot, '.env');
 
-const DEFAULT_SCRAPE_FREQUENCY_DAYS = 3;
+const DEFAULT_SCRAPE_FREQUENCY_DAYS = 1;
 
 mkdirSync(dirname(dbPath), { recursive: true });
 
