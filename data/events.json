@@ -1,294 +1,6 @@
 {
-  "scrapedAt": "2025-11-08T22:40:26.951Z",
+  "scrapedAt": "2025-11-11T22:11:42.627Z",
   "events": [
-    {
-      "id": "50818369238630",
-      "title": "Student Percussion Recital: Justin Sumling",
-      "description": "Justin Sumling, a student at UTA, will take the stage to share their passion for music with the audience. This recital promises a delightful experience of beautiful melodies and impressive musical talent. This performance is free and open to the public. It takes place in Irons Recital Hall, FA105, located in the South Section of the Fine Arts Building. The doors will open approximately 30 minutes before the performance time. Please be aware that no food or drink, aside from bottled water, is allowed in the recital hall. Parking is available in the West Campus Garage, and ADA parking is available at the meters on Nedderman Drive in front of Texas Hall. Visit our parking page for more information.",
-      "start": "2025-11-08T17:30:00.000Z",
-      "end": "2025-11-08T00:00:00.000Z",
-      "location": "Irons Recital Hall, Fine Arts Building",
-      "url": "https://events.uta.edu/event/student-percussion-recital-justin-sumling",
-      "tags": [
-        "Arts & Culture"
-      ],
-      "category": "social",
-      "lat": 32.730496,
-      "lng": -97.115139
-    },
-    {
-      "id": "50269405350827",
-      "title": "Bachelor of Social Work (BSW) Virtual Information Session",
-      "description": "Attend an information session to explore the history of UTA's School of Social Work, discover social work career opportunities, and learn about application and admissions requirements. Register here!",
-      "start": "2025-11-08T18:30:00.000Z",
-      "end": "2025-11-08T19:30:00.000Z",
-      "location": null,
-      "url": "https://events.uta.edu/event/bachelor-of-social-work-bsw-virtual-information-session",
-      "tags": [
-        "Information Session"
-      ],
-      "category": "academic",
-      "lat": null,
-      "lng": null
-    },
-    {
-      "id": "50648221279385",
-      "title": "Volleyball game vs. Utah Valley",
-      "description": "Don't miss cheering on the UTA volleyball team on Senior Day!",
-      "start": "2025-11-08T19:00:00.000Z",
-      "end": "2025-11-08T00:00:00.000Z",
-      "location": "College Park Center",
-      "url": "https://events.uta.edu/event/volleyball-game-vs-utah-valley",
-      "tags": [
-        "Athletics"
-      ],
-      "category": "sports",
-      "lat": 32.73108,
-      "lng": -97.107261
-    },
-    {
-      "id": "50818363202915",
-      "title": "Student Percussion Recital: Lorenzo Ozella",
-      "description": "Lorenzo Ozella, a student at UTA, will take the stage to share their passion for music with the audience. This recital promises a delightful experience of beautiful melodies and impressive musical talent. This performance is free and open to the public. It takes place in Irons Recital Hall, FA105, located in the South Section of the Fine Arts Building. The doors will open approximately 30 minutes before the performance time. Please be aware that no food or drink, aside from bottled water, is allowed in the recital hall. Parking is available in the West Campus Garage, and ADA parking is available at the meters on Nedderman Drive in front of Texas Hall. Visit our parking page for more information.",
-      "start": "2025-11-08T19:30:00.000Z",
-      "end": "2025-11-08T00:00:00.000Z",
-      "location": "Irons Recital Hall, Fine Arts Building",
-      "url": "https://events.uta.edu/event/student-percussion-recital-lorenzo-ozella",
-      "tags": [
-        "Arts & Culture"
-      ],
-      "category": "social",
-      "lat": 32.730496,
-      "lng": -97.115139
-    },
-    {
-      "id": "50818375979791",
-      "title": "Student Viola Recital: Karen Morales",
-      "description": "Karen Morales, a student at UTA, will take the stage to share their passion for music with the audience. This recital promises a delightful experience of beautiful melodies and impressive musical talent. This performance is free and open to the public. It takes place in Irons Recital Hall, FA105, located in the South Section of the Fine Arts Building. The doors willopen approximately 30 minutes before the performance time. Please be aware that no food or drink, aside from bottled water, is allowed in the recital hall. Parking is available in the West Campus Garage, and ADA parking is available at the meters on Nedderman Drive in front of Texas Hall. Visit our parking page for more information.",
-      "start": "2025-11-08T21:30:00.000Z",
-      "end": "2025-11-08T00:00:00.000Z",
-      "location": "Irons Recital Hall, Fine Arts Building",
-      "url": "https://events.uta.edu/event/student-viola-recital-karen-morales",
-      "tags": [
-        "Arts & Culture"
-      ],
-      "category": "social",
-      "lat": 32.730496,
-      "lng": -97.115139
-    },
-    {
-      "id": "50818383220016",
-      "title": "Student Vocal Recital: De'Andree Delgadillo",
-      "description": "De'Andree Delgadillo, a student at UTA, will take the stage to share their passion for music with the audience. This recital promises a delightful experience of beautiful melodies and impressive musical talent. This performance is free and open to the public. It takes place in Irons Recital Hall, FA105, located in the South Section of the Fine Arts Building. The doors will open approximately 30 minutes before the performance time. Please be aware that no food or drink, aside from bottled water, is allowed in the recital hall. Parking is available in the West Campus Garage, and ADA parking is available at the meters on Nedderman Drive in front of Texas Hall. Visit our parking page for more information.",
-      "start": "2025-11-08T23:30:00.000Z",
-      "end": "2025-11-08T00:00:00.000Z",
-      "location": "Irons Recital Hall, Fine Arts Building",
-      "url": "https://events.uta.edu/event/student-vocal-recital-deandree-delgadillo",
-      "tags": [
-        "Arts & Culture"
-      ],
-      "category": "social",
-      "lat": 32.730496,
-      "lng": -97.115139
-    },
-    {
-      "id": "50818396266741",
-      "title": "Student Vocal Recital: Jamie Gonzalez",
-      "description": "Jamie Gonzalez, a student at UTA, will take the stage to share their passion for music with the audience. This recital promises a delightful experience of beautiful melodies and impressive musical talent. This performance is free and open to the public. It takes place in Irons Recital Hall, FA105, located in the South Section of the Fine Arts Building. The doors will open approximately 30 minutes before the performance time. Please be aware that no food or drink, aside from bottled water, is allowed in the recital hall. Parking is available in the West Campus Garage, and ADA parking is available at the meters on Nedderman Drive in front of Texas Hall. Visit our parking page for more information.",
-      "start": "2025-11-09T01:30:00.000Z",
-      "end": "2025-11-08T00:00:00.000Z",
-      "location": "Irons Recital Hall, Fine Arts Building",
-      "url": "https://events.uta.edu/event/student-vocal-recital-jamie-gonzalez",
-      "tags": [
-        "Arts & Culture"
-      ],
-      "category": "social",
-      "lat": 32.730496,
-      "lng": -97.115139
-    },
-    {
-      "id": "50818408316890",
-      "title": "Percussion Ensemble Concert",
-      "description": "Join us for an exhilarating evening of rhythm, energy, and musical creativity at UTA’s Percussion Ensemble Concert! The UTA Percussion Ensemble, under the direction of Dr. Andrew Eldridge, is one of the key components of the percussion curriculum at UTA. This performance is free and open to the public. It will be held in Irons Recital Hall, FA105, located in the South Section of the Fine Arts Building. The doors will open approximately 30 minutes before the performance time. Please be aware that no food or drink, aside from bottled water, is allowed in the recital hall. Parking is available in the West Campus Garage, and ADA parking is available at the meters on Nedderman Drive in front of Texas Hall. Visit our parking page for more information. This concert will be live-streamed at uta.edu/music/live.php.",
-      "start": "2025-11-09T20:30:00.000Z",
-      "end": "2025-11-09T00:00:00.000Z",
-      "location": "Irons Recital Hall, Fine Arts Building",
-      "url": "https://events.uta.edu/event/percussion-ensemble-concert-2954",
-      "tags": [
-        "Arts & Culture"
-      ],
-      "category": "social",
-      "lat": 32.730496,
-      "lng": -97.115139
-    },
-    {
-      "id": "51205678981861",
-      "title": "Light the Night hosted by The Leukemia & Lymphoma Society",
-      "description": "Unite with the Leukemia & Lymphoma Society & Spread Awareness as a community to honor and remember those affected by blood cancers. All community members are invited.",
-      "start": "2025-11-09T22:30:00.000Z",
-      "end": "2025-11-10T01:00:00.000Z",
-      "location": "Trinity Shelter Pavilion: Trinity Park",
-      "url": "https://events.uta.edu/event/light-the-night-hosted-by-the-leukemia-lymphoma-society",
-      "tags": [
-        "New",
-        "Health & Wellness"
-      ],
-      "category": "wellness",
-      "lat": 32.75132,
-      "lng": -97.350179
-    },
-    {
-      "id": "49649895677723",
-      "title": "Maverick Formal",
-      "description": "Join us for a night of elegance, dancing, and fun at Maverick Formal, where students show up and show off not only their outfits but their dance moves. This event is free and open to all students.",
-      "start": "2025-11-09T23:00:00.000Z",
-      "end": "2025-11-10T02:00:00.000Z",
-      "location": "Bluebonnet Ballroom, University Center",
-      "url": "https://events.uta.edu/event/maverick-formal-3764",
-      "tags": [
-        "Campus & Community"
-      ],
-      "category": "social",
-      "lat": 32.731835,
-      "lng": -97.110618
-    },
-    {
-      "id": "50852329569423",
-      "title": "Graduate Recital: Sung Tak Kim",
-      "description": "Sung Tak Kim, a graduate student at UTA, will take the stage to share their passion for music with the audience. This recital promises a delightful experience of beautiful melodies and impressive musical talent. This performance is free and open to the public. It takes place in FA 258, located in the Central Section of the Fine Arts Building. The doors will open approximately 30 minutes before the performance time. Parking is available in the West Campus Garage, and ADA parking is available at the meters on Nedderman Drive in front of Texas Hall. Visit our parking page for more information.",
-      "start": "2025-11-10T01:00:00.000Z",
-      "end": "2025-11-09T00:00:00.000Z",
-      "location": "Music, Fine Arts Building South",
-      "url": "https://events.uta.edu/event/graduate-recital-sung-tak-kim",
-      "tags": [
-        "Arts & Culture"
-      ],
-      "category": "social",
-      "lat": 32.730496,
-      "lng": -97.115139
-    },
-    {
-      "id": "50818417496541",
-      "title": "Student Vocal Recital: Dylan Brown",
-      "description": "Dylan Brown, a student at UTA, will take the stage to share their passion for music with the audience. This recital promises a delightful experience of beautiful melodies and impressive musical talent. This performance is free and open to the public. It takes place in Irons Recital Hall, FA105, located in the South Section of the Fine Arts Building. Doors open approximately 30 minutes before the performance time. Please be aware that no food or drink, aside from bottled water, is allowed in the recital hall. Parking is available in the West Campus Garage, and ADA parking is available at the meters on Nedderman Drive in front of Texas Hall. Visit our parking page for more information.",
-      "start": "2025-11-10T01:30:00.000Z",
-      "end": "2025-11-09T00:00:00.000Z",
-      "location": "Irons Recital Hall, Fine Arts Building",
-      "url": "https://events.uta.edu/event/student-vocal-recital-dylan-brown",
-      "tags": [
-        "Arts & Culture"
-      ],
-      "category": "social",
-      "lat": 32.730496,
-      "lng": -97.115139
-    },
-    {
-      "id": "50950433771717",
-      "title": "Homecoming Golf Tournament",
-      "description": "Help celebrate Maverick Homecoming by joining us for a wonderful morning at the golf course at this year's Homecoming Golf Tournament. Your entry includes a light breakfast, lunch, refreshments, door prizes, green fees, golf cart, range balls and more. Submit your team or individual entry by Tuesday, October 28. The tournament will be held on Monday, November 10 at Tierra Verde Golf Course in Arlington.",
-      "start": "2025-11-10T14:30:00.000Z",
-      "end": "2025-11-10T19:00:00.000Z",
-      "location": "Tierra Verde Golf Club",
-      "url": "https://events.uta.edu/event/homecoming-golf-tournament-3565",
-      "tags": [
-        "Recreation & Fun"
-      ],
-      "category": "academic",
-      "lat": 32.624281,
-      "lng": -97.183067
-    },
-    {
-      "id": "49269390616248",
-      "title": "Paint Your Ride",
-      "description": "Paint Your Ride is an annual event open to the entire UTA community. It is a drive-through event where Freshman Leaders on Campus paint vehicle windows to be in Maverick Spirit for homecoming week! Stop by and meet your local Freshman Leaders!",
-      "start": "2025-11-10T17:00:00.000Z",
-      "end": "2025-11-10T19:00:00.000Z",
-      "location": "Arlington Hall Circle, and West Hall Circle",
-      "url": "https://events.uta.edu/event/paint-your-ride-4818",
-      "tags": [
-        "Campus & Community"
-      ],
-      "category": "social",
-      "lat": 32.733921,
-      "lng": -97.116856
-    },
-    {
-      "id": "50586653707988",
-      "title": "Introduction to ARCGIS",
-      "description": "This ArcGIS workshop offers an introduction to the fundamentals of Geographic Information Systems using the ArcGIS pro platform. Key topics include creating and navigating maps, working with spatial data, basic map design, and simple data analysis techniques. Participants will gain hands-on experience with core ArcGIS tools to visualize and explore geographic information.",
-      "start": "2025-11-10T19:30:00.000Z",
-      "end": "2025-11-10T21:00:00.000Z",
-      "location": "Central Library",
-      "url": "https://events.uta.edu/event/introduction-to-arcgis-4808",
-      "tags": [
-        "Academic Calendar"
-      ],
-      "category": "academic",
-      "lat": 32.729678,
-      "lng": -97.112926
-    },
-    {
-      "id": "51011521824748",
-      "title": "Crandell Speaker Series: Nobel Laureate Michael Rosbash",
-      "description": "Join us for the next exciting installment of the Crandell Speaker Series, featuring Nobel Laureate Michael Rosbash as he presents: “The Circadian Rhythm Story: Past, Present, and Future.\" ✨Discover the fascinating journey of circadian rhythm research from one of the world’s leading scientists! Come early, grab some refreshments, and get ready for an unforgettable afternoon of science, insight, and inspiration. We will begin serving refreshments at 3:30 p.m.",
-      "start": "2025-11-10T22:00:00.000Z",
-      "end": "2025-11-10T00:00:00.000Z",
-      "location": "Science and Engineering Innovation and Research Building (SEIR)",
-      "url": "https://events.uta.edu/event/crandell-speaker-series-nobel-laureate-michael-rosbash",
-      "tags": [
-        "Science & Technology"
-      ],
-      "category": "academic",
-      "lat": 32.727954,
-      "lng": -97.11298
-    },
-    {
-      "id": "51193698616720",
-      "title": "In Pursuit of Lizards",
-      "description": "PhD canditate Adam Rosso of the Fujita Lab will discuss his time in the field while researching whiptails, anoles, and wall lizards. This event will be hosted by the Herpetology Club.",
-      "start": "2025-11-10T23:00:00.000Z",
-      "end": "2025-11-11T00:00:00.000Z",
-      "location": "SH 100",
-      "url": "https://events.uta.edu/event/in-pursuit-of-lizards",
-      "tags": [
-        "New",
-        "Recreation & Fun"
-      ],
-      "category": "academic",
-      "lat": null,
-      "lng": null
-    },
-    {
-      "id": "51117749103797",
-      "title": "Men's Basketball vs. Arlington Baptist",
-      "description": "Join us for Battle of the Arlington universities! Come Celebrate Arlington pride during American Dream City Night, featuring performances by the Varsity Select Women’s Ensemble and Harry Truman Middle School. Let's cheer on our Mavs as they take on Arlington Baptist University!",
-      "start": "2025-11-11T01:00:00.000Z",
-      "end": "2025-11-10T00:00:00.000Z",
-      "location": "College Park Center",
-      "url": "https://events.uta.edu/event/mens-basketball-vs-arlington-baptist",
-      "tags": [
-        "New",
-        "Athletics"
-      ],
-      "category": "sports",
-      "lat": 32.73108,
-      "lng": -97.107261
-    },
-    {
-      "id": "50818463981850",
-      "title": "String Chamber Concert",
-      "description": "Each String Chamber concert provides a different program and promises to be an enchanting evening of classical music from the UTA String Chamber Ensemble, under the exceptional leadership of Cathy Forbes. This performance is free and open to the public. It takes place in Irons Recital Hall, FA105, located in the South Section of the Fine Arts Building. The doors will open approximately 30 minutes before the performance time. Please be aware that no food or drink, aside from bottled water, is allowed in the recital hall. Parking is available in the West Campus Garage, and ADA parking is available at the meters on Nedderman Drive in front of Texas Hall. Visit our parking page for more information. This recital will be live-streamed at uta.edu/music/live.php.",
-      "start": "2025-11-11T01:30:00.000Z",
-      "end": "2025-11-10T00:00:00.000Z",
-      "location": "Irons Recital Hall, Fine Arts Building",
-      "url": "https://events.uta.edu/event/string-chamber-concert-5529",
-      "tags": [
-        "Arts & Culture"
-      ],
-      "category": "social",
-      "lat": 32.730496,
-      "lng": -97.115139
-    },
     {
       "id": "49710126047224",
       "title": "Involvement Fair",
@@ -319,6 +31,22 @@
       "category": "social",
       "lat": 42.338983,
       "lng": -71.044642
+    },
+    {
+      "id": "51225127774662",
+      "title": "Tabling: \"Start Where You Are\" Discovery Space",
+      "description": "Discover what truly matters to you in your career journey! Explore your personal values and interests through our interactive “Deal or No Deal” Career Board. Earn snacks, prizes, and a Career Readiness Postcard stamp!",
+      "start": "2025-11-11T17:00:00.000Z",
+      "end": "2025-11-11T19:00:00.000Z",
+      "location": null,
+      "url": "https://events.uta.edu/event/tabling-start-where-you-are-discovery-space",
+      "tags": [
+        "New",
+        "Workshops"
+      ],
+      "category": "academic",
+      "lat": null,
+      "lng": null
     },
     {
       "id": "51127733631594",
@@ -554,6 +282,22 @@
       "lng": null
     },
     {
+      "id": "51225134985927",
+      "title": "Tabling: \"Boost Your Connections\" Corner",
+      "description": "Build your network and strengthen your professional connections in this interactive networking lounge! Grab a Career Connection Card to complete fun networking challenges and earn raffle entries, snacks, and prizes. Pick up a color-coded name tag to spark meaningful conversations and exchange LinkedIn profiles with fellow Mavericks. Share your experience by tagging the Career Center for an extra raffle entry—and leave with new connections that can help you on your career journey!",
+      "start": "2025-11-12T17:00:00.000Z",
+      "end": "2025-11-12T19:00:00.000Z",
+      "location": null,
+      "url": "https://events.uta.edu/event/tabling-boost-your-connections-corner",
+      "tags": [
+        "New",
+        "Workshops"
+      ],
+      "category": "academic",
+      "lat": null,
+      "lng": null
+    },
+    {
       "id": "50393555014446",
       "title": "Stop. Drop (In). Write. | Graduate Writing Days",
       "description": "Writing is a core aspect of the graduate experience, so why shouldn't writing support be at the center of our efforts to support Maverick graduates? Join us as our EDGE Center graduate assistants lead you through our structured writing days to provide you with the community and tools to boost your academic writing, research development, proofreading skills, and so much more. A light lunch will be provided for each session - please RSVP to reserve your seat! 9/17/25 (11:30 a,m, - 1:30 p.m.) - Think It, Ink It...Just Write It!The EDGE Center presents a focused writing lab designed to help graduate students get words on the page through structured writing sprints. Whether you’re stuck, overwhelmed, or just need a push, this session gives you time, tools, and encouragement to move forward. Come ready to write, reflect, and reset your momentum.​​​​​​10/15/25 (11:30 a.m. - 1:30 p.m.) - Find Your Flow & Keep It MovingThis session offers quiet, structured time to focus, reset, and make meaningful progress whether you’re drafting, revising, or brainstorming. With built-in writing sprints, reflection, and optional support, you’ll walk away with clarity, confidence, and the tools to stay in motion long after the session ends. Just show up—we’ll help you keep it moving.​​​​​​11/12/25 (11:30am - 1:30pm) - Trim, Tweak, & Edit Like a ProThis session is designed to help graduate students tackle the revision process with confidence and ease. You’ll learn practical strategies and tools to make editing less overwhelming with differnt tools. Whether you’re obsessing over commas or struggling to cut clutter, this lab will guide you to clarify your message and polish your writing step by step.​​​​​​",
@@ -748,6 +492,22 @@
       "tags": [
         "New",
         "Recreation & Fun"
+      ],
+      "category": "academic",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "51225141984718",
+      "title": "Tabling: Skill-Building Tool-Kit",
+      "description": "Test your knowledge and strengthen your career skills through an engaging Jeopardy-style trivia game! Connect what you’ve learned in the classroom and beyond to real-world career readiness concepts—from transferable skills to technical know-how. Compete with fellow students, earn raffle entries, and discover how your experiences translate into professional strengths. Enjoy snacks, grab skill-building resources, and take another step toward becoming career ready!",
+      "start": "2025-11-13T17:00:00.000Z",
+      "end": "2025-11-13T19:00:00.000Z",
+      "location": null,
+      "url": "https://events.uta.edu/event/tabling-skill-building-tool-kit",
+      "tags": [
+        "New",
+        "Workshops"
       ],
       "category": "academic",
       "lat": null,
@@ -982,6 +742,37 @@
       "tags": [
         "New",
         "Conference/Symposium"
+      ],
+      "category": "academic",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "51260619068953",
+      "title": "Fried Fish Friday",
+      "description": "Join UTA's Military and Veteran Services for food and fellowship on Friday, Nov. 14. Student veterans, faculty, staff, military-connected dependents, alumni, and community partners are invited. Register now.",
+      "start": "2025-11-14T18:00:00.000Z",
+      "end": "2025-11-14T19:00:00.000Z",
+      "location": "Military and Veteran Services Center",
+      "url": "https://events.uta.edu/event/fried-fish-friday",
+      "tags": [
+        "New"
+      ],
+      "category": "academic",
+      "lat": 32.733858,
+      "lng": -97.122031
+    },
+    {
+      "id": "51225152492933",
+      "title": "Listening Party: Podcast Launch!",
+      "description": "Celebrate the end of Career Week with us at our Listening Party and Grand Finale! Be among the first to experience the launch of the Career Center’s new podcast, featuring career stories and insights to inspire your next steps. Then stick around for the Grand Prize Drawing to see who takes home the big wins!",
+      "start": "2025-11-14T18:00:00.000Z",
+      "end": "2025-11-14T20:00:00.000Z",
+      "location": null,
+      "url": "https://events.uta.edu/event/listening-party-podcast-launch",
+      "tags": [
+        "New",
+        "Workshops"
       ],
       "category": "academic",
       "lat": null,
@@ -1294,6 +1085,22 @@
       "lng": -97.107261
     },
     {
+      "id": "51259717956464",
+      "title": "Yoga Under the Stars",
+      "description": "Join us for a relaxing beginner-friendly yoga session beneath a stunning night sky in the Planetarium. Flow through gentle poses and mindful breathing as constellations twinkle above you. Please bring your own mat and get ready to unwind, stretch, and connect with the universe in this one-of-a-kind cosmic experience.",
+      "start": "2025-11-16T01:00:00.000Z",
+      "end": "2025-11-16T02:00:00.000Z",
+      "location": "UTA Planetarium",
+      "url": "https://events.uta.edu/event/yoga-under-the-stars",
+      "tags": [
+        "New",
+        "Health & Wellness"
+      ],
+      "category": "wellness",
+      "lat": 32.730405,
+      "lng": -97.111807
+    },
+    {
       "id": "50818455020568",
       "title": "Student Vocal Recital: Hannah Drees",
       "description": "Hannah Drees, a student at UTA, will take the stage to share their passion for music with the audience. This recital promises a delightful experience of beautiful melodies and impressive musical talent. This performance is free and open to the public. It takes place in Irons Recital Hall, FA105, located in the South Section of the Fine Arts Building. The doors will open approximately 30 minutes before the performance time. Please be aware that no food or drink, aside from bottled water, is allowed in the recital hall. Parking is available in the West Campus Garage, and ADA parking is available at the meters on Nedderman Drive in front of Texas Hall. Visit our parking page for more information.",
@@ -1307,6 +1114,22 @@
       "category": "social",
       "lat": 32.730496,
       "lng": -97.115139
+    },
+    {
+      "id": "51225223850867",
+      "title": "Miss You Like Hell – staged reading",
+      "description": "The University of Texas at Arlington Department of Theatre Arts and Dance presents a staged reading of the 2018 musical, Miss You Like Hell by Quiara Alegria Hudes and Erin McKeown. The show runs for three performances in UTA’s Mainstage Theatre on November 14 at 7:30 p.m., November 15 at 7:30 p.m., with a matinee performance on Sunday, November 16 at 2 p.m. The show is directed by Amanda Reyes, with Assistant Director Sam Sirena Morales. Miss You like Hell follows a free-spirited mom and her studious estranged daughter on a road trip across the United States in a beat up truck. At the heart of the play is a family relationship that’s complicated and threatened by immigration policies. Tickets at the door are a suggested donation of $10. All proceeds from this event will go to the University of Texas Arlington Department of Theatre Arts and Dance Student Success Fund. A talkback with Director of UTA’s Center for Mexican American Studies (CMAS) Dr. Xavier Medina Vidal will follow the November 14 performance. All are welcome.",
+      "start": "2025-11-16T20:00:00.000Z",
+      "end": "2025-11-16T21:30:00.000Z",
+      "location": "Department of Theatre Arts and dance Mainstage Theatre",
+      "url": "https://events.uta.edu/event/miss-you-like-hell-staged-reading",
+      "tags": [
+        "New",
+        "Arts & Culture"
+      ],
+      "category": "social",
+      "lat": 32.731474,
+      "lng": -97.115124
     },
     {
       "id": "50852006471904",
@@ -1649,6 +1472,21 @@
       "lng": null
     },
     {
+      "id": "50816324575980",
+      "title": "CONHI Athletic Training Info Sessions",
+      "description": "Join the College of Nursing and Health Innovation as the Athletic Training department hosts several virtual training sessions. Register here",
+      "start": "2025-11-19T18:00:00.000Z",
+      "end": "2025-11-19T19:00:00.000Z",
+      "location": null,
+      "url": "https://events.uta.edu/event/conhi-athletic-training-info-sessions",
+      "tags": [
+        "Athletics"
+      ],
+      "category": "sports",
+      "lat": null,
+      "lng": null
+    },
+    {
       "id": "51214685842608",
       "title": "Exploring a Path to Graduate School at UTA",
       "description": "Join us for an engaging Graduate School Information Session featuring a panel of current graduate students and faculty. Panelists will share their personal experiences, insights, and advice on topics such as deciding to pursue graduate school, overcoming fears and challenges, maintaining balance and well-being, and preparing for life after graduate studies. This session is designed to provide undergraduates with relatable perspectives on motivation, resilience, mentorship, and professional growth—helping you make informed decisions about whether graduate school is the right next step for you. Click here to register! Contact us: ugresearch@uta.edu | 817-272-1272 | uta_ugresearch This event will be hosted by the Office of Undergraduate Research, the Graduate School, and the Office of Graduate Admissions.",
@@ -1786,6 +1624,22 @@
       "category": "social",
       "lat": 32.730405,
       "lng": -97.111807
+    },
+    {
+      "id": "51224503786470",
+      "title": "Graduate Workshop on Writing Personal Statements",
+      "description": "Personal statements are required in a variety of academic and professional settings, from applying to graduate school, medical school, scholarship opportunities, to seeking a research grant, and much more. This workshop reviews the purpose, standard structure of personal statements, and best practices for presenting yourself and your work in an effective manner. This graduate student workshop will take place on Wednesday, Nov. 19 at 6 p.m. - virtually - via Microsoft Teams. RSVP to receive the digital link to join the workshop on Nov. 19.",
+      "start": "2025-11-20T00:00:00.000Z",
+      "end": "2025-11-20T01:00:00.000Z",
+      "location": null,
+      "url": "https://events.uta.edu/event/graduate-workshop-on-writing-personal-statements-7987",
+      "tags": [
+        "New",
+        "Workshops"
+      ],
+      "category": "academic",
+      "lat": null,
+      "lng": null
     },
     {
       "id": "51131797052148",
@@ -1957,48 +1811,6 @@
       "lng": -97.113244
     },
     {
-      "id": "51145718647447",
-      "title": "Celebrating Native American Heritage Month",
-      "description": "In celebration of Native American Heritage Month, UTA Special Collections will have a mini-exhibit on display showcasing items in the collection relating to the surrounding Indigenous community. Special Collections invites the UTA community to learn more and view the mini-exhibit during the Central Library’s open hours, starting Nov. 1 and continuing through Nov. 30. The exhibit is located just outside the doors of Special Collections in the Atrium, on the sixth floor of the Central Library.",
-      "start": "2025-11-21T00:00:00.000Z",
-      "end": "2025-11-21T06:00:00.000Z",
-      "location": "Library Atrium, Central Library",
-      "url": "https://events.uta.edu/event/celebrating-native-american-heritage-month",
-      "tags": [
-        "New",
-        "Arts & Culture"
-      ],
-      "category": "social",
-      "lat": 32.729678,
-      "lng": -97.112926
-    },
-    {
-      "id": "50906203106610",
-      "title": "McNair Scholars Application Open (Apply Now)",
-      "description": "The McNair Scholars Program is a competitive program funded by the U.S. Department of Education to prepare university juniors and seniors who are low-income, first generation, and/or underrepresented in graduate education for doctoral education. This program assists students in the attainment of their educational, professional, and personal goals through participation in research and other academic/scholarly activities. APPLICATIONS The priority deadline is Nov. 3, 2025.The general application closes Dec. 1, 2025. Click the link below for more information and to apply. https://www.uta.edu/research/opportunities/undergraduate-research/programs/mcnair Contact us at mcnair@uta.edu",
-      "start": "2025-11-21T00:00:00.000Z",
-      "end": "2025-11-21T00:00:00.000Z",
-      "location": null,
-      "url": "https://events.uta.edu/event/mcnair-scholars-application-open-apply-now",
-      "tags": [],
-      "category": "academic",
-      "lat": null,
-      "lng": null
-    },
-    {
-      "id": "50906011324223",
-      "title": "Undergraduate Research Spring 2026 Application Open",
-      "description": "The application for the Spring 2026 Undergraduate Research Opportunity Program (UROP) and Undergraduate Research Assistant Program (UGRAP) is now open! These programs offer undergraduate students the opportunity to engage in hands-on research alongside UTA faculty members across various disciplines. Whether you are interested in engineering, business management, psychology, biology, or any other field, these programs are open to all majors! For more information about these programs, click here. By participating in UROP/UGRAP, students will have the chance to: • Gain practical research experience • Collaborate with faculty members and peers • Contribute to cutting-edge projects • Enhance their critical thinking and problem-solving skills • Prepare for future career or academic endeavors • Receive funding Eligibility Requirements: • Full-time UTA student • Minimum 2.75 CGPA • UROP: Open to U.S. citizens, permanent residents, and international students • UGRAP: Open to U.S. citizens and permanent residents – Work-study eligibility (required) Important Dates: • Applications Open: October 1, 2025 • Deadline to Apply: November 30, 2025 How to Apply: To apply, scan the QR code on the attached flyer or visit this link. For more information, please contact the Office of Undergraduate Research at ugresearch@uta.edu or call us at 817-272-1272. Don't miss this opportunity to enhance your academic experience and build invaluable research skills. Apply today! Follow us on social media, click here!",
-      "start": "2025-11-21T00:00:00.000Z",
-      "end": "2025-11-21T00:00:00.000Z",
-      "location": null,
-      "url": "https://events.uta.edu/event/undergraduate-research-spring-2026-application-open",
-      "tags": [],
-      "category": "academic",
-      "lat": null,
-      "lng": null
-    },
-    {
       "id": "51136218651033",
       "title": "Homecoming Shoe Drive",
       "description": "For this year's Homecoming, the Office of Sustainability is excited to collaborate with Intercollegiate Athletics and Campus Recreation to host a shoe drive benefiting Soles4Souls, as part of America Recycles Day! Collection will take place November 3-21 with drop off locations at the UC (near Starbucks) and the Maverick Activities Center entrance. We will also be at the Homecoming Games and 5K taking place on November 14-15. Please bring gently used or new shoes for donation and support Mavericks on this great initiative!",
@@ -2015,6 +1827,22 @@
       "lng": null
     },
     {
+      "id": "51259731666330",
+      "title": "Helium Queens: Live at the UTA Planetarium",
+      "description": "Have you ever wanted to listen to live music under the incredible atmosphere of space? Check out the UTA Planetarium's 2025 Concert Series where we blend art with science. Join us for an evening of food, drinks, and live music in the Planetarium dome featuring local artist Helium Queens. Appetizers are included with the price of admission. A reception with food and drinks starts at 6 p.m. in the Planetarium atrium and the concert starts at 7 p.m. There will be a cash bar while appetizers are included with the price of admission. Enjoy futuristic synth-pop music under the atmosphere of space in the UTA Planetarium dome. The Helium Queens includes keyboardist Poppy Xander, drummer Chelsey Danielle and electric violinist Sharla Franklin who refer to themselves as “Earthling Voices”. They began making music as a space pop trio, since then, but just like space, this group has evolved into so much more. What exactly is the Helium Queens? Helium Queens is a futuristic, sci-fi, electronica band that is part performance art and was originally the brainchild of singer, keyboardist, and composer Poppy Xander. Xander (who plays in multiple bands, including The Polyphonic Spree and PriMadonna) teamed up with fellow musicians Sharla Franklin (King George, The Fiddle Rascals) and Chelsey Danielle (Pearl Earl, No Good Babies) in 2017 to bring the idea to life. Dressed in neon, glowing outfits, Xander performs as Piscea Xandaria, Franklin as Starre Lux Nectaris, and Danielle as Venoo Andromeda. The trio has crafted a whole universe (or YOUniverse as they call it) and invite you to experience the immersive, spectacular, world of the Helium Queens at the UTA Planetarium where we bring outer space to you.",
+      "start": "2025-11-21T00:00:00.000Z",
+      "end": "2025-11-21T02:00:00.000Z",
+      "location": "UTA Planetarium",
+      "url": "https://events.uta.edu/event/helium-queens-live-at-the-uta-planetarium-2426",
+      "tags": [
+        "New",
+        "Recreation & Fun"
+      ],
+      "category": "academic",
+      "lat": 32.730405,
+      "lng": -97.111807
+    },
+    {
       "id": "50852204945790",
       "title": "UTA Fall Jazz Concert",
       "description": "🎶✨ Get ready for an unforgettable evening of jazz as the UTA Jazz Department presents its Annual Fall Concert in Texas Hall! 🌟 The doors will open approximately 30 minutes before the performance time. Please be aware that no food or drink, aside from bottled water, is allowed in concert hall. Parking is available in the West Campus Garage, and ADA parking is available at the meters on Nedderman Drive in front of Texas Hall. Visit our parking page for more information. Tickets are $10 for adults and $7 for students, alumni, and seniors. You can purchase them in advance at www.utatickets.com.",
@@ -2028,22 +1856,6 @@
       "category": "social",
       "lat": 32.72926,
       "lng": -97.114967
-    },
-    {
-      "id": "51125605783893",
-      "title": "See the Unseen: Global Photograph Exhibition",
-      "description": "The Department of Global Engagement and Office of Study Abroad presents the See the Unseen Photo Gallery Exhibition which features photography submitted by our very own UTA students. This International Education Week exhibition will be available for viewing from 8 a.m.-5 p.m. from November 17-21, at the Bluebonnet Foyer in the University Center.",
-      "start": "2025-11-21T14:00:00.000Z",
-      "end": "2025-11-21T23:00:00.000Z",
-      "location": "Bluebonnet Ballroom Foyer, University Center",
-      "url": "https://events.uta.edu/event/see-the-unseen-global-photograph-exhibition",
-      "tags": [
-        "New",
-        "Arts & Culture"
-      ],
-      "category": "social",
-      "lat": null,
-      "lng": null
     },
     {
       "id": "50906014223408",
@@ -2195,6 +2007,186 @@
       "end": "2025-11-21T00:00:00.000Z",
       "location": "Irons Recital Hall, Fine Arts Building",
       "url": "https://events.uta.edu/event/uta-wind-symphony-concert-1817",
+      "tags": [
+        "Arts & Culture"
+      ],
+      "category": "social",
+      "lat": 32.730496,
+      "lng": -97.115139
+    },
+    {
+      "id": "51149469008526",
+      "title": "November Trail Cleanup",
+      "description": "Looking for volunteering opportunities close to the UTA campus to benefit everyone and the environment? Join us for our monthly community service project as we cleanup Julia Bergen Linear Park by clearing debris on the trail and picking up trash around the park. If you plan on attending, please RSVP with the link below, which includes the invite to the groupme for the cleanup and lets us know the number of supplies needed. Bringing a bicycle, scooter, or skateboard is encouraged! https://forms.gle/sbiMBkVgHxc1cCjm9 Meet at the: UTA Bike Library, located at 1100 S Pecan St at 8 a.m.",
+      "start": "2025-11-22T14:00:00.000Z",
+      "end": "2025-11-22T18:00:00.000Z",
+      "location": "UTA Bike Shop",
+      "url": "https://events.uta.edu/event/november-trail-cleanup",
+      "tags": [
+        "New",
+        "Recreation & Fun"
+      ],
+      "category": "academic",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "51205681088372",
+      "title": "Walk to End Alzheimer's hosted by the Alzheimer's Association",
+      "description": "Register and join the Alzheimer's Association in the Fight Against Alzheimer's. The Registration begins at 8 a.m. and the ceremony begins at 9 a.m. on Saturday, Nov. 22 (Event Day). All community members are invited.",
+      "start": "2025-11-22T14:00:00.000Z",
+      "end": "2025-11-22T00:00:00.000Z",
+      "location": "Texas Rangers A Lot",
+      "url": "https://events.uta.edu/event/walk-to-end-alzheimers-hosted-by-the-alzheimers-association",
+      "tags": [
+        "New",
+        "Health & Wellness"
+      ],
+      "category": "wellness",
+      "lat": 32.74919,
+      "lng": -97.08489
+    },
+    {
+      "id": "50477112163365",
+      "title": "Spring Talent Show",
+      "description": "KCA celebrates the end of the year with a talent show",
+      "start": "2025-11-22T18:00:00.000Z",
+      "end": "2025-11-23T03:00:00.000Z",
+      "location": "Brazos Park",
+      "url": "https://events.uta.edu/event/spring-talent-show",
+      "tags": [
+        "Recreation & Fun"
+      ],
+      "category": "academic",
+      "lat": 32.730937,
+      "lng": -97.110735
+    },
+    {
+      "id": "50666609915129",
+      "title": "Student Clarinet Recital: Jason Aguilar",
+      "description": "Jason Aguilar, a student at UTA, will take the stage to share their passion for music with the audience. This recital promises a delightful experience of beautiful melodies and impressive musical talent. This performance is free and open to the public. It takes place in FA258, located in the Central Section of the Fine Arts Building. The doors will open approximately 30 minutes before the performance time. Please be aware that no food or drink, aside from bottled water, is allowed in the recital hall. Parking is available in the West Campus Garage, and ADA parking is available at the meters on Nedderman Drive in front of Texas Hall. Visit our parking page for more information.",
+      "start": "2025-11-22T19:30:00.000Z",
+      "end": "2025-11-22T00:00:00.000Z",
+      "location": "Fine Arts Building",
+      "url": "https://events.uta.edu/event/student-clarinet-recital-jason-aguilar",
+      "tags": [
+        "Arts & Culture"
+      ],
+      "category": "social",
+      "lat": 32.730936,
+      "lng": -97.11504
+    },
+    {
+      "id": "50659209214005",
+      "title": "Student Clarinet Recital: David Garcia",
+      "description": "David Garcia, a student at UTA, will take the stage to share their passion for music with the audience. This recital promises a delightful experience of beautiful melodies and impressive musical talent. This performance is free and open to the public. It takes place in Irons Recital Hall, FA105, located in the South Section of the Fine Arts Building. The doors will open approximately 30 minutes before the performance time. Please be aware that no food or drink, aside from bottled water, is allowed in the recital hall. Parking is available in the West Campus Garage, and ADA parking is available at the meters on Nedderman Drive in front of Texas Hall. Visit our parking page for more information.",
+      "start": "2025-11-22T20:30:00.000Z",
+      "end": "2025-11-22T00:00:00.000Z",
+      "location": "Irons Recital Hall, Fine Arts Building",
+      "url": "https://events.uta.edu/event/student-clarinet-recital-david-garcia",
+      "tags": [
+        "Arts & Culture"
+      ],
+      "category": "social",
+      "lat": 32.730496,
+      "lng": -97.115139
+    },
+    {
+      "id": "50818213560723",
+      "title": "Student Clarinet Recital: Simran Kaur",
+      "description": "Simran Kaur, a student at UTA, will take the stage to share their passion for music with the audience. This recital promises a delightful experience of beautiful melodies and impressive musical talent. This performance is free and open to the public. It takes place in FA 258, located in the Central Section of the Fine Arts Building. The doors will open approximately 30 minutes before the performance time. Please be aware that no food or drink, aside from bottled water, is allowed in the recital hall. Parking is available in the West Campus Garage, and ADA parking is available at the meters on Nedderman Drive in front of Texas Hall. Visit our parking page for more information.",
+      "start": "2025-11-22T21:30:00.000Z",
+      "end": "2025-11-22T00:00:00.000Z",
+      "location": "Fine Arts Building",
+      "url": "https://events.uta.edu/event/student-clarinet-recital-simran-kaur",
+      "tags": [
+        "Arts & Culture"
+      ],
+      "category": "social",
+      "lat": 32.730936,
+      "lng": -97.11504
+    },
+    {
+      "id": "51125605783893",
+      "title": "See the Unseen: Global Photograph Exhibition",
+      "description": "The Department of Global Engagement and Office of Study Abroad presents the See the Unseen Photo Gallery Exhibition which features photography submitted by our very own UTA students. This International Education Week exhibition will be available for viewing from 8 a.m.-5 p.m. from November 17-21, at the Bluebonnet Foyer in the University Center.",
+      "start": "2025-11-23T14:00:00.000Z",
+      "end": "2025-11-23T23:00:00.000Z",
+      "location": "Bluebonnet Ballroom Foyer, University Center",
+      "url": "https://events.uta.edu/event/see-the-unseen-global-photograph-exhibition",
+      "tags": [
+        "New",
+        "Arts & Culture"
+      ],
+      "category": "social",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "50852239592058",
+      "title": "UTA Symphonic Winds and Symphonic Band Concert",
+      "description": "Please join us for a concert featuring the UTA Symphonic Winds and Symphonic Band, directed by Dr. Christopher Evans. This performance will be held in Irons Recital Hall, FA105, located in the South Section of the Fine Arts Building. The doors will open approximately 30 minutes before the performance time. Please be aware that no food or drink, aside from bottled water, is allowed in the recital hall. Parking is available in the West Campus Garage, and ADA parking is available at the meters on Nedderman Drive in front of Texas Hall. Visit our parking page for more information. This concert will be live-streamed at uta.edu/music/live.php. Tickets are $10 for adults and $7 for students, alumni, and seniors. You can purchase them in advance at www.utatickets.com.",
+      "start": "2025-11-23T21:00:00.000Z",
+      "end": "2025-11-23T00:00:00.000Z",
+      "location": "Irons Recital Hall, Fine Arts Building",
+      "url": "https://events.uta.edu/event/uta-symphonic-winds-and-symphonic-band-concert-209",
+      "tags": [
+        "Arts & Culture"
+      ],
+      "category": "social",
+      "lat": 32.730496,
+      "lng": -97.115139
+    },
+    {
+      "id": "51145718647447",
+      "title": "Celebrating Native American Heritage Month",
+      "description": "In celebration of Native American Heritage Month, UTA Special Collections will have a mini-exhibit on display showcasing items in the collection relating to the surrounding Indigenous community. Special Collections invites the UTA community to learn more and view the mini-exhibit during the Central Library’s open hours, starting Nov. 1 and continuing through Nov. 30. The exhibit is located just outside the doors of Special Collections in the Atrium, on the sixth floor of the Central Library.",
+      "start": "2025-11-24T00:00:00.000Z",
+      "end": "2025-11-24T06:00:00.000Z",
+      "location": "Library Atrium, Central Library",
+      "url": "https://events.uta.edu/event/celebrating-native-american-heritage-month",
+      "tags": [
+        "New",
+        "Arts & Culture"
+      ],
+      "category": "social",
+      "lat": 32.729678,
+      "lng": -97.112926
+    },
+    {
+      "id": "50906203106610",
+      "title": "McNair Scholars Application Open (Apply Now)",
+      "description": "The McNair Scholars Program is a competitive program funded by the U.S. Department of Education to prepare university juniors and seniors who are low-income, first generation, and/or underrepresented in graduate education for doctoral education. This program assists students in the attainment of their educational, professional, and personal goals through participation in research and other academic/scholarly activities. APPLICATIONS The priority deadline is Nov. 3, 2025.The general application closes Dec. 1, 2025. Click the link below for more information and to apply. https://www.uta.edu/research/opportunities/undergraduate-research/programs/mcnair Contact us at mcnair@uta.edu",
+      "start": "2025-11-24T00:00:00.000Z",
+      "end": "2025-11-24T00:00:00.000Z",
+      "location": null,
+      "url": "https://events.uta.edu/event/mcnair-scholars-application-open-apply-now",
+      "tags": [],
+      "category": "academic",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "50906011324223",
+      "title": "Undergraduate Research Spring 2026 Application Open",
+      "description": "The application for the Spring 2026 Undergraduate Research Opportunity Program (UROP) and Undergraduate Research Assistant Program (UGRAP) is now open! These programs offer undergraduate students the opportunity to engage in hands-on research alongside UTA faculty members across various disciplines. Whether you are interested in engineering, business management, psychology, biology, or any other field, these programs are open to all majors! For more information about these programs, click here. By participating in UROP/UGRAP, students will have the chance to: • Gain practical research experience • Collaborate with faculty members and peers • Contribute to cutting-edge projects • Enhance their critical thinking and problem-solving skills • Prepare for future career or academic endeavors • Receive funding Eligibility Requirements: • Full-time UTA student • Minimum 2.75 CGPA • UROP: Open to U.S. citizens, permanent residents, and international students • UGRAP: Open to U.S. citizens and permanent residents – Work-study eligibility (required) Important Dates: • Applications Open: October 1, 2025 • Deadline to Apply: November 30, 2025 How to Apply: To apply, scan the QR code on the attached flyer or visit this link. For more information, please contact the Office of Undergraduate Research at ugresearch@uta.edu or call us at 817-272-1272. Don't miss this opportunity to enhance your academic experience and build invaluable research skills. Apply today! Follow us on social media, click here!",
+      "start": "2025-11-24T00:00:00.000Z",
+      "end": "2025-11-24T00:00:00.000Z",
+      "location": null,
+      "url": "https://events.uta.edu/event/undergraduate-research-spring-2026-application-open",
+      "tags": [],
+      "category": "academic",
+      "lat": null,
+      "lng": null
+    },
+    {
+      "id": "50852289558694",
+      "title": "Voice Division Recital",
+      "description": "The Voice Division Recital is a monthly recital featuring vocal student music majors. This performance is free and open to the public. It takes place in Irons Recital Hall, FA105, located in the South Section of the Fine Arts Building. The doors will open approximately 30 minutes before the performance time. Please be aware that no food or drink, aside from bottled water, is allowed in the recital hall. Parking is available in the West Campus Garage, and ADA parking is available at the meters on Nedderman Drive in front of Texas Hall. Visit our parking page for more information.",
+      "start": "2025-11-24T17:00:00.000Z",
+      "end": "2025-11-24T00:00:00.000Z",
+      "location": "Irons Recital Hall, Fine Arts Building",
+      "url": "https://events.uta.edu/event/voice-division-recital-2850",
       "tags": [
         "Arts & Culture"
       ],

@@ -1,15 +1,19 @@
-import type { MutableRefObject } from 'react';
+import type { MutableRefObject } from "react";
 
 // Lightweight animation helper inspired by anime.js for offline environments.
-// Supports the small subset of features required by the campus navigator UI.
+// Supports the small subset of features required by the MavPath UI.
 // This allows us to keep the declarative anime-style API while bundling no
 // external dependencies when network access is restricted.
 
-export type AnimeEasing = 'linear' | 'easeOutQuad' | 'easeOutExpo';
+export type AnimeEasing = "linear" | "easeOutQuad" | "easeOutExpo";
 
 type NumericValue = number | [number, number];
 
-type AnimeTarget = Element | Element[] | NodeListOf<Element> | MutableRefObject<Element | null>;
+type AnimeTarget =
+  | Element
+  | Element[]
+  | NodeListOf<Element>
+  | MutableRefObject<Element | null>;
 
 interface AnimeParams {
   targets: AnimeTarget;
@@ -37,8 +41,8 @@ interface ElementAnimationConfig {
 }
 
 const ANIME_DATA_KEY = {
-  x: 'animeTranslateX',
-  y: 'animeTranslateY',
+  x: "animeTranslateX",
+  y: "animeTranslateY",
 };
 
 const easeMap: Record<AnimeEasing, (t: number) => number> = {
@@ -48,8 +52,10 @@ const easeMap: Record<AnimeEasing, (t: number) => number> = {
 };
 
 const resolveTargets = (target: AnimeTarget): Element[] => {
-  if ((target as MutableRefObject<Element | null>)?.current instanceof Element) {
-    return [((target as MutableRefObject<Element | null>).current)!];
+  if (
+    (target as MutableRefObject<Element | null>)?.current instanceof Element
+  ) {
+    return [(target as MutableRefObject<Element | null>).current!];
   }
 
   if (target instanceof Element) {
@@ -68,15 +74,15 @@ const resolveTargets = (target: AnimeTarget): Element[] => {
 };
 
 const parseTransformMatrix = (transform: string): { x: number; y: number } => {
-  if (!transform || transform === 'none') {
+  if (!transform || transform === "none") {
     return { x: 0, y: 0 };
   }
 
-  if (transform.startsWith('matrix(')) {
+  if (transform.startsWith("matrix(")) {
     const values = transform
-      .replace('matrix(', '')
-      .replace(')', '')
-      .split(',')
+      .replace("matrix(", "")
+      .replace(")", "")
+      .split(",")
       .map((v) => Number.parseFloat(v.trim()));
 
     return {
@@ -85,11 +91,11 @@ const parseTransformMatrix = (transform: string): { x: number; y: number } => {
     };
   }
 
-  if (transform.startsWith('matrix3d(')) {
+  if (transform.startsWith("matrix3d(")) {
     const values = transform
-      .replace('matrix3d(', '')
-      .replace(')', '')
-      .split(',')
+      .replace("matrix3d(", "")
+      .replace(")", "")
+      .split(",")
       .map((v) => Number.parseFloat(v.trim()));
 
     return {
@@ -101,7 +107,7 @@ const parseTransformMatrix = (transform: string): { x: number; y: number } => {
   return { x: 0, y: 0 };
 };
 
-const getCurrentTranslate = (element: Element, axis: 'x' | 'y'): number => {
+const getCurrentTranslate = (element: Element, axis: "x" | "y"): number => {
   const datasetKey = ANIME_DATA_KEY[axis] as keyof DOMStringMap;
   const datasetValue = (element as HTMLElement).dataset?.[datasetKey];
   if (datasetValue !== undefined) {
@@ -109,7 +115,7 @@ const getCurrentTranslate = (element: Element, axis: 'x' | 'y'): number => {
   }
 
   const { x, y } = parseTransformMatrix(getComputedStyle(element).transform);
-  return axis === 'x' ? x : y;
+  return axis === "x" ? x : y;
 };
 
 const getCurrentWidth = (element: Element): number => {
@@ -128,7 +134,10 @@ const getCurrentOpacity = (element: Element): number => {
   return Number.isNaN(opacity) ? 1 : opacity;
 };
 
-const resolveRange = (value: NumericValue | undefined, current: number): ResolvedRange | undefined => {
+const resolveRange = (
+  value: NumericValue | undefined,
+  current: number
+): ResolvedRange | undefined => {
   if (value === undefined) {
     return undefined;
   }
@@ -145,8 +154,14 @@ const prepareAnimations = (params: AnimeParams): ElementAnimationConfig[] => {
   const targets = resolveTargets(params.targets);
 
   return targets.map((element) => {
-    const translateX = resolveRange(params.translateX, getCurrentTranslate(element, 'x'));
-    const translateY = resolveRange(params.translateY, getCurrentTranslate(element, 'y'));
+    const translateX = resolveRange(
+      params.translateX,
+      getCurrentTranslate(element, "x")
+    );
+    const translateY = resolveRange(
+      params.translateY,
+      getCurrentTranslate(element, "y")
+    );
     const width = resolveRange(params.width, getCurrentWidth(element));
     const opacity = resolveRange(params.opacity, getCurrentOpacity(element));
 
@@ -169,15 +184,15 @@ const applyTransform = (element: HTMLElement, x: number, y: number) => {
 const animate = (config: ElementAnimationConfig[], params: AnimeParams) => {
   const duration = params.duration ?? 400;
   const delay = params.delay ?? 0;
-  const easing = easeMap[params.easing ?? 'easeOutQuad'];
+  const easing = easeMap[params.easing ?? "easeOutQuad"];
   const startTime = performance.now() + delay;
 
   const initialTransforms = new WeakMap<Element, { x: number; y: number }>();
 
   config.forEach(({ element, translateX, translateY }) => {
     if (!(element instanceof HTMLElement)) return;
-    const x = translateX?.from ?? getCurrentTranslate(element, 'x');
-    const y = translateY?.from ?? getCurrentTranslate(element, 'y');
+    const x = translateX?.from ?? getCurrentTranslate(element, "x");
+    const y = translateY?.from ?? getCurrentTranslate(element, "y");
     initialTransforms.set(element, { x, y });
     applyTransform(element, x, y);
   });
@@ -216,7 +231,7 @@ const animate = (config: ElementAnimationConfig[], params: AnimeParams) => {
 
     if (elapsed < 1) {
       requestAnimationFrame(step);
-    } else if (typeof params.complete === 'function') {
+    } else if (typeof params.complete === "function") {
       params.complete();
     }
   };

@@ -1,6 +1,6 @@
-# Campus Navigator Test Suite
+# MavPath Test Suite
 
-This directory contains comprehensive unit tests for the Campus Navigator application.
+This directory contains comprehensive unit tests for the MavPath application.
 
 ## Test Structure
 
@@ -33,31 +33,37 @@ tests/
 ## Running Tests
 
 ### Run all tests
+
 ```bash
 npm test
 ```
 
 ### Run tests in watch mode
+
 ```bash
 npm test -- --watch
 ```
 
 ### Run tests with UI
+
 ```bash
 npm run test:ui
 ```
 
 ### Run tests with coverage
+
 ```bash
 npm run test:coverage
 ```
 
 ### Run specific test file
+
 ```bash
 npm test -- tests/lib/utils.test.ts
 ```
 
 ### Run tests matching a pattern
+
 ```bash
 npm test -- -t "EventsPanel"
 ```
@@ -78,17 +84,17 @@ npm test -- -t "EventsPanel"
 
 ### Test Breakdown
 
-| Category | File | Tests | Status |
-|----------|------|-------|--------|
-| **Utilities** | utils.test.ts | 10 | ✅ All passing |
-| **Utilities** | events.test.ts | 16 | ✅ All passing |
-| **State** | mapState.test.ts | 34 | ✅ All passing |
-| **Hooks** | use-events.test.ts | 15 | ✅ All passing |
-| **Components** | EventsPanel.test.tsx | 18 | ⚠️ 3 failing |
-| **Components** | DirectionsPanel.test.tsx | 16 | ⚠️ 2 failing |
-| **Components** | GeolocateButton.test.tsx | 16 | ✅ All passing |
-| **Components** | SearchAutocomplete.test.tsx | 17 | ✅ All passing |
-| **Scripts** | scrape-uta-events.test.js | 38 | ✅ All passing |
+| Category       | File                        | Tests | Status         |
+| -------------- | --------------------------- | ----- | -------------- |
+| **Utilities**  | utils.test.ts               | 10    | ✅ All passing |
+| **Utilities**  | events.test.ts              | 16    | ✅ All passing |
+| **State**      | mapState.test.ts            | 34    | ✅ All passing |
+| **Hooks**      | use-events.test.ts          | 15    | ✅ All passing |
+| **Components** | EventsPanel.test.tsx        | 18    | ⚠️ 3 failing   |
+| **Components** | DirectionsPanel.test.tsx    | 16    | ⚠️ 2 failing   |
+| **Components** | GeolocateButton.test.tsx    | 16    | ✅ All passing |
+| **Components** | SearchAutocomplete.test.tsx | 17    | ✅ All passing |
+| **Scripts**    | scrape-uta-events.test.js   | 38    | ✅ All passing |
 
 ## Testing Stack
 
@@ -103,6 +109,7 @@ npm test -- -t "EventsPanel"
 ### Google Maps Mock (`tests/mocks/googleMaps.ts`)
 
 Provides mock implementations for:
+
 - `MockLatLng` - Google Maps coordinates
 - `MockMap` - Map instance
 - `MockDirectionsService` - Routing service
@@ -110,8 +117,12 @@ Provides mock implementations for:
 - `MockAutocomplete` - Autocomplete widget
 
 Usage:
+
 ```typescript
-import { setupGoogleMapsMock, cleanupGoogleMapsMock } from '../mocks/googleMaps';
+import {
+  setupGoogleMapsMock,
+  cleanupGoogleMapsMock,
+} from "../mocks/googleMaps";
 
 beforeEach(() => {
   setupGoogleMapsMock();
@@ -127,7 +138,7 @@ afterEach(() => {
 Provides test utilities for React Query:
 
 ```typescript
-import { createQueryWrapper } from '../mocks/reactQuery';
+import { createQueryWrapper } from "../mocks/reactQuery";
 
 const { result } = renderHook(() => useEvents(), {
   wrapper: createQueryWrapper(),
@@ -139,13 +150,14 @@ const { result } = renderHook(() => useEvents(), {
 ### Event Fixtures (`tests/fixtures/events.ts`)
 
 Provides mock event data:
+
 ```typescript
-import { createMockEvent, mockEvents } from '../fixtures/events';
+import { createMockEvent, mockEvents } from "../fixtures/events";
 
 // Create custom mock event
 const event = createMockEvent({
-  title: 'Custom Event',
-  category: 'sports',
+  title: "Custom Event",
+  category: "sports",
 });
 
 // Use predefined mock events
@@ -157,11 +169,13 @@ const events = mockEvents; // Array of 4 events
 ### Failing Tests (6 total)
 
 #### EventsPanel Tests (3 failing)
+
 1. **"should display event categories as badges"** - Badge rendering issue
 2. **"should compute unique locations"** - Dropdown button text mismatch
 3. **"should compute unique tags"** - Dropdown button text mismatch
 
 #### DirectionsPanel Tests (2 failing)
+
 1. **"should show error when clicking button without origin"** - Error message timing issue
 2. **"should clear error when origin is provided"** - Error clearing logic
 
@@ -179,23 +193,23 @@ Some tests produce React `act()` warnings. These are harmless but indicate async
 ### Test Structure
 
 ```typescript
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach } from "vitest";
 
-describe('ComponentName', () => {
+describe("ComponentName", () => {
   beforeEach(() => {
     // Setup before each test
   });
 
-  describe('feature group', () => {
-    it('should do something specific', () => {
+  describe("feature group", () => {
+    it("should do something specific", () => {
       // Arrange
-      const input = 'test';
+      const input = "test";
 
       // Act
       const result = functionUnderTest(input);
 
       // Assert
-      expect(result).toBe('expected');
+      expect(result).toBe("expected");
     });
   });
 });
@@ -204,14 +218,14 @@ describe('ComponentName', () => {
 ### Component Testing Pattern
 
 ```typescript
-import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
-it('should handle user interaction', async () => {
+it("should handle user interaction", async () => {
   const user = userEvent.setup();
   render(<Component />);
 
-  const button = screen.getByRole('button', { name: /click me/i });
+  const button = screen.getByRole("button", { name: /click me/i });
   await user.click(button);
 
   await waitFor(() => {
@@ -234,12 +248,15 @@ it('should handle user interaction', async () => {
 ## Debugging Tests
 
 ### Run single test with logs
+
 ```bash
 npm test -- -t "test name" --reporter=verbose
 ```
 
 ### Debug in VS Code
+
 Add to `.vscode/launch.json`:
+
 ```json
 {
   "type": "node",
@@ -252,14 +269,17 @@ Add to `.vscode/launch.json`:
 ```
 
 ### View test UI
+
 ```bash
 npm run test:ui
 ```
+
 Opens interactive test browser at http://localhost:51204
 
 ## Configuration
 
 Test configuration is in `vitest.config.ts`:
+
 - Environment: happy-dom
 - Setup file: `tests/setup.ts`
 - Coverage provider: v8

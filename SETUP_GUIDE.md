@@ -1,4 +1,4 @@
-# Campus Navigator Setup Guide
+# MavPath Setup Guide
 
 ## Getting Your Google Maps API Key
 
@@ -6,7 +6,7 @@
 
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Click "Select a project" → "New Project"
-3. Name your project (e.g., "Campus Navigator")
+3. Name your project (e.g., "MavPath")
 4. Click "Create"
 
 ### Step 2: Enable Required APIs
@@ -24,10 +24,10 @@
 2. Click **"+ CREATE CREDENTIALS"** → **"API key"**
 3. Your API key will be created and displayed
 4. Click **"Edit API key"** to restrict it (recommended):
-   - **Application restrictions**: 
+   - **Application restrictions**:
      - For development: None
      - For production: HTTP referrers (add your domain)
-   - **API restrictions**: 
+   - **API restrictions**:
      - Select "Restrict key"
      - Check: Maps JavaScript API, Places API, Directions API
 5. Click **"Save"**
@@ -65,18 +65,21 @@ To use custom map styles:
 ## Troubleshooting
 
 ### Map not loading?
+
 - Check that your API key is correctly set in `.env.local`
 - Verify all required APIs are enabled
 - Check browser console for specific error messages
 - Ensure you've restarted the dev server after adding `.env.local`
 
 ### "This page can't load Google Maps correctly"?
+
 - Your API key may have restrictions that are blocking localhost
 - Go to Google Cloud Console → Credentials → Edit your API key
 - Under "Application restrictions", select "None" for development
 - For production, add your domain to HTTP referrers
 
 ### Quota exceeded?
+
 - Google Maps has a free tier with $200 monthly credit
 - Check your usage at Google Cloud Console → APIs & Services → Dashboard
 - Consider implementing usage limits or upgrading your plan
