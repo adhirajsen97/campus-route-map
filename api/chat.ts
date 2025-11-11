@@ -125,14 +125,12 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
           const contentBlocks: Array<
             | { type: 'input_text'; text: string }
             | { type: 'output_text'; text: string }
-            | { type: 'input_file'; filename: string; file_data: string }
           > = [];
 
           if (message.role === 'system' && eventsContext.fileBase64) {
             contentBlocks.push({
-              type: 'input_file',
-              filename: 'events.json',
-              file_data: eventsContext.fileBase64,
+              type: 'input_text',
+              text: ['BEGIN_EVENTS_FILE_BASE64', eventsContext.fileBase64, 'END_EVENTS_FILE_BASE64'].join('\n'),
             });
           }
 

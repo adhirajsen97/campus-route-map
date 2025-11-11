@@ -485,9 +485,8 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
                 role: "system",
                 content: [
                   {
-                    type: "input_file" as const,
-                    filename: "events.json",
-                    file_data: eventsFileBase64,
+                    type: "input_text" as const,
+                    text: ["BEGIN_EVENTS_FILE_BASE64", eventsFileBase64, "END_EVENTS_FILE_BASE64"].join("\n"),
                   },
                   {
                     type: "input_text" as const,
