@@ -3,7 +3,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 
-import { EVENT_ASSISTANT_RESPONSE_FORMAT } from '../src/lib/event-assistant-schema';
+import { EVENT_ASSISTANT_RESPONSE_FORMAT } from '../src/lib/event-assistant-schema.js';
 
 type ChatRole = 'system' | 'user' | 'assistant';
 
