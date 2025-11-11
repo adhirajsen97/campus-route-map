@@ -1,0 +1,42 @@
+{
+  "scrapedAt": "2025-03-01T12:00:00Z",
+  "events": [
+    {
+      "id": "career-fair",
+      "title": "Spring Career Fair",
+      "description": "Meet employers from across the region.",
+      "start": "2025-03-05T16:00:00Z",
+      "end": "2025-03-05T20:00:00Z",
+      "location": "Arlington Hall",
+      "url": "https://example.edu/events/career-fair",
+      "tags": ["Networking", "Career"],
+      "category": "career",
+      "lat": 32.7315,
+      "lng": -97.1148
+    },
+    {
+      "id": "robotics-showcase",
+      "title": "Robotics Showcase",
+      "description": "Student robotics teams demo their latest builds.",
+      "start": "2025-03-07T19:00:00Z",
+      "end": "2025-03-07T21:00:00Z",
+      "location": "Engineering Research Building",
+      "url": "https://example.edu/events/robotics-showcase",
+      "tags": ["STEM", "Competition"],
+      "category": "academic",
+      "lat": 32.7321,
+      "lng": -97.1162
+    },
+    {
+      "id": "campus-cleanup",
+      "title": "Campus Cleanup Day",
+      "description": "Join the sustainability office for a campus cleanup.",
+      "start": "2025-03-08T14:00:00Z",
+      "end": "2025-03-08T16:30:00Z",
+      "location": "University Center",
+      "url": "https://example.edu/events/campus-cleanup",
+      "tags": ["Volunteer", "Outdoors"],
+      "category": "wellness"
+    }
+  ]
+}
