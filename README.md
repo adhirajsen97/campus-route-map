@@ -158,6 +158,42 @@ The app uses a university-themed design system. Edit `src/index.css` to customiz
 - **TypeScript** - Type safety
 - **Vite** - Build tool
 - **Tailwind CSS** - Styling
+
+## Deployment (Vercel)
+
+The repo is pre-configured for Vercel using [`vercel.json`](./vercel.json). Use the following checklist to launch the app:
+
+1. **Create the project on Vercel**
+   - Import this Git repository into a new Vercel project.
+   - Vercel will auto-detect the `Vite` framework. Keep the defaults or ensure the following values are set:
+     - **Install Command:** `npm install`
+     - **Build Command:** `npm run build`
+     - **Output Directory:** `dist`
+
+2. **Configure Environment Variables** (Project Settings → Environment Variables)
+   | Name | Required | Description |
+   | --- | --- | --- |
+   | `VITE_GOOGLE_MAPS_API_KEY` | ✅ | Google Maps JavaScript API key (also enable Places & Directions APIs). |
+   | `VITE_GOOGLE_MAPS_MAP_ID` | Optional | Custom Cloud-based map styling ID if you have one. |
+   | `OPENAI_API_KEY` | ✅ | Enables the `/api/chat` assistant endpoint. |
+   | `SCRAPE_EVENTS_FREQUENCY_DAYS` | Optional | Overrides the cadence (in days) for the build-time event scraper. |
+
+   Add the variables to the **Production**, **Preview**, and **Development** environments so every deployment works without manual edits.
+
+3. **Trigger the first deployment**
+   - Click **Deploy**. The build pipeline automatically runs the campus event scraper and shuttle route generator before Vite builds the app.
+
+4. **Post-deploy verification**
+   - Visit the deployment URL and confirm:
+     - Client-side routing works (navigation between app views).
+     - `/api/events` returns JSON data.
+     - `/api/chat` responds (requires the `OPENAI_API_KEY`).
+
+### Local ↔ Vercel parity tips
+
+- Keep your local `.env.local` aligned with Vercel's environment variables to avoid surprises.
+- The scraper relies on the built-in SQLite driver behind the `--experimental-sqlite` flag. Use Node.js 20.11+ locally and in Vercel (already enforced through the deployment config).
+- If you want to skip the scraper during local builds, set `SCRAPE_EVENTS_FREQUENCY_DAYS` to a large number so it reuses the cached dataset.
 - **shadcn/ui** - UI components
 - **@react-google-maps/api** - Google Maps integration
 - **Zustand** - State management
