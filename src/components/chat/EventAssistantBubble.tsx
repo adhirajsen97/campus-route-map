@@ -8,6 +8,7 @@ import {
 import type {
   CSSProperties,
   FormEvent,
+  KeyboardEvent,
   PointerEvent as ReactPointerEvent,
 } from "react";
 import {
@@ -426,6 +427,23 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
     [draft, sendMessage],
   );
 
+  const handleDraftKeyDown = useCallback(
+    (event: KeyboardEvent<HTMLTextAreaElement>) => {
+      if (event.key !== "Enter" || event.shiftKey || event.altKey || event.metaKey || event.ctrlKey) {
+        return;
+      }
+
+      event.preventDefault();
+
+      if (isSending || draft.trim().length === 0) {
+        return;
+      }
+
+      void sendMessage(draft);
+    },
+    [draft, isSending, sendMessage],
+  );
+
   const handlePromptSelect = useCallback(
     (prompt: string) => {
       setDraft(prompt);
@@ -618,23 +636,25 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
             </div>
           ) : null}
 
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Quick prompts</p>
-            <div className="mt-2 flex flex-wrap gap-2">
-              {QUICK_PROMPTS.map((prompt) => (
-                <Button
-                  key={prompt}
-                  type="button"
-                  variant="secondary"
-                  size="sm"
-                  className="h-8 rounded-full bg-background/90 text-xs text-muted-foreground hover:bg-primary/10 hover:text-primary"
-                  onClick={() => handlePromptSelect(prompt)}
-                >
-                  {prompt}
-                </Button>
-              ))}
+          {!hasUserMessages ? (
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Quick prompts</p>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {QUICK_PROMPTS.map((prompt) => (
+                  <Button
+                    key={prompt}
+                    type="button"
+                    variant="secondary"
+                    size="sm"
+                    className="h-8 rounded-full bg-background/90 text-xs text-muted-foreground hover:bg-primary/10 hover:text-primary"
+                    onClick={() => handlePromptSelect(prompt)}
+                  >
+                    {prompt}
+                  </Button>
+                ))}
+              </div>
             </div>
-          </div>
+          ) : null}
 
         </div>
       </ScrollArea>
@@ -647,6 +667,7 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
           id="event-assistant-input"
           value={draft}
           onChange={(event) => setDraft(event.target.value)}
+          onKeyDown={handleDraftKeyDown}
           placeholder="Ask about campus events..."
           className="min-h-[80px] resize-none bg-background/80 text-sm"
           disabled={isSending}
