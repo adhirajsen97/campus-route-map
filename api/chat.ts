@@ -39,8 +39,12 @@ async function readBody(req: IncomingMessage) {
 async function loadEventsSnapshot() {
   try {
     const raw = await readFile(eventsPath, 'utf8');
-    const parsed = JSON.parse(raw) as { events?: Array<Record<string, unknown>> };
+    const parsed = JSON.parse(raw) as {
+      scrapedAt?: unknown;
+      events?: Array<Record<string, unknown>>;
+    };
     const events = Array.isArray(parsed.events) ? parsed.events : [];
+    const scrapedAt = typeof parsed.scrapedAt === 'string' && parsed.scrapedAt.length > 0 ? parsed.scrapedAt : null;
     const formatted = events
       .map((event) => {
         if (!event || typeof event !== 'object') {
@@ -54,11 +58,13 @@ async function loadEventsSnapshot() {
         const tags = Array.isArray(event.tags)
           ? (event.tags.filter((tag) => typeof tag === 'string') as string[])
           : [];
-        return `Title: ${title}\nStart: ${start}\nEnd: ${end}\nLocation: ${location}\nCategory: ${category}\nTags: ${tags.join(', ') || 'None'}\n---`;
+        const url = typeof event.url === 'string' && event.url.length > 0 ? event.url : 'None';
+        return `Title: ${title}\nStart: ${start}\nEnd: ${end}\nLocation: ${location}\nCategory: ${category}\nTags: ${tags.join(', ') || 'None'}\nURL: ${url}\n---`;
       })
       .filter((snippet): snippet is string => Boolean(snippet))
       .join('\n');
-    return formatted;
+    const header = scrapedAt ? `Events data last updated at ${scrapedAt}.` : null;
+    return [header, formatted].filter((segment): segment is string => Boolean(segment && segment.length > 0)).join('\n');
   } catch (error) {
     console.error('Failed to read events.json for chat context', error);
     return '';
@@ -86,9 +92,13 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
 
   const eventsSnapshot = await loadEventsSnapshot();
 
+  const now = new Date();
+  const friendlyDate = new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(now);
+  const isoDate = now.toISOString();
+
   const systemMessage: ChatMessage = {
     role: 'system',
-    content: `You are an Event Assistant AI. You must ONLY answer questions based on the event data provided. If a user asks about anything outside the event data, reply: "I'm sorry, I can only answer questions related to the events provided." Do not infer or invent information. Always quote or summarize directly from the provided event data. If the question cannot be answered with the available data, state that clearly.\n\nHere is the complete list of events you can reference:\n${eventsSnapshot}`,
+    content: `You are an Event Assistant AI. You must ONLY answer questions based on the event data provided. If a user asks about anything outside the event data, reply: "I'm sorry, I can only answer questions related to the events provided." Do not infer or invent information. Always quote or summarize directly from the provided event data. If the question cannot be answered with the available data, state that clearly.\n\nToday's date is ${friendlyDate} (ISO ${isoDate}). Use this to interpret any relative date references in the user's question and focus on the appropriate events.\n\nHere is the complete list of events you can reference:\n${eventsSnapshot}`,
   };
 
   const requestMessages: ChatMessage[] = [systemMessage, ...body.messages.map((message) => ({

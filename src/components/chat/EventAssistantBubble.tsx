@@ -243,6 +243,16 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
     return set.size;
   }, [events]);
 
+  const currentDateInfo = useMemo(() => {
+    const now = new Date();
+    const friendlyDate = new Intl.DateTimeFormat("en-US", { dateStyle: "full" }).format(now);
+
+    return {
+      iso: now.toISOString(),
+      friendly: friendlyDate,
+    };
+  }, []);
+
   const eventsSnapshot = useMemo(() => {
     if (!events || events.length === 0) {
       return "No events data is currently available.";
@@ -254,8 +264,9 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
         const end = event.end.toISOString();
         const location = event.location ?? "Unknown location";
         const tags = event.tags && event.tags.length > 0 ? event.tags.join(", ") : "None";
+        const url = event.url ?? "None";
 
-        return `Title: ${event.title}\nStart: ${start}\nEnd: ${end}\nLocation: ${location}\nCategory: ${event.category}\nTags: ${tags}\n---`;
+        return `Title: ${event.title}\nStart: ${start}\nEnd: ${end}\nLocation: ${location}\nCategory: ${event.category}\nTags: ${tags}\nURL: ${url}\n---`;
       })
       .join("\n");
   }, [events]);
@@ -267,6 +278,7 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
         "If a user asks about anything outside the event data, reply: \"I'm sorry, I can only answer questions related to the events provided.\"",
         "Do not infer or invent information. Always quote or summarize directly from the provided event data.",
         "If the question cannot be answered with the available data, state that clearly.",
+        `Today's date is ${currentDateInfo.friendly} (ISO ${currentDateInfo.iso}). Use this to interpret any relative date references from the user and to filter the event schedule appropriately.`,
         "You must respond using a single JSON object with this structure: { \"summary\": string, \"events\": [ { \"title\": string, \"time\": string, \"location\": string | null, \"category\": string | null, \"tags\": string[], \"url\": string | null, \"description\": string | null } ], \"notes\": string | null }.",
         "Always include an array for \"events\" even when there are no results. When an event includes a URL in the data, place it in the \"url\" field; otherwise, set \"url\" to null.",
         "Format the \"time\" field as a human-readable range like \"Nov 9, 2025 • 8:30 PM – 10:00 PM\". Use sentence case for the \"summary\" and \"notes\" fields.",
@@ -275,7 +287,7 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
         "Here is the complete list of events you can reference:",
         eventsSnapshot,
       ].join("\n"),
-    [eventsSnapshot],
+    [currentDateInfo, eventsSnapshot],
   );
 
   const sendMessage = useCallback(
