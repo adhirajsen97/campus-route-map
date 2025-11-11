@@ -15,12 +15,13 @@ export type AssistantStructuredResponse = {
 };
 
 export const EVENT_ASSISTANT_RESPONSE_FORMAT = {
-  type: "json_schema",
-  json_schema: {
+    type: "json_schema",
     name: "event_assistant_response",
+    strict: true,
     schema: {
       type: "object",
       additionalProperties: false,
+      required: ["summary", "events", "notes"],
       properties: {
         summary: {
           type: ["string", "null"],
@@ -32,7 +33,13 @@ export const EVENT_ASSISTANT_RESPONSE_FORMAT = {
           items: {
             type: "object",
             additionalProperties: false,
-            required: ["title", "tags"],
+            required: [ "title",
+              "time",
+              "location",
+              "category",
+              "tags",
+              "url",
+              "description"],
             properties: {
               title: {
                 type: "string",
@@ -72,11 +79,8 @@ export const EVENT_ASSISTANT_RESPONSE_FORMAT = {
           type: ["string", "null"],
           description: "Additional remarks or clarifications for the user.",
         },
-      },
-      required: ["events"],
-    },
-    strict: true,
-  },
+      }
+    }  
 } as const;
 
 export type EventAssistantResponseFormat = typeof EVENT_ASSISTANT_RESPONSE_FORMAT;

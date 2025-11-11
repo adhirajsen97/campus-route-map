@@ -409,7 +409,7 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
         "Format the \"time\" field as a human-readable range like \"Nov 9, 2025 • 8:30 PM – 10:00 PM\". Use sentence case for the \"summary\" and \"notes\" fields.",
         "Do not wrap the JSON in markdown code fences and do not include any text outside of the JSON object.",
         "",
-        "Here is the complete list of events you can reference:",
+        "Here is the complete list of events you can reference in base64encoded above:",
         eventsSnapshot,
       ].join("\n"),
     [currentDateInfo, eventsSnapshot],
@@ -486,7 +486,7 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
                 content: [
                   {
                     type: "input_text" as const,
-                    text: ["BEGIN_EVENTS_FILE_BASE64", eventsFileBase64, "END_EVENTS_FILE_BASE64"].join("\n"),
+                    text: [""].join("\n"),
                   },
                   {
                     type: "input_text" as const,
