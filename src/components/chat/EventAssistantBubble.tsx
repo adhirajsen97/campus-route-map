@@ -195,10 +195,23 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
       setErrorMessage(null);
       setIsSending(true);
 
-      const payloadMessages = [...messagesRef.current, userMessage].map((message) => ({
-        role: message.role,
-        content: message.content,
-      }));
+      const payloadMessages = [...messagesRef.current, userMessage].map((message) => {
+        const contentBlock =
+          message.role === "assistant"
+            ? ({ type: "output_text" as const, text: message.content } satisfies {
+                type: "output_text";
+                text: string;
+              })
+            : ({ type: "input_text" as const, text: message.content } satisfies {
+                type: "input_text";
+                text: string;
+              });
+
+        return {
+          role: message.role,
+          content: [contentBlock],
+        };
+      });
 
       const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
 
@@ -230,15 +243,7 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
                   },
                 ],
               },
-              ...payloadMessages.map((message) => ({
-                role: message.role,
-                content: [
-                  {
-                    type: "input_text" as const,
-                    text: message.content,
-                  },
-                ],
-              })),
+              ...payloadMessages,
             ],
             temperature: 0.1,
             max_output_tokens: 600,
