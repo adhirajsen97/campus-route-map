@@ -83,6 +83,25 @@ interface ChatWindowProps {
   onClose: () => void;
 }
 
+const encodeBase64 = (value: string) => {
+  if (typeof window !== "undefined" && typeof window.btoa === "function") {
+    const encoder = new TextEncoder();
+    const bytes = encoder.encode(value);
+    let binary = "";
+    bytes.forEach((byte) => {
+      binary += String.fromCharCode(byte);
+    });
+    return window.btoa(binary);
+  }
+
+  const globalBuffer = (globalThis as { Buffer?: { from: (input: string, encoding: string) => { toString: (encoding: string) => string } } }).Buffer;
+  if (globalBuffer) {
+    return globalBuffer.from(value, "utf8").toString("base64");
+  }
+
+  throw new Error("Base64 encoding is not supported in this environment.");
+};
+
 const stripJsonWrapper = (value: string) => {
   const trimmed = value.trim();
   if (trimmed.startsWith("```")) {
@@ -239,6 +258,46 @@ const parseAssistantResponse = (content: string): AssistantStructuredResponse | 
 
 const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
   const { data: events, isLoading } = useEvents();
+  const eventsFileBase64Ref = useRef<string | null>(null);
+  const eventsFilePromiseRef = useRef<Promise<string | null> | null>(null);
+
+  const ensureEventsFileBase64 = useCallback(async () => {
+    if (eventsFileBase64Ref.current) {
+      return eventsFileBase64Ref.current;
+    }
+
+    if (eventsFilePromiseRef.current) {
+      return eventsFilePromiseRef.current;
+    }
+
+    const promise = (async () => {
+      try {
+        const response = await fetch("/api/events");
+        if (!response.ok) {
+          throw new Error(`Failed to load events.json: ${response.status}`);
+        }
+        const text = await response.text();
+        const base64 = encodeBase64(text);
+        eventsFileBase64Ref.current = base64;
+        return base64;
+      } catch (error) {
+        console.error("Failed to load events.json for assistant", error);
+        return null;
+      }
+    })();
+
+    eventsFilePromiseRef.current = promise;
+    try {
+      const result = await promise;
+      return result;
+    } finally {
+      eventsFilePromiseRef.current = null;
+    }
+  }, []);
+
+  useEffect(() => {
+    void ensureEventsFileBase64();
+  }, [ensureEventsFileBase64]);
   const [draft, setDraft] = useState("");
   const [messages, setMessages] = useState<ChatMessage[]>(() => [
     {
@@ -376,6 +435,13 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
       setErrorMessage(null);
       setIsSending(true);
 
+      const eventsFileBase64 = await ensureEventsFileBase64();
+      if (!eventsFileBase64) {
+        setErrorMessage("Unable to load the latest events data. Please try again later.");
+        setIsSending(false);
+        return;
+      }
+
       const payloadMessages = [...messagesRef.current, userMessage].map((message) => {
         const contentBlock =
           message.role === "assistant"
@@ -418,6 +484,11 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
               {
                 role: "system",
                 content: [
+                  {
+                    type: "input_file" as const,
+                    filename: "events.json",
+                    file_data: eventsFileBase64,
+                  },
                   {
                     type: "input_text" as const,
                     text: systemPrompt,
@@ -482,7 +553,7 @@ const ChatWindow = ({ corner, onClose }: ChatWindowProps) => {
         setIsSending(false);
       }
     },
-    [isSending, systemPrompt],
+    [ensureEventsFileBase64, isSending, systemPrompt],
   );
 
   const handleSubmit = useCallback(

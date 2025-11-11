@@ -38,9 +38,10 @@ async function readBody(req: IncomingMessage) {
   }
 }
 
-async function loadEventsSnapshot() {
+async function loadEventsContext() {
   try {
     const raw = await readFile(eventsPath, 'utf8');
+    const fileBase64 = Buffer.from(raw, 'utf8').toString('base64');
     const parsed = JSON.parse(raw) as {
       scrapedAt?: unknown;
       events?: Array<Record<string, unknown>>;
@@ -66,10 +67,13 @@ async function loadEventsSnapshot() {
       .filter((snippet): snippet is string => Boolean(snippet))
       .join('\n');
     const header = scrapedAt ? `Events data last updated at ${scrapedAt}.` : null;
-    return [header, formatted].filter((segment): segment is string => Boolean(segment && segment.length > 0)).join('\n');
+    const snapshot = [header, formatted]
+      .filter((segment): segment is string => Boolean(segment && segment.length > 0))
+      .join('\n');
+    return { snapshot, fileBase64 };
   } catch (error) {
     console.error('Failed to read events.json for chat context', error);
-    return '';
+    return { snapshot: '', fileBase64: '' };
   }
 }
 
@@ -92,7 +96,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     return;
   }
 
-  const eventsSnapshot = await loadEventsSnapshot();
+  const eventsContext = await loadEventsContext();
 
   const now = new Date();
   const friendlyDate = new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(now);
@@ -100,7 +104,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
 
   const systemMessage: ChatMessage = {
     role: 'system',
-    content: `You are an Event Assistant AI. You must ONLY answer questions based on the event data provided. If a user asks about anything outside the event data, reply: "I'm sorry, I can only answer questions related to the events provided." Do not infer or invent information. Always quote or summarize directly from the provided event data. If the question cannot be answered with the available data, state that clearly.\n\nToday's date is ${friendlyDate} (ISO ${isoDate}). Use this to interpret any relative date references in the user's question and focus on the appropriate events.\n\nHere is the complete list of events you can reference:\n${eventsSnapshot}`,
+    content: `You are an Event Assistant AI. You must ONLY answer questions based on the event data provided. If a user asks about anything outside the event data, reply: "I'm sorry, I can only answer questions related to the events provided." Do not infer or invent information. Always quote or summarize directly from the provided event data. If the question cannot be answered with the available data, state that clearly.\n\nToday's date is ${friendlyDate} (ISO ${isoDate}). Use this to interpret any relative date references in the user's question and focus on the appropriate events.\n\nHere is the complete list of events you can reference:\n${eventsContext.snapshot}`,
   };
 
   const requestMessages: ChatMessage[] = [systemMessage, ...body.messages.map((message) => ({
@@ -117,15 +121,32 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       },
       body: JSON.stringify({
         model: 'gpt-4o-mini',
-        input: requestMessages.map((message) => ({
-          role: message.role,
-          content: [
-            {
-              type: 'text' as const,
-              text: message.content,
-            },
-          ],
-        })),
+        input: requestMessages.map((message) => {
+          const contentBlocks: Array<
+            | { type: 'input_text'; text: string }
+            | { type: 'output_text'; text: string }
+            | { type: 'input_file'; filename: string; file_data: string }
+          > = [];
+
+          if (message.role === 'system' && eventsContext.fileBase64) {
+            contentBlocks.push({
+              type: 'input_file',
+              filename: 'events.json',
+              file_data: eventsContext.fileBase64,
+            });
+          }
+
+          contentBlocks.push(
+            message.role === 'assistant'
+              ? { type: 'output_text', text: message.content }
+              : { type: 'input_text', text: message.content },
+          );
+
+          return {
+            role: message.role,
+            content: contentBlocks,
+          };
+        }),
         temperature: 0.1,
         max_output_tokens: 1200,
         response_format: EVENT_ASSISTANT_RESPONSE_FORMAT,
