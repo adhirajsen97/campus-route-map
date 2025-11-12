@@ -27,3 +27,10 @@ Tarrant County Building Footprints.geojson
 # Data artifacts
 data/*.sqlite
 .env
+
+# Cypress
+cypress/videos
+cypress/screenshots
+cypress/downloads
+cypress/results
+cypress.env.json

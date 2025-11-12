@@ -1,4 +1,4 @@
-// Core domain types for Campus Navigator
+// Core domain types for MavPath
 
 export interface Building {
   id: string;
@@ -20,7 +20,7 @@ export interface CampusEvent {
   end: Date;
   lat?: number;
   lng?: number;
-  category: 'academic' | 'sports' | 'social' | 'career' | 'wellness';
+  category: "academic" | "sports" | "social" | "career" | "wellness";
   buildingId?: string;
   location?: string;
   url?: string;
@@ -68,7 +68,7 @@ export interface RouteStep {
   duration: string;
 }
 
-export type TravelMode = 'DRIVING' | 'WALKING' | 'BICYCLING' | 'TRANSIT';
+export type TravelMode = "DRIVING" | "WALKING" | "BICYCLING" | "TRANSIT";
 
 export interface MapState {
   center: { lat: number; lng: number };

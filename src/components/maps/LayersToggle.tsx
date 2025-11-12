@@ -102,6 +102,7 @@ export const LayersToggle = () => {
               id="events"
               checked={showEvents}
               onCheckedChange={toggleEvents}
+              data-testid="events-toggle"
             />
           </div>
           <Popover>
@@ -110,6 +111,7 @@ export const LayersToggle = () => {
                 variant="outline"
                 size="sm"
                 className="justify-between gap-2"
+                data-testid="shuttles-toggle-button"
               >
                 <div className="flex items-center gap-2">
                   <BusFront className="h-4 w-4 text-accent" />

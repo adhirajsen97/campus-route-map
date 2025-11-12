@@ -748,6 +748,21 @@
       "lng": null
     },
     {
+      "id": "51260619068953",
+      "title": "Fried Fish Friday",
+      "description": "Join UTA's Military and Veteran Services for food and fellowship on Friday, Nov. 14. Student veterans, faculty, staff, military-connected dependents, alumni, and community partners are invited. Register now.",
+      "start": "2025-11-14T18:00:00.000Z",
+      "end": "2025-11-14T19:00:00.000Z",
+      "location": "Military and Veteran Services Center",
+      "url": "https://events.uta.edu/event/fried-fish-friday",
+      "tags": [
+        "New"
+      ],
+      "category": "academic",
+      "lat": 32.733858,
+      "lng": -97.122031
+    },
+    {
       "id": "51225152492933",
       "title": "Listening Party: Podcast Launch!",
       "description": "Celebrate the end of Career Week with us at our Listening Party and Grand Finale! Be among the first to experience the launch of the Career Center’s new podcast, featuring career stories and insights to inspire your next steps. Then stick around for the Grand Prize Drawing to see who takes home the big wins!",
@@ -1068,6 +1083,22 @@
       "category": "social",
       "lat": 32.73108,
       "lng": -97.107261
+    },
+    {
+      "id": "51259717956464",
+      "title": "Yoga Under the Stars",
+      "description": "Join us for a relaxing beginner-friendly yoga session beneath a stunning night sky in the Planetarium. Flow through gentle poses and mindful breathing as constellations twinkle above you. Please bring your own mat and get ready to unwind, stretch, and connect with the universe in this one-of-a-kind cosmic experience.",
+      "start": "2025-11-16T01:00:00.000Z",
+      "end": "2025-11-16T02:00:00.000Z",
+      "location": "UTA Planetarium",
+      "url": "https://events.uta.edu/event/yoga-under-the-stars",
+      "tags": [
+        "New",
+        "Health & Wellness"
+      ],
+      "category": "wellness",
+      "lat": 32.730405,
+      "lng": -97.111807
     },
     {
       "id": "50818455020568",
@@ -1441,6 +1472,21 @@
       "lng": null
     },
     {
+      "id": "50816324575980",
+      "title": "CONHI Athletic Training Info Sessions",
+      "description": "Join the College of Nursing and Health Innovation as the Athletic Training department hosts several virtual training sessions. Register here",
+      "start": "2025-11-19T18:00:00.000Z",
+      "end": "2025-11-19T19:00:00.000Z",
+      "location": null,
+      "url": "https://events.uta.edu/event/conhi-athletic-training-info-sessions",
+      "tags": [
+        "Athletics"
+      ],
+      "category": "sports",
+      "lat": null,
+      "lng": null
+    },
+    {
       "id": "51214685842608",
       "title": "Exploring a Path to Graduate School at UTA",
       "description": "Join us for an engaging Graduate School Information Session featuring a panel of current graduate students and faculty. Panelists will share their personal experiences, insights, and advice on topics such as deciding to pursue graduate school, overcoming fears and challenges, maintaining balance and well-being, and preparing for life after graduate studies. This session is designed to provide undergraduates with relatable perspectives on motivation, resilience, mentorship, and professional growth—helping you make informed decisions about whether graduate school is the right next step for you. Click here to register! Contact us: ugresearch@uta.edu | 817-272-1272 | uta_ugresearch This event will be hosted by the Office of Undergraduate Research, the Graduate School, and the Office of Graduate Admissions.",
@@ -1763,6 +1809,22 @@
       "category": "social",
       "lat": null,
       "lng": null
+    },
+    {
+      "id": "51259731666330",
+      "title": "Helium Queens: Live at the UTA Planetarium",
+      "description": "Have you ever wanted to listen to live music under the incredible atmosphere of space? Check out the UTA Planetarium's 2025 Concert Series where we blend art with science. Join us for an evening of food, drinks, and live music in the Planetarium dome featuring local artist Helium Queens. Appetizers are included with the price of admission. A reception with food and drinks starts at 6 p.m. in the Planetarium atrium and the concert starts at 7 p.m. There will be a cash bar while appetizers are included with the price of admission. Enjoy futuristic synth-pop music under the atmosphere of space in the UTA Planetarium dome. The Helium Queens includes keyboardist Poppy Xander, drummer Chelsey Danielle and electric violinist Sharla Franklin who refer to themselves as “Earthling Voices”. They began making music as a space pop trio, since then, but just like space, this group has evolved into so much more. What exactly is the Helium Queens? Helium Queens is a futuristic, sci-fi, electronica band that is part performance art and was originally the brainchild of singer, keyboardist, and composer Poppy Xander. Xander (who plays in multiple bands, including The Polyphonic Spree and PriMadonna) teamed up with fellow musicians Sharla Franklin (King George, The Fiddle Rascals) and Chelsey Danielle (Pearl Earl, No Good Babies) in 2017 to bring the idea to life. Dressed in neon, glowing outfits, Xander performs as Piscea Xandaria, Franklin as Starre Lux Nectaris, and Danielle as Venoo Andromeda. The trio has crafted a whole universe (or YOUniverse as they call it) and invite you to experience the immersive, spectacular, world of the Helium Queens at the UTA Planetarium where we bring outer space to you.",
+      "start": "2025-11-21T00:00:00.000Z",
+      "end": "2025-11-21T02:00:00.000Z",
+      "location": "UTA Planetarium",
+      "url": "https://events.uta.edu/event/helium-queens-live-at-the-uta-planetarium-2426",
+      "tags": [
+        "New",
+        "Recreation & Fun"
+      ],
+      "category": "academic",
+      "lat": 32.730405,
+      "lng": -97.111807
     },
     {
       "id": "50852204945790",

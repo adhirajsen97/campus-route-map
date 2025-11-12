@@ -149,6 +149,7 @@ export const DirectionsPanel = ({ directionsResponse, onRouteComputed, onRouteCl
             onPlaceSelected={handleOriginPlaceSelected}
             leadingIcon={<MapPin className="h-4 w-4 text-muted-foreground" />}
             hideDefaultIcon
+            testId="origin-input"
           />
           {originError && (
             <p className="text-xs text-destructive">{originError}</p>
@@ -165,6 +166,7 @@ export const DirectionsPanel = ({ directionsResponse, onRouteComputed, onRouteCl
               onPlaceSelected={handleDestinationPlaceSelected}
               leadingIcon={<MapPin className="h-4 w-4 text-accent" />}
               hideDefaultIcon
+              testId="destination-input"
             />
           </div>
         )}
