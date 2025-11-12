@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2025-11-11T22:11:42.627Z",
+  "scrapedAt": "2025-11-11T01:04:25.882Z",
   "events": [
     {
       "id": "49710126047224",
@@ -1547,22 +1547,6 @@
       "category": "social",
       "lat": null,
       "lng": null
-    },
-    {
-      "id": "51126992247364",
-      "title": "Study Abroad in Mexico",
-      "description": "Learn about Mexico's language and culture! Snacks will be provided.",
-      "start": "2025-11-19T18:00:00.000Z",
-      "end": "2025-11-19T20:00:00.000Z",
-      "location": "Palo Pinto Room, University Center",
-      "url": "https://events.uta.edu/event/study-abroad-in-mexico",
-      "tags": [
-        "New",
-        "Campus & Community"
-      ],
-      "category": "social",
-      "lat": 32.731835,
-      "lng": -97.110618
     },
     {
       "id": "50515167703967",

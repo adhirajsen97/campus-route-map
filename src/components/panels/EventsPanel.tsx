@@ -391,7 +391,7 @@ export const EventsPanel = () => {
         </div>
 
         <ScrollArea className="h-[calc(100vh-28rem)] pr-4">
-          <div className="space-y-3">{renderContent()}</div>
+          <div id="event-list" className="space-y-3">{renderContent()}</div>
         </ScrollArea>
       </CardContent>
     </Card>

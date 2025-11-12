@@ -18,6 +18,8 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "cypress:run:cloud": "cypress run --record --key de2359df-5858-4c85-9be2-7407e7e9e217",
@@ -85,6 +87,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.32.0",
+    "@playwright/test": "^1.56.1",
     "@tailwindcss/typography": "^0.5.16",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
