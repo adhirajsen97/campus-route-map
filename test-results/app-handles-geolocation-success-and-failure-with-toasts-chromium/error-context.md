@@ -9,7 +9,7 @@
     - banner [ref=e4]:
       - generic [ref=e7]:
         - img [ref=e8]
-        - heading "Campus Navigator" [level=1] [ref=e11]
+        - heading "MavPath" [level=1] [ref=e11]
     - generic [ref=e12]:
       - generic [ref=e18]:
         - generic [ref=e19]:
