@@ -1,4 +1,4 @@
-# Campus Navigator
+# MavPath
 
 A modern, Google Maps-powered campus navigation web app built with React, TypeScript, and Tailwind CSS.
 
@@ -25,19 +25,22 @@ A modern, Google Maps-powered campus navigation web app built with React, TypeSc
 ### Installation
 
 1. **Clone and install dependencies:**
+
    ```bash
    npm install
    ```
 
 2. **Configure Google Maps API:**
-   
+
    Create a `.env.local` file in the root directory:
+
    ```bash
    VITE_GOOGLE_MAPS_API_KEY=your_api_key_here
    # Optional: VITE_GOOGLE_MAPS_MAP_ID=your_map_id_here
    ```
 
 3. **Start development server:**
+
    ```bash
    npm run dev
    ```
@@ -49,6 +52,7 @@ A modern, Google Maps-powered campus navigation web app built with React, TypeSc
 - The campus events scraper runs automatically before `npm run dev`, `npm run build`, and `npm run preview`. When the last scrape happened within the cadence it simply reuses the existing dataset.
 - Set `SCRAPE_EVENTS_FREQUENCY_DAYS` in `.env` (defaults to `3`) to control how often a new scrape is allowed. The script records the most recent run in `SCRAPE_EVENTS_LAST_RUN` so it can calculate the next eligible execution.
 - Trigger a manual refresh at any time with:
+
   ```bash
   npm run scrape:events
   ```
@@ -97,30 +101,35 @@ src/
 The app is UI-ready with clearly marked integration points for backend APIs. Search for `TODO(api)` comments to find these wiring points:
 
 ### 1. **Search API** (`SearchAutocomplete.tsx`)
+
 ```typescript
 // TODO(api): Replace Places API with custom search
 // const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
 ```
 
 ### 2. **Buildings API** (`MarkerLayer.tsx`)
+
 ```typescript
 // TODO(api): Fetch buildings from backend
 // const { data: buildings } = await fetch('/api/buildings');
 ```
 
 ### 3. **Building Details** (`BuildingInfoPanel.tsx`)
+
 ```typescript
 // TODO(api): Fetch full building details
 // const { data } = await fetch(`/api/buildings/${building.id}`);
 ```
 
 ### 4. **Events API** (`LayersToggle.tsx`)
+
 ```typescript
 // TODO(api): Fetch campus events
 // const { data: events } = await fetch('/api/events');
 ```
 
 ### 5. **Route Logging** (`DirectionsPanel.tsx`)
+
 ```typescript
 // TODO(api): Log route analytics
 // await fetch('/api/routes/log', {
@@ -134,10 +143,11 @@ The app is UI-ready with clearly marked integration points for backend APIs. Sea
 ### Update Campus Location
 
 Edit `src/lib/mapsClient.ts`:
+
 ```typescript
 export const DEFAULT_CENTER = {
-  lat: 37.7749,  // Your campus latitude
-  lng: -122.4194 // Your campus longitude
+  lat: 37.7749, // Your campus latitude
+  lng: -122.4194, // Your campus longitude
 };
 ```
 
@@ -148,6 +158,7 @@ Replace mock data in `src/data/buildings.mock.ts` with your campus buildings fol
 ### Customize Colors
 
 The app uses a university-themed design system. Edit `src/index.css` to customize:
+
 - `--primary`: University blue (main brand color)
 - `--accent`: Campus coral (highlights and CTAs)
 - `--gradient-primary`: Header gradient

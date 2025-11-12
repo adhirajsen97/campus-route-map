@@ -16,6 +16,7 @@ interface SearchAutocompleteProps {
   leadingIcon?: ReactNode;
   hideDefaultIcon?: boolean;
   inputClassName?: string;
+  testId?: string;
 }
 
 export const SearchAutocomplete = ({
@@ -29,6 +30,7 @@ export const SearchAutocomplete = ({
   leadingIcon,
   hideDefaultIcon,
   inputClassName,
+  testId,
 }: SearchAutocompleteProps) => {
   const [autocomplete, setAutocomplete] = useState<google.maps.places.Autocomplete | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -148,6 +150,7 @@ export const SearchAutocomplete = ({
             onChange={handleInputChange}
             aria-invalid={errorMessage ? 'true' : 'false'}
             aria-describedby={errorMessage ? 'search-error' : undefined}
+            data-testid={testId}
           />
         </Autocomplete>
       ) : (
@@ -158,6 +161,7 @@ export const SearchAutocomplete = ({
           className={`pl-10 bg-background text-foreground ${inputClassName ?? ''}`}
           disabled
           aria-disabled="true"
+          data-testid={testId}
         />
       )}
       {errorMessage && (

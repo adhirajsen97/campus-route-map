@@ -196,6 +196,7 @@ export const EventsPanel = () => {
               onChange={(event) => setSearchTerm(event.target.value)}
               placeholder="Search events by name, location, or tag"
               className="pl-9"
+              data-testid="events-search-input"
             />
           </div>
           <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">

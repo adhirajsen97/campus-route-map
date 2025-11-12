@@ -8,7 +8,7 @@ import { EventMarkers } from '@/components/maps/EventMarkers';
 import { LayersToggle } from '@/components/maps/LayersToggle';
 import { ShuttleRoutesLayer } from '@/components/maps/ShuttleRoutesLayer';
 // import { BuildingInfoPanel } from '@/components/panels/BuildingInfoPanel';
-import { EventsPanel } from '@/components/panels/EventsPanel';
+import { EventsPanel } from "@/components/panels/EventsPanel";
 // import { mockBuildings } from '@/data/buildings.mock';
 import { useMapStore } from '@/lib/mapState';
 import { MapPin, Navigation, CalendarDays, Menu, X } from 'lucide-react';
@@ -27,14 +27,20 @@ const Index = () => {
 
   const indicatorRef = useRef<HTMLSpanElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
-  const menuButtonRefs = useRef<{ directions: HTMLButtonElement | null; events: HTMLButtonElement | null }>({
+  const menuButtonRefs = useRef<{
+    directions: HTMLButtonElement | null;
+    events: HTMLButtonElement | null;
+  }>({
     directions: null,
     events: null,
   });
 
-  const handleRouteComputed = useCallback((result: google.maps.DirectionsResult) => {
-    setDirectionsResult(result);
-  }, []);
+  const handleRouteComputed = useCallback(
+    (result: google.maps.DirectionsResult) => {
+      setDirectionsResult(result);
+    },
+    []
+  );
 
   const handleRouteCleared = useCallback(() => {
     setDirectionsResult(null);
@@ -78,7 +84,7 @@ const Index = () => {
       translateX: activeButton.offsetLeft,
       width: activeButton.offsetWidth,
       duration: 450,
-      easing: 'easeOutExpo',
+      easing: "easeOutExpo",
     });
   }, [activeSidebarView]);
 
@@ -90,7 +96,7 @@ const Index = () => {
       opacity: [0, 1],
       translateY: [12, 0],
       duration: 320,
-      easing: 'easeOutQuad',
+      easing: "easeOutQuad",
     });
   }, [activeSidebarView]);
 
@@ -111,6 +117,7 @@ const Index = () => {
                   : 'text-muted-foreground hover:text-foreground'
               }`}
               aria-pressed={activeSidebarView === 'directions'}
+              data-testid="directions-tab"
             >
               <Navigation className="h-4 w-4" />
               Directions
@@ -127,6 +134,7 @@ const Index = () => {
                   : 'text-muted-foreground hover:text-foreground'
               }`}
               aria-pressed={activeSidebarView === 'events'}
+              data-testid="events-tab"
             >
               <CalendarDays className="h-4 w-4" />
               Events
@@ -144,6 +152,7 @@ const Index = () => {
             onClick={() => setIsSidebarOpen(false)}
             className="ml-2 inline-flex h-8 w-8 items-center justify-center rounded-md border border-border/60 bg-background text-muted-foreground transition-colors hover:text-foreground lg:hidden"
             aria-label="Close sidebar"
+            data-testid="mobile-menu-close"
           >
             <X className="h-4 w-4" />
           </button>
@@ -191,13 +200,24 @@ const Index = () => {
   return (
     <div className="h-screen w-full flex flex-col">
       {/* Header */}
-      <header className="bg-gradient-primary text-primary-foreground shadow-primary z-10">
+      <header className="bg-gradient-primary text-primary-foreground shadow-primary z-10" data-testid="app-header">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <MapPin className="h-7 w-7" />
-              <h1 className="text-2xl font-bold">Campus Navigator</h1>
+              <h1 className="text-2xl font-bold">MavPath</h1>
             </div>
+            <button
+              type="button"
+              onClick={() => setIsSidebarOpen(true)}
+              className="lg:hidden inline-flex items-center gap-2 rounded-md border border-primary-foreground/20 bg-primary-foreground/10 px-3 py-2 text-sm font-medium backdrop-blur transition-colors hover:bg-primary-foreground/20"
+              aria-expanded={isSidebarOpen}
+              aria-controls="sidebar-panel"
+              aria-label="Open sidebar menu"
+              data-testid="mobile-menu-button"
+            >
+              <Menu className="h-5 w-5" />
+            </button>
           </div>
         </div>
       </header>
@@ -206,19 +226,6 @@ const Index = () => {
       <div className="flex-1 min-h-0 flex relative">
         {/* Map */}
         <div className="flex-1 relative">
-          <button
-            type="button"
-            onClick={() => setIsSidebarOpen(true)}
-            className={`lg:hidden absolute left-4 top-20 z-20 inline-flex items-center gap-2 rounded-md border border-border/60 bg-background/90 px-3 py-2 text-sm font-medium text-foreground shadow-md backdrop-blur transition-opacity ${
-              isSidebarOpen ? 'pointer-events-none opacity-0' : 'opacity-100'
-            }`}
-            aria-expanded={isSidebarOpen}
-            aria-controls="sidebar-panel"
-          >
-            <Menu className="h-4 w-4" />
-            Open panel
-          </button>
-
           <MapCanvas center={center} zoom={zoom} onMapReady={setMapInstance}>
             {directionsResult && (
               <DirectionsRenderer

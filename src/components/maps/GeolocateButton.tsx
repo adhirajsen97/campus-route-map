@@ -58,6 +58,7 @@ export const GeolocateButton = () => {
       disabled={isLocating}
       className="shadow-md bg-background hover:bg-accent"
       aria-label="Find my location"
+      data-testid="geolocate-button"
     >
       {isLocating ? (
         <Loader2 className="h-4 w-4 animate-spin" />
