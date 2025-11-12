@@ -1,12 +1,34 @@
 export const googleMapsStub = `
+// Prevent multiple executions
+if (!window.__googleMapsStubLoaded) {
+  window.__googleMapsStubLoaded = true;
+
+// Initialize google object immediately to ensure useJsApiLoader can detect it
+if (!window.google) {
+  window.google = {};
+}
+if (!window.google.maps) {
+  window.google.maps = {};
+}
+
 (() => {
   const listeners = new WeakMap();
 
   const getListeners = (target) => {
+    if (!target) {
+      return new Map();
+    }
     if (!listeners.has(target)) {
       listeners.set(target, new Map());
     }
-    return listeners.get(target);
+    const registry = listeners.get(target);
+    // Ensure we always return a Map
+    if (!registry || typeof registry.get !== 'function' || !(registry instanceof Map)) {
+      const newRegistry = new Map();
+      listeners.set(target, newRegistry);
+      return newRegistry;
+    }
+    return registry;
   };
 
   class MapsEventListener {
@@ -18,8 +40,9 @@ export const googleMapsStub = `
 
     remove() {
       const registry = getListeners(this.target);
+      if (!registry || typeof registry.get !== 'function') return;
       const handlers = registry.get(this.eventName);
-      if (!handlers) return;
+      if (!handlers || !Array.isArray(handlers)) return;
       const index = handlers.indexOf(this.handler);
       if (index !== -1) {
         handlers.splice(index, 1);
@@ -30,16 +53,30 @@ export const googleMapsStub = `
   class EventTarget {
     addListener(eventName, handler) {
       const registry = getListeners(this);
+      if (!registry || typeof registry.get !== 'function' || typeof registry.set !== 'function') {
+        // Fallback: return a dummy listener if registry is broken
+        return { remove: () => {} };
+      }
       const handlers = registry.get(eventName) ?? [];
-      handlers.push(handler);
-      registry.set(eventName, handlers);
+      if (!Array.isArray(handlers)) {
+        registry.set(eventName, [handler]);
+      } else {
+        handlers.push(handler);
+        registry.set(eventName, handlers);
+      }
       return new MapsEventListener(this, eventName, handler);
     }
 
     _emit(eventName, ...args) {
-      const handlers = getListeners(this).get(eventName);
-      if (!handlers) return;
-      [...handlers].forEach((handler) => handler(...args));
+      const registry = getListeners(this);
+      if (!registry || typeof registry.get !== 'function') return;
+      const handlers = registry.get(eventName);
+      if (!handlers || !Array.isArray(handlers)) return;
+      [...handlers].forEach((handler) => {
+        if (typeof handler === 'function') {
+          handler(...args);
+        }
+      });
     }
   }
 
@@ -171,6 +208,7 @@ export const googleMapsStub = `
       this._map = null;
       this.options = options;
       this.position = options.position ?? null;
+      this._title = options.title ?? '';
       mapsState.markers.push(this);
       if (options.map) {
         this.setMap(options.map);
@@ -183,6 +221,20 @@ export const googleMapsStub = `
 
     getMap() {
       return this._map;
+    }
+
+    setIcon() {}
+
+    setPosition() {}
+
+    setZIndex() {}
+
+    setTitle(title) {
+      this._title = title ?? '';
+    }
+
+    getTitle() {
+      return this._title;
     }
   }
 
@@ -205,6 +257,8 @@ export const googleMapsStub = `
     }
 
     setOptions() {}
+
+    setPath() {}
   }
 
   class Polygon extends EventTarget {
@@ -226,18 +280,29 @@ export const googleMapsStub = `
     }
 
     setOptions() {}
+
+    setPaths() {}
   }
 
   class InfoWindow extends EventTarget {
     constructor(options = {}) {
       super();
       this._content = options.content ?? '';
+      this._title = options.title ?? '';
       this._map = null;
       this._anchor = null;
     }
 
     setContent(content) {
       this._content = content;
+    }
+
+    setTitle(title) {
+      this._title = title ?? '';
+    }
+
+    getTitle() {
+      return this._title;
     }
 
     open({ anchor, map } = {}) {
@@ -312,11 +377,20 @@ export const googleMapsStub = `
     constructor() {
       super();
       this._place = createPlace();
+      this._options = {};
       mapsState.autocompletes.push(this);
+      // Register with test utility if available
+      if (typeof window !== 'undefined' && window.__registerAutocomplete) {
+        window.__registerAutocomplete(this);
+      }
     }
 
     getPlace() {
       return this._place;
+    }
+
+    setOptions(options) {
+      this._options = { ...this._options, ...options };
     }
 
     setBounds() {}
@@ -335,6 +409,29 @@ export const googleMapsStub = `
     getDetails(request, callback) {
       const place = mapsState.placeDetails[request.placeId] ?? createPlace({ place_id: request.placeId });
       callback(place, 'OK');
+    }
+  }
+
+  class Loader {
+    constructor() {
+      this._libraries = new Set();
+    }
+
+    async load(callback) {
+      // Simulate async loading
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          if (typeof callback === 'function') {
+            callback();
+          }
+          resolve();
+        }, 0);
+      });
+    }
+
+    async loadLibraries(libraries) {
+      libraries.forEach((lib) => this._libraries.add(lib));
+      return Promise.resolve();
     }
   }
 
@@ -397,8 +494,12 @@ export const googleMapsStub = `
   google.maps = maps;
 
   const importLibrary = async (name) => {
+    // Simulate async loading with a small delay
+    await new Promise(resolve => setTimeout(resolve, 10));
+    
     switch (name) {
       case 'core':
+      case 'maps':
         return {
           Map,
           Marker,
@@ -431,6 +532,18 @@ export const googleMapsStub = `
   };
 
   google.maps.importLibrary = (name) => importLibrary(name);
+  
+  // Add Load class for useJsApiLoader compatibility
+  google.maps.Load = Loader;
+
+  // Ensure window.google is set up immediately
+  window.google = google;
+  
+  // Mark as ready for @googlemaps/js-api-loader
+  // The Loader class checks for importLibrary before injecting script
+  if (typeof window !== 'undefined') {
+    window.google.maps.version = '3.test';
+  }
 
   Object.defineProperty(window, '__googleMapsMock', {
     configurable: true,
@@ -439,19 +552,18 @@ export const googleMapsStub = `
     },
   });
 
-  if (!window.google) {
-    window.google = google;
-  }
-
   mapsState.reset();
 
-  window.__triggerAutocomplete = (index, place) => {
-    const target = mapsState.autocompletes[index];
-    if (!target) {
-      throw new Error('No autocomplete registered at index ' + index);
-    }
-    target.__setPlace(place);
-  };
+  // Only define __triggerAutocomplete if it's not already defined by the test
+  if (typeof window !== 'undefined' && !window.__triggerAutocomplete) {
+    window.__triggerAutocomplete = (index, place) => {
+      const target = mapsState.autocompletes[index];
+      if (!target) {
+        throw new Error('No autocomplete registered at index ' + index);
+      }
+      target.__setPlace(place);
+    };
+  }
 
   window.__setMockDirectionsResponse = (response) => {
     mapsState.nextDirectionsResponse = response;
@@ -507,4 +619,13 @@ export const googleMapsStub = `
 
   setTimeout(runCallbacks, 0);
 })();
+
+// Ensure the stub is immediately available for @googlemaps/js-api-loader
+// The Loader class checks for window.google.maps and importLibrary
+if (typeof window !== 'undefined' && window.google?.maps) {
+  // Mark as loaded immediately
+  window.google.maps.__loaded = true;
+}
+
+} // Close the if block for __googleMapsStubLoaded
 `;

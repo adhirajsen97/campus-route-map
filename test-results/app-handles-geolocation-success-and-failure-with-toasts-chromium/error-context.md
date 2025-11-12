@@ -1,0 +1,63 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - region "Notifications (F8)":
+    - list
+  - region "Notifications alt+T"
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e7]:
+        - img [ref=e8]
+        - heading "Campus Navigator" [level=1] [ref=e11]
+    - generic [ref=e12]:
+      - generic [ref=e18]:
+        - generic [ref=e19]:
+          - generic [ref=e20]:
+            - img [ref=e21]
+            - generic [ref=e23] [cursor=pointer]: Events
+          - switch "Events" [checked] [ref=e24] [cursor=pointer]
+        - button "Shuttles 7/7 active" [ref=e25] [cursor=pointer]:
+          - generic [ref=e26]:
+            - img
+            - generic [ref=e27]: Shuttles
+          - generic [ref=e28]: 7/7 active
+      - generic [ref=e30]:
+        - generic [ref=e33]:
+          - button "Directions" [pressed] [ref=e34] [cursor=pointer]:
+            - img [ref=e35]
+            - text: Directions
+          - button "Events" [ref=e37] [cursor=pointer]:
+            - img [ref=e38]
+            - text: Events
+        - generic [ref=e42]:
+          - generic [ref=e43]:
+            - heading "Get Directions" [level=3] [ref=e45]:
+              - img [ref=e46]
+              - text: Get Directions
+            - generic [ref=e48]:
+              - generic [ref=e49]:
+                - text: From
+                - generic [ref=e50]:
+                  - generic:
+                    - img
+                  - textbox "Starting point..." [ref=e52]
+              - generic [ref=e53]:
+                - text: Travel Mode
+                - combobox "Travel Mode Travel Mode" [ref=e54] [cursor=pointer]:
+                  - generic: Walking
+                  - img [ref=e55]
+              - generic [ref=e57]:
+                - button "Choose Destination" [disabled]
+          - generic [ref=e58]:
+            - heading "Quick Start" [level=3] [ref=e59]
+            - list [ref=e60]:
+              - listitem [ref=e61]: • Select a starting point in the directions panel
+              - listitem [ref=e62]: • Click anywhere on the map to see building information
+              - listitem [ref=e63]: • Use the directions button to add a destination
+              - listitem [ref=e64]: • Toggle events layer to show/hide campus events
+              - listitem [ref=e65]: • Drag the map or use zoom controls to explore different areas
+    - button "Open UTA Event Assistant chat" [ref=e66]:
+      - img [ref=e67]
+      - generic [ref=e70]: AI
+```

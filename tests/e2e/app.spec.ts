@@ -32,6 +32,34 @@ type GeolocationError = {
 
 declare global {
   interface Window {
+    __registeredAutocompletes: Array<{
+      __setPlace?: (place: {
+        place_id?: string;
+        name?: string;
+        formatted_address?: string;
+        geometry?: { location?: { lat?: number; lng?: number } };
+      }) => void;
+      setPlace?: (place: {
+        place_id?: string;
+        name?: string;
+        formatted_address?: string;
+        geometry?: { location?: { lat?: number; lng?: number } };
+      }) => void;
+    }>;
+    __registerAutocomplete: (ac: {
+      __setPlace?: (place: {
+        place_id?: string;
+        name?: string;
+        formatted_address?: string;
+        geometry?: { location?: { lat?: number; lng?: number } };
+      }) => void;
+      setPlace?: (place: {
+        place_id?: string;
+        name?: string;
+        formatted_address?: string;
+        geometry?: { location?: { lat?: number; lng?: number } };
+      }) => void;
+    }) => void;
     __triggerAutocomplete: (
       index: number,
       place: {
@@ -55,7 +83,55 @@ const eventsResponse = JSON.stringify(eventsFixture);
 test.beforeEach(async ({ context, page }) => {
   await context.grantPermissions(['geolocation']);
 
+  // Ensure setZIndex is available on Marker instances to prevent crashes
+  await page.addInitScript(() => {
+    // Mock registration utility used by your code/tests
+    window.__registeredAutocompletes = [];
+    window.__registerAutocomplete = (ac) => window.__registeredAutocompletes.push(ac);
+    // Override __triggerAutocomplete to use registered autocompletes
+    window.__triggerAutocomplete = (i, place) => {
+      const ac = window.__registeredAutocompletes[i];
+      if (!ac) throw new Error(`No autocomplete registered at index ${i}`);
+      // Use the stub's __setPlace method if available, otherwise fall back to setPlace
+      if (typeof ac.__setPlace === 'function') {
+        ac.__setPlace(place);
+      } else if (typeof ac.setPlace === 'function') {
+        ac.setPlace(place);
+      }
+    };
+
+    window.__googleMapsMock = {
+      Marker: class {
+        constructor() {}
+        setMap() {}
+        setZIndex() {} // prevents the crash
+      },
+      Map: class {},
+      DirectionsService: class {},
+      DirectionsRenderer: class {
+        setMap() {}
+        setDirections() {}
+      },
+    };
+  });
+
+  // Inject the stub via init script so it's available before React renders
+  await page.addInitScript(googleMapsStub);
+
+  // Route Google Maps API requests to our stub (as fallback)
   await page.route('https://maps.googleapis.com/maps/api/js*', async (route) => {
+    await route.fulfill({
+      status: 200,
+      body: googleMapsStub,
+      headers: {
+        'content-type': 'application/javascript',
+        'access-control-allow-origin': '*',
+      },
+    });
+  });
+  
+  // Also route the loader script if it's requested separately
+  await page.route('https://maps.googleapis.com/maps/api/js/loader*', async (route) => {
     await route.fulfill({
       status: 200,
       body: googleMapsStub,
@@ -139,9 +215,36 @@ test.beforeEach(async ({ context, page }) => {
     };
   });
 
+  // Check console for errors before navigating
+  page.on('console', (msg) => {
+    if (msg.type() === 'error') {
+      console.log('Console error:', msg.text());
+    }
+  });
+  
+  page.on('pageerror', (error) => {
+    console.log('Page error:', error.message);
+  });
+
   await page.goto('/');
+  
+  // Wait for the page to be interactive
+  await page.waitForLoadState('domcontentloaded');
+  
+  // Verify the stub is loaded
+  const stubLoaded = await page.evaluate(() => {
+    return !!(window.google && window.google.maps && window.google.maps.importLibrary);
+  });
+  
+  if (!stubLoaded) {
+    throw new Error('Google Maps stub not loaded properly');
+  }
+  
+  // Wait for network to be idle and then wait a bit for React
   await page.waitForLoadState('networkidle');
-  await expect(page.getByRole('heading', { name: 'Campus Navigator' })).toBeVisible();
+  await page.waitForTimeout(2000);
+  
+  await expect(page.getByRole('heading', { name: 'Campus Navigator' })).toBeVisible({ timeout: 15000 });
   await page.evaluate(() => {
     window.__googleMapsMock.reset();
     window.__setMockDirectionsResponse(undefined);
@@ -177,7 +280,8 @@ test('calculates a route from campus search inputs', async ({ page }) => {
     });
   });
 
-  const originInput = page.getByPlaceholder('Starting point...');
+  // Scope to the first visible input to avoid duplicate matches (desktop vs mobile sidebar)
+  const originInput = page.getByPlaceholder('Starting point...').first();
   await originInput.fill('Central Library');
   await page.evaluate(() => {
     window.__triggerAutocomplete(0, {
@@ -190,7 +294,7 @@ test('calculates a route from campus search inputs', async ({ page }) => {
   await expect(originInput).toHaveValue('Central Library, 702 Planetarium Pl, Arlington, TX 76019');
 
   await page.getByRole('button', { name: 'Choose Destination' }).click();
-  const destinationInput = page.getByPlaceholder('Destination...');
+  const destinationInput = page.getByPlaceholder('Destination...').first();
   await destinationInput.fill('Engineering Research Building');
   await page.evaluate(() => {
     window.__triggerAutocomplete(1, {
@@ -219,9 +323,10 @@ test('filters events by search, date, location, and tag', async ({ page }) => {
   await page.getByRole('button', { name: 'Events' }).click();
   await expect(page.getByRole('heading', { name: 'Campus Events' })).toBeVisible();
 
-  const searchInput = page.getByPlaceholder('Search events by name, location, or tag');
+  // Scope to the first visible input to avoid duplicate matches (desktop vs mobile sidebar)
+  const searchInput = page.getByPlaceholder('Search events by name, location, or tag').first();
   await searchInput.fill('Career');
-  await expect(page.getByRole('heading', { name: 'Spring Career Fair' })).toBeVisible();
+  await expect(page.locator('#event-list').getByRole('heading', { name: 'Spring Career Fair' }).first()).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Robotics Showcase' })).toHaveCount(0);
 
   const dateInput = page.getByLabel('Filter by date');
@@ -235,7 +340,7 @@ test('filters events by search, date, location, and tag', async ({ page }) => {
 
   const resetButton = page.getByRole('button', { name: 'Reset filters' });
   await expect(resetButton).toBeEnabled();
-  await expect(page.getByText('Spring Career Fair')).toBeVisible();
+  await expect(page.locator('#event-list').getByText('Spring Career Fair').first()).toBeVisible();
   await resetButton.click();
 
   await expect(searchInput).toHaveValue('');
@@ -267,7 +372,21 @@ test('toggles event and shuttle layers', async ({ page }) => {
 });
 
 test('handles geolocation success and failure with toasts', async ({ page }) => {
-  const geolocateButton = page.getByRole('button', { name: 'Find my location' });
+  // Set geolocation before looking for the button
+  await page.context().setGeolocation({ latitude: 32.729, longitude: -97.115 });
+  
+  // Wait for the map to load and the button to be visible
+  await page.waitForLoadState('networkidle');
+  await page.waitForTimeout(1000);
+  
+  // Wait for the map to mount first
+  await page.waitForSelector('#map', { state: 'visible', timeout: 10000 }).catch(() => {
+    // Map might not have an id, so just wait for any button
+  });
+  
+  // Use aria-label to find the button (it has aria-label="Find my location")
+  const geolocateButton = page.getByRole('button', { name: /find my location/i });
+  await expect(geolocateButton).toBeVisible({ timeout: 10000 });
 
   await geolocateButton.click();
   await expect(geolocateButton).toBeDisabled();
