@@ -1,0 +1,44 @@
+name: Scrape UTA events
+
+on:
+  schedule:
+    # Runs at 15:00 UTC every day (adjust as needed)
+    - cron: "0 15 * * *"
+  workflow_dispatch: {}  # allow manual run from GitHub UI
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+        with:
+          # Needed so we can push changes back
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run scrape script
+        run: npm run scrape:events
+
+      - name: Commit and push updated events.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if git status --porcelain | grep -q "data/events.json"; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/events.json
+            git commit -m "chore: update events.json via scraper"
+            git push
+          else
+            echo "No changes to events.json"
+          fi
